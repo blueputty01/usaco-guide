@@ -1,7 +1,7 @@
 ---
 id: sqrt
 title: 'Square Root Decomposition'
-author: Benjamin Qi, Neo Wang
+author: Benjamin Qi, Neo Wang, Mihnea Brebenel
 description: Splitting up data into smaller chunks to speed up processing.
 frequency: 1
 ---
@@ -59,7 +59,6 @@ sums $\sum_{i=0}^{r}\texttt{nums}[i]$ and $\sum_{i=0}^{l-1}\texttt{nums}[i]$,
 which each are calculated in $\mathcal{O}(\sqrt N)$.
 
 <LanguageSection>
-
 <CPPSection>
 
 ```cpp
@@ -72,9 +71,7 @@ struct Sqrt {
 	vector<long long> blocks;
 	Sqrt(int sqrtn, vector<int> &arr) : block_size(sqrtn), blocks(sqrtn, 0) {
 		nums = arr;
-		for (int i = 0; i < nums.size(); i++) {
-			blocks[i / block_size] += nums[i];
-		}
+		for (int i = 0; i < nums.size(); i++) { blocks[i / block_size] += nums[i]; }
 	}
 
 	/** O(1) update to set nums[x] to v */
@@ -88,9 +85,7 @@ struct Sqrt {
 	long long query(int r) {
 		long long res = 0;
 		for (int i = 0; i < r / block_size; i++) { res += blocks[i]; }
-		for (int i = (r / block_size) * block_size; i < r; i++) {
-			res += nums[i];
-		}
+		for (int i = (r / block_size) * block_size; i < r; i++) { res += nums[i]; }
 		return res;
 	}
 
@@ -119,7 +114,6 @@ int main() {
 ```
 
 </CPPSection>
-
 <JavaSection>
 
 ```java
@@ -128,8 +122,7 @@ import java.util.*;
 
 public class DRSQ {
 	public static void main(String[] args) throws IOException {
-		BufferedReader br =
-		    new BufferedReader(new InputStreamReader(System.in));
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		PrintWriter pw = new PrintWriter(System.out);
 		StringTokenizer st = new StringTokenizer(br.readLine());
 
@@ -167,9 +160,7 @@ public class DRSQ {
 			blockSize = sqrtn;
 			blocks = new long[sqrtn];
 			nums = arr;
-			for (int i = 0; i < nums.length; i++) {
-				blocks[i / blockSize] += nums[i];
-			}
+			for (int i = 0; i < nums.length; i++) { blocks[i / blockSize] += nums[i]; }
 		}
 
 		/** O(1) update to set nums[x] to v */
@@ -186,9 +177,7 @@ public class DRSQ {
 		static long query(int r) {
 			long res = 0;
 			for (int i = 0; i < r / blockSize; i++) { res += blocks[i]; }
-			for (int i = (r / blockSize) * blockSize; i < r; i++) {
-				res += nums[i];
-			}
+			for (int i = (r / blockSize) * blockSize; i < r; i++) { res += nums[i]; }
 			return res;
 		}
 	}
@@ -196,7 +185,92 @@ public class DRSQ {
 ```
 
 </JavaSection>
+</LanguageSection>
 
+## Combining Algorithms
+
+<FocusProblem problem="ndcp" />
+
+Doing this problem with DP has a time complexity of $\mathcal{O}(N^2)$.
+
+<LanguageSection>
+<CPPSection>
+
+```cpp
+vector<int> dp(n, 1);
+for (int i = n - 1; i >= 0; i--) {
+	for (int x = i + a[i]; x <= n; x += a[i]) { dp[i] = (dp[i] + dp[x]) % MOD; }
+}
+```
+
+</CPPSection>
+</LanguageSection>
+
+If we try prefix sums, the complexity is still $\mathcal{O}(N^2)$.
+
+<LanguageSection>
+<CPPSection>
+
+```cpp
+for (int i = n - 1; i >= 0; i--) {
+	dp[i] += s[a[i]][i % a[i]];
+	dp[i] %= MOD;
+
+	for (int j = 1; j <= x; j++) {
+		s[j][i % j] += dp[i];
+		s[j][i % j] %= MOD;
+	}
+}
+```
+
+</CPPSection>
+</LanguageSection>
+
+We can apply the DP algorithm to the steps where $A_i \cdot x >= \sqrt(N)$ because the jump is bigger, thus resulting in a faster loop
+We can apply prefix sums for the remaining cases where $A_i \cdot x < \sqrt(N)$.
+
+This trick allows us to combine two $\mathcal{O}(N^2)$ algorithm into one $\mathcal{O}(N\sqrt(N))$ algorithm.
+
+<LanguageSection>
+<CPPSection>
+
+```cpp
+#include <bits/stdc++.h>
+using namespace std;
+
+const int MOD = 998244353;
+
+int main() {
+	int n;
+	cin >> n;
+	vector<int> a(n);
+	for (int i = 0; i < n; i++) { cin >> a[i]; }
+
+	int x = (int)sqrt(n);
+
+	vector<int> dp(n, 1);
+	vector<vector<int>> s(x + 1, vector<int>(x + 1));
+	for (int i = n - 1; i >= 0; i--) {
+		if (a[i] > x) {
+			for (int j = i + a[i]; j < n; j += a[i]) {
+				dp[i] += dp[j];
+				dp[i] %= MOD;
+			}
+		} else {
+			dp[i] += s[a[i]][i % a[i]];
+			dp[i] %= MOD;
+		}
+		for (int j = 1; j <= x; j++) {
+			s[j][i % j] += dp[i];
+			s[j][i % j] %= MOD;
+		}
+	}
+
+	cout << dp[0] << endl;
+}
+```
+
+</CPPSection>
 </LanguageSection>
 
 ## Batching
@@ -209,7 +283,6 @@ the buffer. When the buffer gets too large ($\ge \sqrt N$), clear it and
 recalculate prefix sums.
 
 <LanguageSection>
-
 <CPPSection>
 
 ```cpp
@@ -260,7 +333,6 @@ int main() {
 ```
 
 </CPPSection>
-
 <JavaSection>
 
 <Warning title="TLE">
@@ -276,8 +348,7 @@ public class DRSQ {
 	static List<Long> prefix;
 
 	public static void main(String[] args) throws IOException {
-		BufferedReader br =
-		    new BufferedReader(new InputStreamReader(System.in));
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		PrintWriter pw = new PrintWriter(System.out);
 		StringTokenizer st = new StringTokenizer(br.readLine());
 
@@ -344,17 +415,89 @@ public class DRSQ {
 ```
 
 </JavaSection>
-
 </LanguageSection>
 
 ## Mo's Algorithm
+
+<FocusProblem problem = "dquery" />
 
 <Resources>
 	<Resource source="CF" title="Mo's Algorithm" url="7383">
 		<i>very</i> brief description
 	</Resource>
+	<Resource source="HE" title="Mo's Algorithm" url="https://www.hackerearth.com/practice/notes/mos-algorithm/" starred>
+		elaborate description with proof
+	</Resource>
 	<Resource source="CPH" title="Mo's Algorithm - 27.3" url="/CPH.pdf#page=265"/>
 </Resources>
+
+<LanguageSection>
+<CPPSection>
+
+```cpp
+#include <bits/stdc++.h>
+using namespace std;
+
+struct Query {
+	int l, r, idx;
+};
+
+int main() {
+	int n;
+	cin >> n;
+	vector<int> v(n);
+	for (int i = 0; i < n; i++) { cin >> v[i]; }
+
+	int q;
+	cin >> q;
+	vector<Query> queries;
+	for (int i = 0; i < q; i++) {
+		int x, y;
+		cin >> x >> y;
+		queries.push_back({--x, --y, i});
+	}
+
+	int block_size = (int)sqrt(n);
+	auto mo_cmp = [&](Query a, Query b) {
+		int block_a = a.l / block_size;
+		int block_b = b.l / block_size;
+		if (block_a == block_b) { return a.r < b.r; }
+		return block_a < block_b;
+	};
+	sort(queries.begin(), queries.end(), mo_cmp);
+
+	int different_values = 0;
+	vector<int> values(VALMAX);
+	auto remove = [&](int idx) {
+		values[v[idx]]--;
+		if (values[v[idx]] == 0) { different_values--; }
+	};
+	auto add = [&](int idx) {
+		values[v[idx]]++;
+		if (values[v[idx]] == 1) { different_values++; }
+	};
+
+	int mo_left = -1;
+	int mo_right = -1;
+	vector<int> ans(q);
+	for (int i = 0; i < q; i++) {
+		int left = queries[i].l;
+		int right = queries[i].r;
+
+		while (mo_left < left) { remove(mo_left++); }
+		while (mo_left > left) { add(--mo_left); }
+		while (mo_right < right) { add(++mo_right); }
+		while (mo_right > right) { remove(mo_right--); }
+
+		ans[queries[i].idx] = different_values;
+	}
+
+	for (int i = 0; i < q; i++) { cout << ans[i] << '\n'; }
+}
+```
+
+</CPPSection>
+</LanguageSection>
 
 <!-- [A2OJ](https://a2oj.com/category?ID=318) -->
 

@@ -1,31 +1,33 @@
 import { Link } from 'gatsby';
 import * as React from 'react';
-import { useContext } from 'react';
 import MODULE_ORDERING from '../../../content/ordering';
-import MarkdownLayoutContext from '../../context/MarkdownLayoutContext';
+import { useMarkdownLayout } from '../../context/MarkdownLayoutContext';
 import { MarkdownLayoutSidebarModuleLinkInfo } from '../../models/module';
 import { SolutionInfo } from '../../models/solution';
 import Breadcrumbs from './Breadcrumbs';
 
 const NavBar = ({ alignNavButtonsRight = true }) => {
-  const moduleLayoutInfo = useContext(MarkdownLayoutContext);
+  const moduleLayoutInfo = useMarkdownLayout();
   const { markdownLayoutInfo, sidebarLinks } = moduleLayoutInfo;
 
-  if (markdownLayoutInfo instanceof SolutionInfo) return null;
-
   const sortedModuleLinks = React.useMemo(() => {
+    if (markdownLayoutInfo instanceof SolutionInfo) return undefined;
     const links: MarkdownLayoutSidebarModuleLinkInfo[] = [];
     for (const group of MODULE_ORDERING[markdownLayoutInfo.section]) {
       for (const id of group.items) {
-        links.push(sidebarLinks.find(x => x.id === id));
+        const link = sidebarLinks.find(x => x.id === id);
+        if (link) links.push(link);
       }
     }
     return links;
   }, [sidebarLinks]);
   const moduleIdx = React.useMemo(
-    () => sortedModuleLinks.findIndex(x => x.id === markdownLayoutInfo.id),
+    () => sortedModuleLinks?.findIndex(x => x.id === markdownLayoutInfo.id),
     [markdownLayoutInfo, sortedModuleLinks]
-  );
+  ) as number;
+  if (!sortedModuleLinks || markdownLayoutInfo instanceof SolutionInfo) {
+    return null;
+  }
   const prevModule = moduleIdx === 0 ? null : sortedModuleLinks[moduleIdx - 1];
   const nextModule =
     moduleIdx === sortedModuleLinks.length - 1

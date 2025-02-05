@@ -24,15 +24,14 @@
       "isStarred": false,
       "tags": ["Merging"],
       "solutionMetadata": {
-        "kind": "autogen-label-from-site",
-        "site": "CF"
+        "kind": "internal"
       }
     },
     {
       "uniqueId": "usaco-696",
       "name": "Promotion Counting",
       "url": "http://www.usaco.org/index.php?page=viewproblem2&cpid=696",
-      "source": "Plat",
+      "source": "Platinum",
       "difficulty": "Normal",
       "isStarred": false,
       "tags": ["Merging", "Indexed Set"],
@@ -44,7 +43,7 @@
       "uniqueId": "usaco-842",
       "name": "Disruption",
       "url": "http://www.usaco.org/index.php?page=viewproblem2&cpid=842",
-      "source": "Plat",
+      "source": "Platinum",
       "difficulty": "Normal",
       "isStarred": false,
       "tags": ["Merging"],
@@ -56,14 +55,13 @@
     {
       "uniqueId": "poi-11-TreeRotations",
       "name": "2011 - Tree Rotations",
-      "url": "https://szkopul.edu.pl/problemset/problem/sUe3qzxBtasek-RAWmZaxY_p/site/?key=statement",
+      "url": "https://oj.uz/problem/view/POI11_rot",
       "source": "POI",
       "difficulty": "Normal",
       "isStarred": false,
       "tags": ["Merging", "Indexed Set"],
       "solutionMetadata": {
-        "kind": "link",
-        "url": "https://github.com/mostafa-saad/MyCompetitiveProgramming/blob/master/Olympiad/POI/official/2011/editorial/rot.pdf"
+        "kind": "internal"
       }
     },
     {

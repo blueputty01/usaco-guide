@@ -1,10 +1,9 @@
 import { CheckIcon, XIcon } from '@heroicons/react/solid';
 import * as React from 'react';
-import { useContext } from 'react';
-import UserDataContext from '../../context/UserDataContext/UserDataContext';
+import { useFirebaseUser } from '../../context/UserDataContext/UserDataContext';
 
 export default function Authentication() {
-  const { firebaseUser } = useContext(UserDataContext);
+  const firebaseUser = useFirebaseUser();
 
   let linkedWithGoogle = false;
   let linkedWithGithub = false;
@@ -99,7 +98,7 @@ export default function Authentication() {
                 </svg>
                 <div className="min-w-0 flex-1 text-sm">
                   <label className="font-medium text-gray-700 dark:text-gray-100">
-                    Github
+                    GitHub
                   </label>
                 </div>
                 <div className="ml-3 flex items-center h-5">

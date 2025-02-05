@@ -73,7 +73,7 @@ int main() {
 			int compliment = (MAX_VAL * 3) - (val[i] + val[j]);
 
 			if (compliment >= 0 && compliment < (2 * MAX_VAL)) {
-				ways[i][j] = frq[rem];
+				ways[i][j] = frq[compliment];
 			}
 			frq[val[j]]++;
 		}
@@ -84,8 +84,7 @@ int main() {
 	// essentially 2D prefix sum on ways
 	for (int i = n - 1; i >= 0; i--) {
 		for (int j = i + 1; j < n; j++) {
-			ways[i][j] +=
-			    (ways[i + 1][j] + ways[i][j - 1] - ways[i + 1][j - 1]);
+			ways[i][j] += (ways[i + 1][j] + ways[i][j - 1] - ways[i + 1][j - 1]);
 		}
 	}
 

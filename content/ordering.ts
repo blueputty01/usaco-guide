@@ -71,7 +71,7 @@ const MODULE_ORDERING: { [key in SectionID]: Chapter[] } = {
   bronze: [
     {
       name: 'Getting Started',
-      items: ['time-comp', 'intro-ds', 'simulation', 'rect-geo'],
+      items: ['time-comp', 'intro-ds', 'simulation'],
     },
     {
       name: 'Complete Search',
@@ -83,7 +83,7 @@ const MODULE_ORDERING: { [key in SectionID]: Chapter[] } = {
     },
     {
       name: 'Additional',
-      items: ['ad-hoc', 'intro-greedy', 'intro-graphs'],
+      items: ['ad-hoc', 'intro-greedy', 'intro-graphs', 'rect-geo'],
     },
     {
       name: 'Conclusion',
@@ -114,6 +114,10 @@ const MODULE_ORDERING: { [key in SectionID]: Chapter[] } = {
       items: ['graph-traversal', 'flood-fill', 'intro-tree', 'func-graphs'],
     },
     {
+      name: 'Additional Topics',
+      items: ['intro-bitwise'],
+    },
+    {
       name: 'Conclusion',
       description: 'Congratulations on making it this far!',
       items: ['silver-conclusion'],
@@ -135,6 +139,7 @@ const MODULE_ORDERING: { [key in SectionID]: Chapter[] } = {
         'lis',
         'dp-bitmasks',
         'dp-ranges',
+        'digit-dp',
       ],
     },
     {
@@ -160,12 +165,7 @@ const MODULE_ORDERING: { [key in SectionID]: Chapter[] } = {
     {
       name: 'Additional Topics',
       description: 'Rarely required.',
-      items: [
-        'string-hashing',
-        'hashmaps',
-        'meet-in-the-middle',
-        'intro-bitwise',
-      ],
+      items: ['hashing', 'hashmaps', 'meet-in-the-middle'],
     },
     {
       name: 'Conclusion',
@@ -196,7 +196,7 @@ const MODULE_ORDERING: { [key in SectionID]: Chapter[] } = {
     },
     {
       name: 'Misc. Topics',
-      items: ['matrix-expo', 'bitsets', 'DC-DP'],
+      items: ['PIE', 'matrix-expo', 'bitsets', 'DC-DP', 'dp-sos'],
     },
     {
       name: 'Conclusion',
@@ -234,7 +234,7 @@ const MODULE_ORDERING: { [key in SectionID]: Chapter[] } = {
     },
     {
       name: 'Dynamic Programming',
-      items: ['comb-sub', 'dp-more', 'dp-sos'],
+      items: ['comb-sub', 'dp-more'],
     },
     {
       name: 'Flows',
@@ -252,6 +252,7 @@ const MODULE_ORDERING: { [key in SectionID]: Chapter[] } = {
       name: 'Misc. Topics',
       items: [
         'extend-euclid',
+        'catalan',
         'xor-basis',
         'fracturing-search',
         'game-theory',
@@ -275,7 +276,7 @@ export const SECTION_LABELS: { [key in SectionID]: string } = {
   gold: 'Gold',
   plat: 'Platinum',
   adv: 'Advanced',
-};
+} as const;
 export const SECTION_SEO_DESCRIPTION: { [key in SectionID]: string } = {
   general:
     'General information for USACO and Competitive Programming. Includes resources to pick a language, set up an IDE, practice tips, and more!',
@@ -283,7 +284,7 @@ export const SECTION_SEO_DESCRIPTION: { [key in SectionID]: string } = {
     'Topics for USACO Bronze include time complexity, data structures, sorting, simulation, complete search, ad hoc, greedy, graphs, rectangle geometry, sets and maps, and recursion.',
   silver:
     'Topics for USACO Silver include binary search on the answer, prefix sums, two pointers, dfs, floodfill, trees, custom comparators, greedy with sorting, and more!',
-  gold: 'Topics for USACO Gold include dynamic programming, union-find, shortest paths, point update range sum, topological sort, minimum spanning trees, euler tour, string hashing, and more!',
+  gold: 'Topics for USACO Gold include dynamic programming, union-find, shortest paths, point update range sum, topological sort, minimum spanning trees, euler tour, hashing, and more!',
   plat: 'Topics for USACO Platinum include segment trees, advanced tree techniques, advanced dynamic programming, computational geometry, matrix exponentiation, and more!',
   adv: 'Topics usually outside the scope of most USACO contests include segment tree beats, treaps, slope trick, strongly connected components, max-flow, suffix arrays, fast fourier transform, and more!',
 };
@@ -306,8 +307,7 @@ SECTIONS.forEach(section => {
   });
 });
 
-export { moduleIDToSectionMap };
-export { moduleIDToURLMap };
+export { moduleIDToSectionMap, moduleIDToURLMap };
 
 const moduleIDToURLMap: { [key: string]: string } = {};
 

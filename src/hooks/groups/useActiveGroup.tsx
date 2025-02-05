@@ -9,15 +9,18 @@ import {
   where,
 } from 'firebase/firestore';
 import * as React from 'react';
-import { ReactNode, useContext } from 'react';
+import { ReactNode } from 'react';
 import toast from 'react-hot-toast';
-import UserDataContext from '../../context/UserDataContext/UserDataContext';
+import {
+  useFirebaseUser,
+  useIsUserDataLoaded,
+} from '../../context/UserDataContext/UserDataContext';
 import { GroupData, isUserAdminOfGroup } from '../../models/groups/groups';
 import { PostData } from '../../models/groups/posts';
 import { useFirebaseApp } from '../useFirebase';
 
 const ActiveGroupContext = React.createContext<{
-  activeGroupId?: string;
+  activeGroupId: string;
   setActiveGroupId: React.Dispatch<React.SetStateAction<string | undefined>>;
   groupData?: GroupData;
   posts: PostData[];
@@ -29,13 +32,14 @@ const ActiveGroupContext = React.createContext<{
    * (ie if parent wants to view child's progress, or if owner views member's progress)
    * it could be different
    */
-  activeUserId: string;
+  activeUserId: string | undefined;
   setActiveUserId: (id?: string) => void;
 } | null>(null);
 
 export function ActiveGroupProvider({ children }: { children: ReactNode }) {
-  const { firebaseUser, isLoaded: isUserLoaded } = useContext(UserDataContext);
-  const [activeGroupId, setActiveGroupId] = React.useState<string>();
+  const firebaseUser = useFirebaseUser();
+  const isUserLoaded = useIsUserDataLoaded();
+  const [activeGroupId, setActiveGroupId] = React.useState<string>('');
   const [posts, setPosts] = React.useState<PostData[]>([]);
   const [inStudentView, setInStudentView] = React.useState(false);
   const [activeUserId, setActiveUserId] = React.useState<string>();
@@ -74,7 +78,7 @@ export function ActiveGroupProvider({ children }: { children: ReactNode }) {
         ),
         snap => {
           loadedPosts = true;
-          setPosts(snap.docs.map(doc => ({ id: doc.id, ...doc.data() })));
+          setPosts(snap.docs.map(doc => ({ ...doc.data(), id: doc.id })));
           if (loadedGroup && loadedPosts) setIsLoading(false);
         },
         error => {

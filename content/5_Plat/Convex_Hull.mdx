@@ -1,7 +1,7 @@
 ---
 id: convex-hull
 title: 'Convex Hull'
-author: Benjamin Qi, Neo Wang, Chuyang Wang
+author: Benjamin Qi, Neo Wang, Chuyang Wang, Mihnea Brebenel
 description: Smallest convex polygon containing a set of points on a grid.
 prerequisites:
   - geo-pri
@@ -47,7 +47,7 @@ lines. The set of points that touch the rope is the convex hull.
 	/>
 </Resources>
 
-<Youtube id="9rQMLpQn5xQ" />
+<YouTube id="9rQMLpQn5xQ" />
 
 ### Solution
 
@@ -55,7 +55,7 @@ lines. The set of points that touch the rope is the convex hull.
 	<Resource
 		source="Benq"
 		title="Graham Scan Implementation"
-		url="https://github.com/bqi343/USACO/blob/master/Implementations/content/geometry%20(13)/Polygons/ConvexHull2.h"
+		url="https://github.com/bqi343/USACO/blob/master/Implementations/content/geometry%20(13)/Polygons/ConvexHullGraham.h"
 	/>
 </Resources>
 
@@ -184,10 +184,8 @@ T norm(const P &p) { return sq(p.f) + sq(p.s); }  // x^2 + y^2
 // basic operations
 P operator-(const P &l, const P &r) { return P(l.f - r.f, l.s - r.s); }
 
-T cross(const P &a, const P &b) {
-	return a.f * b.s - a.s * b.f;
-}  // cross product
-T cross(const P &p, const P &a, const P &b) {  // cross product
+T cross(const P &a, const P &b) { return a.f * b.s - a.s * b.f; }  // cross product
+T cross(const P &p, const P &a, const P &b) {                      // cross product
 	return cross(a - p, b - p);
 }
 
@@ -280,6 +278,10 @@ At the end, we have got all points of the convex hull in the counterclockwise or
 
 This algorithm takes $\mathcal{O}(n \log n)$ time to sort the points and $\mathcal{O}(n)$ time to calculate the hull, giving a final time complexity of $\mathcal{O}(n \log n)$.
 
+An animation of  how it works:
+<video width="960" height="720" controls>
+	<source src="/animations/convex_hull.mp4" type="video/mp4"/>
+</video>
 
 <Spoiler title="Worked Example">
 
@@ -400,8 +402,7 @@ import java.util.*;
 
 public class ConvexHull {
 	public static void main(String[] args) throws IOException {
-		BufferedReader in =
-		    new BufferedReader(new InputStreamReader(System.in));
+		BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
 
 		int N = Integer.parseInt(in.readLine());
 		while (N > 0) {
@@ -417,9 +418,7 @@ public class ConvexHull {
 			var hull = monotoneChain(points);
 
 			System.out.println(hull.size());
-			for (V2 p : hull) {
-				System.out.println(String.format("%d %d", p.X, p.Y));
-			}
+			for (V2 p : hull) { System.out.println(String.format("%d %d", p.X, p.Y)); }
 
 			N = Integer.parseInt(in.readLine());
 		}
@@ -444,9 +443,8 @@ public class ConvexHull {
 			 * point, i.e. it forms a right turn, then we can remove the last
 			 * point until there are only left turns
 			 */
-			while (hull.size() > 1 &&
-			       sign(hull.get(hull.size() - 2), hull.get(hull.size() - 1),
-			            P[i]) <= 0)
+			while (hull.size() > 1 && sign(hull.get(hull.size() - 2),
+			                               hull.get(hull.size() - 1), P[i]) <= 0)
 				hull.remove(hull.size() - 1);
 			hull.add(P[i]);
 		}
@@ -454,9 +452,8 @@ public class ConvexHull {
 		// upper hull
 		int k = hull.size();
 		for (int i = P.length - 2; i >= 0; i--) {
-			while (hull.size() > k &&
-			       sign(hull.get(hull.size() - 2), hull.get(hull.size() - 1),
-			            P[i]) <= 0) {
+			while (hull.size() > k && sign(hull.get(hull.size() - 2),
+			                               hull.get(hull.size() - 1), P[i]) <= 0) {
 				hull.remove(hull.size() - 1);
 			}
 			hull.add(P[i]);
@@ -479,9 +476,7 @@ public class ConvexHull {
 	}
 
 	// cross product trick, the signed area of these there points
-	private static int area(V2 O, V2 P, V2 Q) {
-		return P.minus(O).cross(Q.minus(O));
-	}
+	private static int area(V2 O, V2 P, V2 Q) { return P.minus(O).cross(Q.minus(O)); }
 
 	private static class V2 implements Comparable<V2> {
 		public int X;
@@ -537,6 +532,11 @@ public class ConvexHull {
 		source="CF"
 		title="Rotating calipers technique and applications"
 		url="46162"
+	/>
+	<Resource
+		source="CF"
+		title="Rotating calipers - alternate explanation"
+		url="133763"
 	/>
 </Resources>
 

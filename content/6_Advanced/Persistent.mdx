@@ -8,6 +8,9 @@ prerequisites:
 frequency: 1
 ---
 
+## Overview
+A persistent data structure is a data structure that preserves the previous versions of itself when modified, allowing access to any historical version. In other words, once a change is made to the structure, both the original and modified versions remain accessible. This is particularly useful in scenarios where you need to keep track of the history of updates or backtrack to previous states of the data structure.
+
 ## Persistent Array
 
 Persistent arrays are one of the simplest persistent data structures. A
@@ -28,8 +31,8 @@ vector<pair<int, int>> arr[100001];  // The persistent array
 
 int get_item(int index, int time) {
 	// Gets the array item at a given index and time
-	auto ub = upper_bound(arr[index].begin(), arr[index].end(),
-	                      make_pair(time, INT_MAX));
+	auto ub =
+	    upper_bound(arr[index].begin(), arr[index].end(), make_pair(time, INT_MAX));
 	return prev(ub)->second;
 }
 
@@ -95,8 +98,7 @@ Node *build(int l = 0, int r = n - 1) {
 Node *update(Node *node, int val, int pos, int l = 0, int r = n - 1) {
 	if (l == r) return new Node(val);
 	int mid = (l + r) / 2;
-	if (pos > mid)
-		return new Node(node->l, update(node->r, val, pos, mid + 1, r));
+	if (pos > mid) return new Node(node->l, update(node->r, val, pos, mid + 1, r));
 	else return new Node(update(node->l, val, pos, l, mid), node->r);
 }
 
@@ -154,6 +156,18 @@ tree - just add range queries!
 		title="PSegs w/ SPOJ"
 	>
 		not great formatting
+	</Resource>
+	<Resource
+ 		source="cp-algo"
+ 		url="https://cp-algorithms.com/data_structures/segment_tree.html#preserving-the-history-of-its-values-persistent-segment-tree"
+ 		title="Persistent Segment Tree"
+ 	/>
+ 	<Resource
+ 		source="SecondThread"
+ 		url="https://youtu.be/m3uEG4NgJx8"
+ 		title="Persistent Data Structures"
+ 	>
+		good video on persistent data structures
 	</Resource>
 </Resources>
 
@@ -215,8 +229,7 @@ Node *build(int l = 1, int r = n) {
 Node *update(Node *node, int val, int pos, int l = 1, int r = n) {
 	if (l == r) return new Node(val);
 	int mid = (l + r) / 2;
-	if (pos > mid)
-		return new Node(node->l, update(node->r, val, pos, mid + 1, r));
+	if (pos > mid) return new Node(node->l, update(node->r, val, pos, mid + 1, r));
 	else return new Node(update(node->l, val, pos, l, mid), node->r);
 }
 

@@ -2,8 +2,7 @@
 
 // File taken from https://github.com/FormidableLabs/prism-react-renderer/issues/54
 
-import vsDark from 'prism-react-renderer/themes/vsDark';
-import vsLight from 'prism-react-renderer/themes/vsLight';
+import { themes } from 'prism-react-renderer';
 import * as React from 'react';
 import styled from 'styled-components';
 import { SpoilerContext } from '../Spoiler';
@@ -54,15 +53,14 @@ const CodeSnippetLineContent = styled(LineContent)`
   }
 `;
 
-const CopyButton = styled.button`
+const CopyButton = styled.button<{ isDarkMode: boolean; rightOffset: string }>`
   padding: 1.6px 8px 1.6px 8px;
-  color: ${(props: { isDarkMode: boolean }) =>
-    props.isDarkMode ? 'black' : 'white'};
-  background-color: ${(props: { isDarkMode: boolean }) =>
+  color: ${({ isDarkMode }) => (isDarkMode ? 'black' : 'white')};
+  background-color: ${props =>
     props.isDarkMode ? 'hsla(240, 20%, 88%, 1)' : 'hsla(60, 20%, 12%, 1)'};
   position: absolute;
   top: 0px;
-  right: calc(var(--right-offset) + var(--left-offset));
+  right: calc(${props => props.rightOffset} + var(--left-offset));
   z-index: 99;
   border-radius: 0px 0px 4px 4px;
   font-size: 12px;
@@ -70,7 +68,7 @@ const CopyButton = styled.button`
     'Liberation Mono', 'Courier New', monospace;
   /* copy from tailwind defaults */
   &:hover {
-    background-color: ${(props: { isDarkMode: boolean }) =>
+    background-color: ${props =>
       props.isDarkMode ? 'hsla(240, 20%, 75%, 1)' : 'hsla(60, 20%, 25%, 1)'};
   }
   /* -mx-4 sm:-mx-6 md:mx-0 */
@@ -131,7 +129,7 @@ const CodeSnipButton = ({
 class CodeBlock extends React.Component<
   {
     children: string;
-    className: string;
+    className: string | undefined;
     isDarkMode: boolean;
     copyButton?: boolean;
   },
@@ -140,7 +138,12 @@ class CodeBlock extends React.Component<
     codeSnipShow: boolean[];
   }
 > {
-  codeSnips = [];
+  codeSnips = [] as {
+    begin: number;
+    end: number;
+    value: string;
+    indentation: string;
+  }[];
   static contextType = SpoilerContext;
   // can't declare context because otherwise storybook / gatsby build will fail
   // and I can't figure out why
@@ -173,7 +176,7 @@ class CodeBlock extends React.Component<
     let prev = -1;
     let prevVal = '';
     let prevIndentation = '';
-    const codeSnipShowDefault = [];
+    const codeSnipShowDefault: boolean[] = [];
     const code = this.getCode();
     for (const line of code.split('\n')) {
       if (prev == -1) {
@@ -323,7 +326,7 @@ class CodeBlock extends React.Component<
 
     let language = className?.replace(/language-/, '');
     if (language == 'py') language = 'python';
-    if (!['cpp', 'java', 'python'].includes(language)) {
+    if (!['cpp', 'java', 'python'].includes(language ?? '')) {
       // no styling, just a regular pre tag
       return (
         <pre className="-mx-4 sm:-mx-6 md:mx-0 md:rounded bg-gray-100 p-4 mb-4 whitespace-pre-wrap break-all dark:bg-gray-900">
@@ -349,7 +352,7 @@ class CodeBlock extends React.Component<
     // }
 
     const collapsed = this.state.collapsed;
-    const rightOffset = String(language.length * 8 + 40) + 'px';
+    const rightOffset = String(language!.length * 8 + 40) + 'px';
     return (
       <RelativeDiv>
         {this.props.copyButton ? (
@@ -358,9 +361,7 @@ class CodeBlock extends React.Component<
             onClick={() => {
               navigator.clipboard.writeText(code);
             }}
-            style={{
-              '--right-offset': rightOffset,
-            }}
+            rightOffset={rightOffset}
             className="focus:outline-none"
             isDarkMode={isDarkMode}
           >
@@ -371,7 +372,7 @@ class CodeBlock extends React.Component<
           Prism={Prism as any}
           code={code}
           language={language}
-          theme={isDarkMode ? vsDark : vsLight}
+          theme={isDarkMode ? themes.vsDark : themes.vsLight}
         >
           {({ className, style, tokens, getLineProps, getTokenProps }) => (
             <div
@@ -427,7 +428,7 @@ class CodeBlock extends React.Component<
                                 ? 'linear-gradient(0deg, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 100%)'
                                 : 'linear-gradient(0deg, rgba(255,255,255,1) 0%, rgba(255,255,255,0) 100%)',
                             }
-                          : null
+                          : undefined
                       }
                     >
                       <svg

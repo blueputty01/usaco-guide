@@ -1,17 +1,19 @@
 import { Link } from 'gatsby';
 import * as React from 'react';
-import { useContext } from 'react';
 import styled, { css } from 'styled-components';
 import tw from 'twin.macro';
-import { LANGUAGE_LABELS } from '../../context/UserDataContext/properties/userLang';
-import UserDataContext from '../../context/UserDataContext/UserDataContext';
+import {
+  LANGUAGE_LABELS,
+  useUserLangSetting,
+} from '../../context/UserDataContext/properties/simpleProperties';
+import { useUserProgressOnModules } from '../../context/UserDataContext/properties/userProgress';
 import { ModuleLinkInfo } from '../../models/module';
 import { FrequencyLabels } from '../Frequency';
 import ModuleFrequencyDots from '../MarkdownLayout/ModuleFrequencyDots';
 import { LinkWithProgress as SidebarLinkWithProgress } from '../MarkdownLayout/SidebarNav/ItemLink';
 import Tooltip from '../Tooltip/Tooltip';
 
-const LinkWithProgress = styled(SidebarLinkWithProgress)`
+const LinkWithProgress = styled(SidebarLinkWithProgress)<{ small: boolean }>`
   &&::after {
     ${({ small }) => css`
       // prettier-ignore
@@ -52,7 +54,7 @@ const LinkWithProgress = styled(SidebarLinkWithProgress)`
   }
 `;
 
-const StyledLink = styled.div`
+const StyledLink = styled.div<{ showDot?: boolean }>`
   ${tw`focus:outline-none transition ease-in-out duration-150 text-gray-800 hover:text-blue-700 text-xl leading-6 py-3`}
 
   &::before {
@@ -104,19 +106,10 @@ const FrequencyTextColors = [
 ];
 
 // https://stackoverflow.com/questions/3177836/how-to-format-time-since-xxx-e-g-4-minutes-ago-similar-to-stack-exchange-site
-function time_ago(time) {
-  switch (typeof time) {
-    case 'number':
-      break;
-    case 'string':
-      time = +new Date(time);
-      break;
-    case 'object':
-      if (time.constructor === Date) time = time.getTime();
-      break;
-    default:
-      time = +new Date();
-  }
+function time_ago(time: unknown): string {
+  if (typeof time == 'string') time = +new Date(time);
+  else if (time instanceof Date) time = time.getTime();
+  else time = +new Date();
   const time_formats = [
     [60, 'seconds', 1], // 60
     [120, '1 minute ago', '1 minute from now'], // 60*2
@@ -133,8 +126,8 @@ function time_ago(time) {
     [2903040000, 'years', 29030400], // 60*60*24*7*4*12*100, 60*60*24*7*4*12
     [5806080000, 'Last century', 'Next century'], // 60*60*24*7*4*12*100*2
     [58060800000, 'centuries', 2903040000], // 60*60*24*7*4*12*100*20, 60*60*24*7*4*12*100
-  ];
-  let seconds = (+new Date() - time) / 1000,
+  ] as [number, string, string | number][];
+  let seconds = (+new Date() - (time as number)) / 1000,
     token = 'ago',
     list_choice = 1;
 
@@ -153,22 +146,22 @@ function time_ago(time) {
     format;
   while ((format = time_formats[i++])) {
     if (seconds < format[0]) {
-      if (typeof format[2] == 'string') return format[list_choice];
+      if (typeof format[2] == 'string') return format[list_choice] as string;
       else {
         return Math.floor(seconds / format[2]) + ' ' + format[1] + ' ' + token;
       }
     }
   }
-  return time;
+  return time as string;
 }
 
-function timeAgoString(time): string {
+function timeAgoString(time: unknown): string {
   const res = time_ago(time);
   return res && `Updated: ${res}`;
 }
 
 const ModuleLink = ({ link }: { link: ModuleLinkInfo }): JSX.Element => {
-  const { userProgressOnModules } = useContext(UserDataContext);
+  const userProgressOnModules = useUserProgressOnModules();
   const progress = userProgressOnModules[link.id] || 'Not Started';
 
   let lineColorStyle = tw`bg-gray-200`;
@@ -202,15 +195,15 @@ const ModuleLink = ({ link }: { link: ModuleLinkInfo }): JSX.Element => {
     darkLineColorStyle = tw`bg-gray-800`;
     darkDotColorStyle = tw`bg-gray-800`;
   }
-  const { lang: userLang } = useContext(UserDataContext);
-  const maxLangOc = Math.max(link.cppOc, link.javaOc, link.pyOc);
+  const userLang = useUserLangSetting();
+  const maxLangOc = Math.max(link.cppOc ?? 0, link.javaOc ?? 0, link.pyOc ?? 0);
   const langToOc = {
     cpp: link.cppOc,
     java: link.javaOc,
     py: link.pyOc,
     showAll: maxLangOc,
   };
-  const isMissingLang = langToOc[userLang] < maxLangOc;
+  const isMissingLang = (langToOc[userLang] ?? 0) < maxLangOc;
   return (
     <LinkWithProgress
       lineColorStyle={lineColorStyle}
@@ -260,16 +253,16 @@ const ModuleLink = ({ link }: { link: ModuleLinkInfo }): JSX.Element => {
                 totalCount={4}
                 color={
                   'transition text-gray-400 ' +
-                  FrequencyCircleColors[link.frequency]
+                  FrequencyCircleColors[link.frequency ?? 0]
                 }
               />
               <span
                 className={
                   `ml-1 transition text-gray-500 ` +
-                  FrequencyTextColors[link.frequency]
+                  FrequencyTextColors[link.frequency ?? 0]
                 }
               >
-                {FrequencyLabels[link.frequency]}
+                {FrequencyLabels[link.frequency ?? 0]}
               </span>
             </p>
           )}

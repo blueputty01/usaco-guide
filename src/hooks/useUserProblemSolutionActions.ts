@@ -9,14 +9,13 @@ import {
   Timestamp,
   updateDoc,
 } from 'firebase/firestore';
-import { useContext } from 'react';
-import UserDataContext from '../context/UserDataContext/UserDataContext';
+import { useFirebaseUser } from '../context/UserDataContext/UserDataContext';
 import { UserSolutionForProblem } from '../models/userSolutionForProblem';
 import { useFirebaseApp } from './useFirebase';
 
 export default function useUserProblemSolutionActions() {
   const firebaseApp = useFirebaseApp();
-  const { firebaseUser } = useContext(UserDataContext);
+  const firebaseUser = useFirebaseUser();
 
   return {
     submitSolution: async (
@@ -29,8 +28,8 @@ export default function useUserProblemSolutionActions() {
         collection(getFirestore(firebaseApp), 'userProblemSolutions'),
         {
           ...solution,
-          userID: firebaseUser.uid,
-          userName: firebaseUser.displayName,
+          userID: firebaseUser?.uid,
+          userName: firebaseUser?.displayName,
           upvotes: [],
           timestamp: Timestamp.now(),
         }
@@ -54,7 +53,7 @@ export default function useUserProblemSolutionActions() {
       await updateDoc(
         doc(getFirestore(firebaseApp), 'userProblemSolutions', solutionID),
         {
-          upvotes: arrayUnion(firebaseUser.uid),
+          upvotes: arrayUnion(firebaseUser?.uid),
         }
       );
     },
@@ -62,7 +61,7 @@ export default function useUserProblemSolutionActions() {
       await updateDoc(
         doc(getFirestore(firebaseApp), 'userProblemSolutions', solutionID),
         {
-          upvotes: arrayRemove(firebaseUser.uid),
+          upvotes: arrayRemove(firebaseUser?.uid),
         }
       );
     },

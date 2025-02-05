@@ -4,26 +4,25 @@ import classNames from 'classnames';
 import { Link } from 'gatsby';
 import * as React from 'react';
 import { Fragment, useContext } from 'react';
-// import { SolutionInfo } from '../../models/solution';
 import {
+  SECTION_LABELS,
   moduleIDToSectionMap,
   moduleIDToURLMap,
-  SECTION_LABELS,
 } from '../../../../content/ordering';
-import MarkdownLayoutContext from '../../../context/MarkdownLayoutContext';
+import { useMarkdownLayout } from '../../../context/MarkdownLayoutContext';
 import { useMarkdownProblems } from '../../../context/MarkdownProblemListsContext';
 import { ProblemSolutionContext } from '../../../context/ProblemSolutionContext';
 import {
-  Language,
   LANGUAGE_LABELS,
-} from '../../../context/UserDataContext/properties/userLang';
-import UserDataContext from '../../../context/UserDataContext/UserDataContext';
+  useSetUserLangSetting,
+  useUserLangSetting,
+} from '../../../context/UserDataContext/properties/simpleProperties';
 import { ModuleInfo, ModuleLinkInfo } from '../../../models/module';
-import { getProblemsProgressInfo } from '../../../utils/getProgressInfo';
+import { useProblemsProgressInfo } from '../../../utils/getProgressInfo';
 import { DashboardProgressSmall } from '../../Dashboard/DashboardProgress';
 import { Frequency } from '../../Frequency';
 import MarkCompleteButton from '../MarkCompleteButton';
-import getSuffix from '../TableOfContents/getSuffix';
+import useSuffix from '../TableOfContents/useSuffix';
 
 export default function ModuleHeaders({
   moduleLinks,
@@ -34,23 +33,28 @@ export default function ModuleHeaders({
     markdownLayoutInfo: markdownData,
     moduleProgress,
     handleCompletionChange,
-  } = useContext(MarkdownLayoutContext);
+  } = useMarkdownLayout();
 
-  const { lang, setLang } = useContext(UserDataContext);
-
+  const lang = useUserLangSetting();
+  const setLang = useSetUserLangSetting();
+  let problemIDs = [] as string[];
   // this is for modules
-  const problemIDs =
-    markdownData instanceof ModuleInfo
-      ? useMarkdownProblems().map(problem => problem.uniqueId)
-      : [];
-  const problemsProgressInfo = getProblemsProgressInfo(problemIDs);
+  try {
+    const markdownProblems = useMarkdownProblems();
+    if (markdownData instanceof ModuleInfo) {
+      problemIDs = markdownProblems.map(problem => problem.uniqueId);
+    }
+  } catch (e) {
+    console.log(e);
+  }
+  const problemsProgressInfo = useProblemsProgressInfo(problemIDs);
 
   // this is for solutions
   const problemSolutionContext = useContext(ProblemSolutionContext);
   const problem = problemSolutionContext?.problem;
 
   // either prerequisites for modules or appears in for problems
-  let moduleHeaderLinks: { label: string; url?: string }[] = null;
+  let moduleHeaderLinks: { label: string; url?: string }[];
   if (markdownData instanceof ModuleInfo) {
     moduleHeaderLinks = (markdownData.prerequisites || []).map(prereq => {
       const moduleLink = moduleLinks.find(x => x.id === prereq);
@@ -79,7 +83,7 @@ export default function ModuleHeaders({
         label: `${SECTION_LABELS[moduleIDToSectionMap[module.id]]} - ${
           module.title
         }`,
-        url: `${moduleIDToURLMap[module.id]}#problem-${problem.uniqueId}`,
+        url: `${moduleIDToURLMap[module.id]}#problem-${problem!.uniqueId}`,
       };
     });
   }
@@ -179,7 +183,7 @@ export default function ModuleHeaders({
                     className="origin-top-left absolute z-10 left-0 mt-2 w-56 rounded-md shadow-lg bg-white dark:bg-gray-800 ring-1 ring-black ring-opacity-5 focus:outline-none"
                   >
                     <div className="py-1">
-                      {['cpp', 'java', 'py'].map((lang: Language) => (
+                      {(['cpp', 'java', 'py'] as const).map(lang => (
                         <Menu.Item key={lang}>
                           {({ active }) => (
                             <button
@@ -204,7 +208,7 @@ export default function ModuleHeaders({
           </Menu>
 
           <Link
-            to={`/editor?filepath=${getSuffix()}`}
+            to={`/editor?filepath=${useSuffix()}`}
             className="text-sm font-medium text-gray-600 hover:text-gray-900 my-0 dark:text-gray-400 dark:hover:text-gray-100 group inline-flex items-center space-x-1.5"
           >
             <span>Edit This Page</span>

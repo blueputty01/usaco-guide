@@ -2,10 +2,20 @@
 id: usaco-664
 source: USACO Bronze 2016 December
 title: Block Game
-author: Óscar Garries, Franek Antoniak, Dong Liu
+author: Óscar Garries, Franek Antoniak, Dong Liu, David Guo
 ---
 
 [Official Analysis (Java)](http://www.usaco.org/current/data/sol_blocks_bronze_dec16.html)
+
+## Explanation
+
+We use a frequency array to keep track of the minimum number of blocks needed for each letter.
+For each pair of words, we count the occurrences of each letter in both words.
+
+Since we can only see one side of the block at a time,
+we take the larger of the two frequencies for each letter and add it to the total count.
+Finally, after processing all pairs, we output the frequency array,
+which represents the total number of blocks needed for each letter.
 
 ## Implementation
 
@@ -46,9 +56,7 @@ int main() {
 	for (const auto &[w1, w2] : words) {
 		vector<int> freq1 = count_freq(w1);
 		vector<int> freq2 = count_freq(w2);
-		for (int c = 0; c < 26; c++) {
-			max_blocks[c] += std::max(freq1[c], freq2[c]);
-		}
+		for (int c = 0; c < 26; c++) { max_blocks[c] += std::max(freq1[c], freq2[c]); }
 	}
 
 	std::ofstream written("blocks.out");
@@ -68,9 +76,7 @@ public class Blocks {
 		Kattio io = new Kattio("blocks");
 		int n = io.nextInt();
 		String[][] words = new String[n][];
-		for (int i = 0; i < n; i++) {
-			words[i] = new String[] {io.next(), io.next()};
-		}
+		for (int i = 0; i < n; i++) { words[i] = new String[] {io.next(), io.next()}; }
 
 		int[] maxBlocks = new int[26];
 		for (String[] w : words) {

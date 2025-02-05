@@ -28,6 +28,19 @@
       }
     },
     {
+      "uniqueId": "cf-547B",
+      "name": "Mike and Feet",
+      "url": "https://codeforces.com/contest/547/problem/B",
+      "source": "CF",
+      "difficulty": "Normal",
+      "isStarred": true,
+      "tags": ["Stack"],
+      "solutionMetadata": {
+        "kind": "autogen-label-from-site",
+        "site": "CF"
+      }
+    },
+    {
       "uniqueId": "ceoi-11-bal",
       "name": "2011 - Balloons",
       "url": "https://oj.uz/problem/view/CEOI11_bal",
@@ -35,6 +48,18 @@
       "difficulty": "Normal",
       "isStarred": false,
       "tags": ["Stack", "Geometry"],
+      "solutionMetadata": {
+        "kind": "internal"
+      }
+    },
+    {
+      "uniqueId": "baltic-12-mobile",
+      "name": "2012 - Mobile",
+      "url": "https://oj.uz/problem/view/BOI12_mobile",
+      "source": "Baltic OI",
+      "difficulty": "Normal",
+      "isStarred": false,
+      "tags": ["Binary Search", "Stack"],
       "solutionMetadata": {
         "kind": "internal"
       }
@@ -121,13 +146,27 @@
       "isStarred": false,
       "tags": ["Stack", "PURS"],
       "solutionMetadata": {
-        "kind": "internal"
+        "kind": "internal",
+        "hasHints": true
+      }
+    },
+    {
+      "uniqueId": "cf-1483C",
+      "name": "Skyline Photo",
+      "url": "https://codeforces.com/contest/1483/problem/C",
+      "source": "CF",
+      "difficulty": "Hard",
+      "isStarred": true,
+      "tags": ["Stack", "PURS", "DP"],
+      "solutionMetadata": {
+        "kind": "autogen-label-from-site",
+        "site": "CF"
       }
     },
     {
       "uniqueId": "ioi-04-empodia",
       "name": "2004 - Empodia",
-      "url": "https://contest.yandex.com/ioi/contest/560/problems/D/",
+      "url": "https://dmoj.ca/problem/ioi04p6",
       "source": "IOI",
       "difficulty": "Very Hard",
       "isStarred": false,
@@ -137,15 +176,15 @@
       }
     },
     {
-      "uniqueId": "infoarena-ssdj",
+      "uniqueId": "kilonova-ssdj",
       "name": "ssdj",
-      "url": "https://infoarena.ro/problema/ssdj",
-      "source": "InfoArena",
+      "url": "https://kilonova.ro/problems/1976",
+      "source": "Kilonova",
       "difficulty": "Very Hard",
       "isStarred": false,
       "tags": ["Stack"],
       "solutionMetadata": {
-        "kind": "none"
+        "kind": "internal"
       }
     },
     {
@@ -157,7 +196,7 @@
       "isStarred": false,
       "tags": ["Stack"],
       "solutionMetadata": {
-        "kind": "none"
+        "kind": "internal"
       }
     },
     {

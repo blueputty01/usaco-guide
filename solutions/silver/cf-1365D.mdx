@@ -5,7 +5,7 @@ title: Solve the Maze
 author: Daniel Suh, Brad Ma, George Pong
 ---
 
-[Official Analysis](https://codeforces.com/blog/entry/78504)
+[Official Analysis (C++)](https://codeforces.com/blog/entry/78504)
 
 ## Explanation
 
@@ -72,8 +72,7 @@ void solve() {
 					int newRow = i + rowMovement[x];
 					int newColumn = j + columnMovement[x];
 					// check if it is in the boundaries
-					if (newRow >= 0 && newRow < N && newColumn >= 0 &&
-					    newColumn < M) {
+					if (newRow >= 0 && newRow < N && newColumn >= 0 && newColumn < M) {
 						if (grid[newRow][newColumn] == 'G') {
 							cout << "No\n";
 							return;

@@ -1,22 +1,28 @@
 import { graphql, useStaticQuery } from 'gatsby';
-import React, { useContext, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { moduleIDToURLMap } from '../../../../../content/ordering';
-import UserDataContext from '../../../../context/UserDataContext/UserDataContext';
-import { ProblemSolutionInfo } from '../../../../models/problem';
+import {
+  useDivisionTableQuery,
+  useSetDivisionTableQuery,
+} from '../../../../context/UserDataContext/properties/simpleProperties';
+import {
+  ProblemDifficulty,
+  ProblemSolutionInfo,
+} from '../../../../models/problem';
 import Transition from '../../../Transition';
 import { ProblemsList } from '../ProblemsList';
-import contestToPoints from './contest_to_points.json';
 import { DivisionProblemInfo } from './DivisionProblemInfo';
+import contestToPoints from './contest_to_points.json';
 import divToProbs from './div_to_probs.json';
 import idToSol from './id_to_sol.json';
 
 const startYear = 2016;
-const endYear = 2023; // manually increment this for a new season
+const endYear = 2024; // manually increment this for a new season
 const allYears = `All (${startYear - 1} - ${endYear})`;
 const divisions = ['Bronze', 'Silver', 'Gold', 'Platinum'];
 
 const getSeasons = () => {
-  const res = [];
+  const res: string[] = [];
   for (let i = startYear; i <= endYear; ++i) {
     res.push(`${i - 1} - ${i}`);
   }
@@ -61,10 +67,10 @@ const DivisionButton = ({
     setShow(false);
     onChange(option);
   };
-  const ref = React.useRef<HTMLDivElement>();
+  const ref = React.useRef<HTMLDivElement>(null);
   React.useEffect(() => {
     const handleClick = e => {
-      if (ref.current.contains(e.target)) return;
+      if (ref.current?.contains(e.target)) return;
       setShow(false);
     };
     document.addEventListener('mousedown', handleClick);
@@ -123,7 +129,7 @@ const DivisionButton = ({
               : 'origin-top-right'
           } right-0 absolute z-10 mt-2 rounded-md shadow-lg`} // w-36
         >
-          <div className="rounded-md bg-white shadow-xs">
+          <div className="rounded-md bg-white dark:bg-gray-900 shadow-xs">
             <div
               className="py-1"
               role="menu"
@@ -134,7 +140,7 @@ const DivisionButton = ({
                 <button
                   key={option}
                   onClick={() => handleSelect(option)}
-                  className="flex items-center w-full text-left px-3 py-2 text-sm leading-5 text-gray-700 hover:bg-gray-100 hover:text-gray-900 focus:outline-none focus:bg-gray-100 focus:text-gray-900"
+                  className="flex items-center w-full text-left px-3 py-2 text-sm leading-5 text-gray-700 dark:text-dark-high-emphasis hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-gray-900 dark:hover:text-dark-high-emphasis focus:outline-none focus:bg-gray-100 focus:text-gray-900"
                   role="menuitem"
                 >
                   {getCircle(option)}
@@ -152,28 +158,27 @@ const DivisionButton = ({
 };
 
 export function DivisionList(props): JSX.Element {
-  const data = useStaticQuery(graphql`
-    query {
+  const data: Queries.DivisionListQuery = useStaticQuery(graphql`
+    query DivisionList {
       allProblemInfo(
-        filter: { source: { in: ["Bronze", "Silver", "Gold", "Plat"] } }
+        filter: { source: { in: ["Bronze", "Silver", "Gold", "Platinum"] } }
       ) {
-        edges {
-          node {
-            solution {
-              kind
-              label
-              labelTooltip
-              sketch
-              url
-            }
-            uniqueId
+        nodes {
+          solution {
+            kind
+            label
+            labelTooltip
+            sketch
             url
-            tags
-            difficulty
-            module {
-              frontmatter {
-                id
-              }
+            hasHints
+          }
+          uniqueId
+          url
+          tags
+          difficulty
+          module {
+            frontmatter {
+              id
             }
           }
         }
@@ -183,21 +188,21 @@ export function DivisionList(props): JSX.Element {
   const probToLink: { [key: string]: string } = {};
   const probToURL: { [key: string]: string } = {};
   const probToTags: { [key: string]: string[] } = {};
-  const probToDifficulty: { [key: string]: string[] } = {};
+  const probToDifficulty: { [key: string]: ProblemDifficulty } = {};
   const probToSol: { [key: string]: ProblemSolutionInfo } = {};
-  for (const edge of data.allProblemInfo.edges) {
-    const problem = edge.node;
+  for (const node of data.allProblemInfo.nodes) {
+    const problem = node;
     const uniqueId = problem.uniqueId;
     probToLink[uniqueId] =
-      problem.module &&
+      problem.module! &&
       `${moduleIDToURLMap[problem.module.frontmatter.id]}/#problem-${uniqueId}`;
     probToURL[uniqueId] = problem.url;
     const prevTags = probToTags[uniqueId] || [];
     const allTags = prevTags.concat(problem.tags);
     probToTags[uniqueId] = [...new Set(allTags)];
-    probToDifficulty[uniqueId] = problem.difficulty;
+    probToDifficulty[uniqueId] = problem.difficulty as ProblemDifficulty;
     // https://stackoverflow.com/questions/9229645/remove-duplicate-values-from-js-array
-    probToSol[uniqueId] = problem.solution;
+    probToSol[uniqueId] = problem.solution as ProblemSolutionInfo;
   }
   const divisionToSeasonToProbs: {
     [key: string]: { [key: string]: DivisionProblemInfo[] };
@@ -224,9 +229,9 @@ export function DivisionList(props): JSX.Element {
   for (const division of divisions) {
     for (const probInfo of divToProbs[division]) {
       const contest = probInfo[1];
-      let fraction = null;
+      let fraction = 0;
       if (contest in contestToFraction[division]) {
-        fraction = contestToFraction[division][contest].shift();
+        fraction = contestToFraction[division][contest].shift()!;
       }
       const id = `usaco-${probInfo[0]}`;
       const prob: DivisionProblemInfo = {
@@ -240,7 +245,7 @@ export function DivisionList(props): JSX.Element {
         moduleLink: probToLink[id],
         percentageSolved: fraction,
         tags: probToTags[id],
-        difficulty: probToDifficulty[id] as any,
+        difficulty: probToDifficulty[id],
         url:
           probToURL[id] ||
           'http://www.usaco.org/index.php?page=viewproblem2&cpid=' +
@@ -262,19 +267,18 @@ export function DivisionList(props): JSX.Element {
       divisionToSeasonToProbs[division][allYears].push(prob);
     }
   }
-  const userSettings = useContext(UserDataContext);
+
+  const divisionTableQuery = useDivisionTableQuery();
+  const setDivisionTableQuery = useSetDivisionTableQuery();
 
   const [divisionHash, setDivisionHash] = React.useState('');
   const [seasonHash, setSeasonHash] = React.useState('');
   let curDivision =
-    divisionHash ||
-    (userSettings.divisionTableQuery &&
-      userSettings.divisionTableQuery.division);
+    divisionHash || (divisionTableQuery && divisionTableQuery.division);
   if (!divisions.includes(curDivision)) curDivision = divisions[0];
 
   let curSeason =
-    seasonHash ||
-    (userSettings.divisionTableQuery && userSettings.divisionTableQuery.season);
+    seasonHash || (divisionTableQuery && divisionTableQuery.season);
   if (!seasons.includes(curSeason)) curSeason = seasons[seasons.length - 1];
 
   useEffect(() => {
@@ -319,7 +323,7 @@ export function DivisionList(props): JSX.Element {
             if (curDivision === newDivision) return;
             setDivisionHash('');
             setSeasonHash('');
-            userSettings.setDivisionTableQuery({
+            setDivisionTableQuery({
               division: newDivision,
               season: curSeason,
             });
@@ -332,7 +336,7 @@ export function DivisionList(props): JSX.Element {
             if (curSeason === newSeason) return;
             setDivisionHash('');
             setSeasonHash('');
-            userSettings.setDivisionTableQuery({
+            setDivisionTableQuery({
               division: curDivision,
               season: newSeason,
             });

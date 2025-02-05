@@ -89,7 +89,7 @@
       "source": "POI",
       "difficulty": "Normal",
       "isStarred": false,
-      "tags": [],
+      "tags": ["Binary Jumping", "Sliding Window"],
       "solutionMetadata": {
         "kind": "internal"
       }
@@ -103,8 +103,8 @@
       "isStarred": false,
       "tags": [],
       "solutionMetadata": {
-        "kind": "autogen-label-from-site",
-        "site": "CF"
+        "kind": "internal",
+        "hasHints": true
       }
     },
     {
@@ -136,7 +136,7 @@
       "uniqueId": "usaco-648",
       "name": "262144",
       "url": "http://www.usaco.org/index.php?page=viewproblem2&cpid=648",
-      "source": "Plat",
+      "source": "Platinum",
       "difficulty": "Hard",
       "isStarred": false,
       "tags": ["Binary Jumping"],
@@ -163,7 +163,7 @@
       "uniqueId": "usaco-576",
       "name": "Max Flow",
       "url": "http://www.usaco.org/index.php?page=viewproblem2&cpid=576",
-      "source": "Plat",
+      "source": "Platinum",
       "difficulty": "Easy",
       "isStarred": false,
       "tags": ["LCA"],
@@ -175,7 +175,7 @@
       "uniqueId": "usaco-842",
       "name": "Disruption",
       "url": "http://www.usaco.org/index.php?page=viewproblem2&cpid=842",
-      "source": "Plat",
+      "source": "Platinum",
       "difficulty": "Normal",
       "isStarred": false,
       "tags": ["LCA"],
@@ -201,7 +201,7 @@
       "uniqueId": "usaco-948",
       "name": "Tree Boxes",
       "url": "http://www.usaco.org/index.php?page=viewproblem2&cpid=948",
-      "source": "Plat",
+      "source": "Platinum",
       "difficulty": "Hard",
       "isStarred": false,
       "tags": ["LCA"],
@@ -214,20 +214,20 @@
       "uniqueId": "usaco-817",
       "name": "New Barns",
       "url": "http://www.usaco.org/index.php?page=viewproblem2&cpid=817",
-      "source": "Plat",
+      "source": "Platinum",
       "difficulty": "Hard",
       "isStarred": false,
       "tags": ["Diameter"],
       "solutionMetadata": {
-        "kind": "USACO",
-        "usacoId": "817"
+        "kind": "internal",
+        "hasHints": true
       }
     },
     {
       "uniqueId": "usaco-866",
       "name": "Gathering",
       "url": "http://www.usaco.org/index.php?page=viewproblem2&cpid=866",
-      "source": "Plat",
+      "source": "Platinum",
       "difficulty": "Hard",
       "isStarred": false,
       "tags": ["LCA"],
@@ -238,9 +238,9 @@
     },
     {
       "uniqueId": "usaco-901",
-      "name": "Exercise",
+      "name": "Exercise Route",
       "url": "http://www.usaco.org/index.php?page=viewproblem2&cpid=901",
-      "source": "Plat",
+      "source": "Platinum",
       "difficulty": "Very Hard",
       "isStarred": false,
       "tags": ["LCA"],
@@ -300,6 +300,19 @@
       }
     },
     {
+      "uniqueId": "cf-1843F2",
+      "name": "Omsk Metro (hard version)",
+      "url": "https://codeforces.com/contest/1843/problem/F2",
+      "source": "CF",
+      "difficulty": "Normal",
+      "isStarred": true,
+      "tags": ["LCA"],
+      "solutionMetadata": {
+        "kind": "autogen-label-from-site",
+        "site": "CF"
+      }
+    },
+    {
       "uniqueId": "csa-RootLCAQueries",
       "name": "Root LCA Queries",
       "url": "https://csacademy.com/contest/archive/task/root-lca-queries",
@@ -308,8 +321,8 @@
       "isStarred": false,
       "tags": ["LCA"],
       "solutionMetadata": {
-        "kind": "autogen-label-from-site",
-        "site": "CSA"
+        "kind": "internal",
+        "hasHints": true
       }
     },
     {
@@ -326,22 +339,21 @@
       }
     },
     {
-      "uniqueId": "dmoj-HotCold",
+      "uniqueId": "bts-hotcold",
       "name": "Hot & Cold",
       "url": "https://dmoj.ca/problem/bts17p7",
-      "source": "DMOJ",
+      "source": "Back to School",
       "difficulty": "Normal",
       "isStarred": false,
       "tags": ["LCA"],
       "solutionMetadata": {
-        "kind": "autogen-label-from-site",
-        "site": "DMOJ"
+        "kind": "internal"
       }
     },
     {
       "uniqueId": "ks-dependent",
       "name": "Dependent Events",
-      "url": "https://codingcompetitions.withgoogle.com/kickstart/round/0000000000435914/00000000008d9970#problem",
+      "url": "https://zibada.guru/gcj/ks2021h/problems/#D",
       "source": "Google Kickstart",
       "difficulty": "Hard",
       "isStarred": false,

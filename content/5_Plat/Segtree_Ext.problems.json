@@ -10,7 +10,23 @@
       "isStarred": false,
       "tags": ["PURQ"],
       "solutionMetadata": {
-        "kind": "none"
+        "kind": "in-module",
+        "moduleId": "segtree-ext"
+      }
+    }
+  ],
+  "walkSam2": [
+    {
+      "uniqueId": "spoj-OrderSet",
+      "name": "Ordered Set",
+      "url": "https://www.spoj.com/problems/ORDERSET/",
+      "source": "SPOJ",
+      "difficulty": "Easy",
+      "isStarred": false,
+      "tags": ["PURS"],
+      "solutionMetadata": {
+        "kind": "in-module",
+        "moduleId": "segtree-ext"
       }
     }
   ],
@@ -66,7 +82,8 @@
       "isStarred": false,
       "tags": ["PURQ"],
       "solutionMetadata": {
-        "kind": "none"
+        "kind": "in-module",
+        "moduleId": "segtree-ext"
       }
     }
   ],
@@ -109,6 +126,18 @@
       }
     },
     {
+      "uniqueId": "cf-104380H",
+      "name": "01 (Hard Version)",
+      "url": "https://codeforces.com/gym/104380/problem/H",
+      "source": "CF",
+      "difficulty": "Easy",
+      "isStarred": false,
+      "tags": ["PURQ"],
+      "solutionMetadata": {
+        "kind": "none"
+      }
+    },
+    {
       "uniqueId": "usaco-365",
       "name": "Optimal Milking",
       "url": "http://www.usaco.org/index.php?page=viewproblem2&cpid=365",
@@ -134,6 +163,18 @@
       }
     },
     {
+      "uniqueId": "usaco-1332",
+      "name": "Pareidolia",
+      "url": "http://www.usaco.org/index.php?page=viewproblem2&cpid=1332",
+      "source": "Platinum",
+      "difficulty": "Normal",
+      "isStarred": false,
+      "tags": ["Matrix", "PURQ"],
+      "solutionMetadata": {
+        "kind": "internal"
+      }
+    },
+    {
       "uniqueId": "coci-21-sjeckanje",
       "name": "2021 - Sjeckanje",
       "url": "https://oj.uz/problem/view/COCI21_sjeckanje",
@@ -149,7 +190,7 @@
       "uniqueId": "usaco-577",
       "name": "High Card Low Card",
       "url": "http://www.usaco.org/index.php?page=viewproblem2&cpid=577",
-      "source": "Plat",
+      "source": "Platinum",
       "difficulty": "Hard",
       "isStarred": false,
       "tags": ["PURQ", "Greedy"],

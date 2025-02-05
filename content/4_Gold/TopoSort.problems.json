@@ -103,6 +103,18 @@
       "isStarred": false,
       "tags": ["TopoSort"],
       "solutionMetadata": {
+        "kind": "internal"
+      }
+    },
+    {
+      "uniqueId": "cf-1385E",
+      "name": "Directing Edges",
+      "url": "https://codeforces.com/contest/1385/problem/E",
+      "source": "CF",
+      "difficulty": "Easy",
+      "isStarred": false,
+      "tags": ["TopoSort"],
+      "solutionMetadata": {
         "kind": "autogen-label-from-site",
         "site": "CF"
       }
@@ -117,6 +129,19 @@
       "tags": ["TopoSort", "Binary Search"],
       "solutionMetadata": {
         "kind": "internal"
+      }
+    },
+    {
+      "uniqueId": "cf-1476E",
+      "name": "Pattern Matching",
+      "url": "https://codeforces.com/problemset/problem/1476/E",
+      "source": "CF",
+      "difficulty": "Hard",
+      "isStarred": false,
+      "tags": ["TopoSort", "Bitwise"],
+      "solutionMetadata": {
+        "kind": "autogen-label-from-site",
+        "site": "CF"
       }
     },
     {

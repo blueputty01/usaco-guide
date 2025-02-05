@@ -2,7 +2,7 @@ import { Transition } from '@headlessui/react';
 import { Link, navigate } from 'gatsby';
 import * as React from 'react';
 import { useRef, useState } from 'react';
-import UserDataContext from '../../../context/UserDataContext/UserDataContext';
+import { useFirebaseUser } from '../../../context/UserDataContext/UserDataContext';
 import { useActiveGroup } from '../../../hooks/groups/useActiveGroup';
 import { useGroupActions } from '../../../hooks/groups/useGroupActions';
 import { usePostActions } from '../../../hooks/groups/usePostActions';
@@ -13,12 +13,12 @@ export default function GroupPageHeader(props: { group: GroupData }) {
   const { createNewPost } = usePostActions(props.group?.id);
   const [isActionsOpen, setIsActionsOpen] = useState(false);
   const { showAdminView, setInStudentView } = useActiveGroup();
-  const { firebaseUser } = React.useContext(UserDataContext);
-  const ref = useRef<HTMLDivElement>();
+  const firebaseUser = useFirebaseUser();
+  const ref = useRef<HTMLDivElement>(null);
 
   React.useEffect(() => {
     const handleClick = e => {
-      if (ref.current.contains(e.target)) return;
+      if (ref.current?.contains(e.target)) return;
       setIsActionsOpen(false);
     };
     document.addEventListener('mousedown', handleClick);
@@ -127,24 +127,37 @@ export default function GroupPageHeader(props: { group: GroupData }) {
                     </Link>
                   </>
                 )}
-                {isUserAdminOfGroup(props.group, firebaseUser?.uid) && (
-                  <button
-                    type="button"
-                    className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 focus:outline-none focus:bg-gray-100 focus:text-gray-900"
-                    onClick={() => {
-                      setInStudentView(showAdminView);
-                    }}
-                  >
-                    {showAdminView ? 'Enter Student View' : 'Exit Student View'}
-                  </button>
-                )}
+                {firebaseUser &&
+                  isUserAdminOfGroup(props.group, firebaseUser.uid) && (
+                    <button
+                      type="button"
+                      className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 focus:outline-none focus:bg-gray-100 focus:text-gray-900"
+                      onClick={() => {
+                        setInStudentView(showAdminView);
+                      }}
+                    >
+                      {showAdminView
+                        ? 'Enter Student View'
+                        : 'Exit Student View'}
+                    </button>
+                  )}
                 <button
                   type="button"
                   className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 focus:outline-none focus:bg-gray-100 focus:text-gray-900"
                   onClick={() => {
                     const groupId = props.group?.id;
-                    if (groupId) {
-                      leaveGroup(groupId, firebaseUser?.uid)
+                    if (
+                      groupId &&
+                      confirm(
+                        'Are you sure you want to leave this group? You will not be able to rejoin unless you are provided with another link.'
+                      ) &&
+                      prompt(
+                        'Are you REALLY sure? Please type "Yes I am sure I want to leave"'
+                      )!
+                        .toLowerCase()
+                        .indexOf('yes i am sure i want to leave') > -1
+                    ) {
+                      leaveGroup(groupId, firebaseUser!.uid)
                         .then(() => navigate(`/groups/`))
                         .catch(e => {
                           console.log(e);

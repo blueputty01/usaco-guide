@@ -52,6 +52,19 @@
       }
     },
     {
+      "uniqueId": "ac-subsetSumQueries",
+      "name": "Subset Sum Queries",
+      "url": "https://atcoder.jp/contests/abc321/tasks/abc321_f",
+      "source": "AC",
+      "difficulty": "Easy",
+      "isStarred": true,
+      "tags": ["Knapsack"],
+      "solutionMetadata": {
+        "kind": "autogen-label-from-site",
+        "site": "AC"
+      }
+    },
+    {
       "uniqueId": "cses-1158",
       "name": "Book Shop",
       "url": "https://cses.fi/problemset/task/1158",
@@ -88,6 +101,31 @@
       }
     },
     {
+      "uniqueId": "cf-687C",
+      "name": "The Values You Can Make",
+      "url": "https://codeforces.com/contest/687/problem/C",
+      "source": "CF",
+      "difficulty": "Easy",
+      "isStarred": false,
+      "tags": ["Knapsack"],
+      "solutionMetadata": {
+        "kind": "autogen-label-from-site",
+        "site": "CF"
+      }
+    },
+    {
+      "uniqueId": "noi-18-knapsack",
+      "name": "Knapsack",
+      "url": "https://oj.uz/problem/view/NOI18_knapsack",
+      "source": "NOI",
+      "difficulty": "Normal",
+      "isStarred": false,
+      "tags": ["DP", "Knapsack"],
+      "solutionMetadata": {
+        "kind": "internal"
+      }
+    },
+    {
       "uniqueId": "cses-1665",
       "name": "Coding Company",
       "url": "https://cses.fi/problemset/task/1665",
@@ -114,18 +152,6 @@
       }
     },
     {
-      "uniqueId": "noi-18-knapsack",
-      "name": "Knapsack",
-      "url": "https://oj.uz/problem/view/NOI18_knapsack",
-      "source": "NOI",
-      "difficulty": "Normal",
-      "isStarred": false,
-      "tags": ["DP", "Knapsack"],
-      "solutionMetadata": {
-        "kind": "internal"
-      }
-    },
-    {
       "uniqueId": "usaco-839",
       "name": "Talent Show",
       "url": "http://www.usaco.org/index.php?page=viewproblem2&cpid=839",
@@ -141,13 +167,13 @@
       "uniqueId": "usaco-925",
       "name": "Mooriokart",
       "url": "http://www.usaco.org/index.php?page=viewproblem2&cpid=925",
-      "source": "Plat",
+      "source": "Platinum",
       "difficulty": "Very Hard",
       "isStarred": false,
       "tags": ["Knapsack"],
       "solutionMetadata": {
-        "kind": "USACO",
-        "usacoId": "925"
+        "kind": "internal",
+        "hasHints": true
       }
     }
   ],
@@ -174,8 +200,7 @@
       "isStarred": false,
       "tags": ["Knapsack", "Exponentiation"],
       "solutionMetadata": {
-        "kind": "USACO",
-        "usacoId": "897"
+        "kind": "internal"
       }
     },
     {
@@ -187,8 +212,7 @@
       "isStarred": false,
       "tags": ["Knapsack", "Prime Factorization"],
       "solutionMetadata": {
-        "kind": "USACO",
-        "usacoId": "1043"
+        "kind": "internal"
       }
     },
     {
@@ -231,12 +255,13 @@
       "uniqueId": "usaco-1045",
       "name": "Exercise",
       "url": "http://www.usaco.org/index.php?page=viewproblem2&cpid=1045",
-      "source": "Plat",
+      "source": "Platinum",
       "difficulty": "Insane",
       "isStarred": false,
       "tags": ["Knapsack", "Prime Factorization"],
       "solutionMetadata": {
-        "kind": "internal"
+        "kind": "internal",
+        "hasHints": true
       }
     }
   ]

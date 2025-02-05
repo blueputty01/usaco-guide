@@ -129,7 +129,7 @@
       "uniqueId": "usaco-626",
       "name": "Circular Barn",
       "url": "http://www.usaco.org/index.php?page=viewproblem2&cpid=626",
-      "source": "Plat",
+      "source": "Platinum",
       "difficulty": "Normal",
       "isStarred": false,
       "tags": ["DP", "Convex"],
@@ -141,13 +141,25 @@
       "uniqueId": "usaco-998",
       "name": "Falling Portals",
       "url": "http://www.usaco.org/index.php?page=viewproblem2&cpid=998",
-      "source": "Plat",
+      "source": "Platinum",
       "difficulty": "Normal",
       "isStarred": false,
       "tags": ["Convex"],
       "solutionMetadata": {
         "kind": "USACO",
         "usacoId": "998"
+      }
+    },
+    {
+      "uniqueId": "usaco-1285",
+      "name": "Mana Collection",
+      "url": "http://www.usaco.org/index.php?page=viewproblem2&cpid=1285",
+      "source": "Platinum",
+      "difficulty": "Hard",
+      "isStarred": false,
+      "tags": ["Bitmask DP", "Convex"],
+      "solutionMetadata": {
+        "kind": "internal"
       }
     },
     {

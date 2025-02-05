@@ -2,15 +2,23 @@ import * as React from 'react';
 import { useContext, useEffect, useState } from 'react';
 import { SECTION_LABELS } from '../../../content/ordering';
 import MarkdownLayoutContext from '../../context/MarkdownLayoutContext';
-import UserDataContext from '../../context/UserDataContext/UserDataContext';
+import { useFirebaseUser } from '../../context/UserDataContext/UserDataContext';
+import { useUserLangSetting } from '../../context/UserDataContext/properties/simpleProperties';
 import useContactFormAction from '../../hooks/useContactFormAction';
 import useStickyState from '../../hooks/useStickyState';
 import { ModuleInfo } from '../../models/module';
+import { SolutionInfo } from '../../models/solution';
 import SlideoverForm from './SlideoverForm';
 
 // Warning: this file is insanely messy. This should be rewritten soon :)
 
-const Field = ({ label, id, value, onChange, errorMsg = null }) => {
+const Field = ({
+  label,
+  id,
+  value,
+  onChange,
+  errorMsg = null as string | null,
+}) => {
   return (
     <div className="space-y-1">
       <label
@@ -72,13 +80,12 @@ export default function ContactUsSlideover({
   onClose: () => void;
   defaultLocation?: string;
 }): JSX.Element {
-  const userSettings = useContext(UserDataContext);
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [location, setLocation] = useState(defaultLocation);
   const [topic, setTopic] = useStickyState('', 'contact_form_topic');
   const topics = [
-    ['Minor Mistake', 'typo, broken link, wrong time complexity'],
+    ['Mistake', 'typo, broken link, wrong time complexity, wrong code'],
     ['Unclear Explanation'],
     ['Website Bug'],
     ['Suggestion'],
@@ -92,6 +99,7 @@ export default function ContactUsSlideover({
   const [showErrors, setShowErrors] = useState(false);
 
   const markdownContext = useContext(MarkdownLayoutContext);
+  const userLang = useUserLangSetting();
   const submitForm = useContactFormAction();
 
   React.useEffect(() => {
@@ -101,18 +109,20 @@ export default function ContactUsSlideover({
         setLocation(
           `${SECTION_LABELS[activeModule.section]} - ${activeModule.title}`
         );
+      } else if (activeModule && activeModule instanceof SolutionInfo) {
+        setLocation(`Solution: ${activeModule.title}`);
       } else setLocation('');
     }
   }, [markdownContext?.markdownLayoutInfo]);
 
-  const { firebaseUser } = useContext(UserDataContext);
+  const firebaseUser = useFirebaseUser();
   useEffect(() => {
     if (!firebaseUser) return;
     if (email === '') {
-      setEmail(firebaseUser.email);
+      setEmail(firebaseUser.email!);
     }
     if (name === '') {
-      setName(firebaseUser.displayName);
+      setName(firebaseUser.displayName!);
     }
   }, [firebaseUser]);
 
@@ -144,7 +154,7 @@ export default function ContactUsSlideover({
         email,
         moduleName: location,
         url: window.location.href,
-        lang: userSettings.lang,
+        lang: userLang,
         topic,
         message,
       });
@@ -300,7 +310,7 @@ export default function ContactUsSlideover({
               }
             />
             <Field
-              label="Module (if applicable)"
+              label="Module or Solution (if applicable)"
               id="contact_module"
               value={location}
               onChange={e => setLocation(e.target.value)}

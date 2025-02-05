@@ -1,4 +1,3 @@
-import { LinkIcon } from '@heroicons/react/solid';
 import * as React from 'react';
 import useUserProblemSubmissions from '../../../hooks/groups/useUserProblemSubmissions';
 import { PostData } from '../../../models/groups/posts';
@@ -6,7 +5,6 @@ import {
   getEarnedPointsForProblem,
   GroupProblemData,
 } from '../../../models/groups/problem';
-import TextTooltip from '../../Tooltip/TextTooltip';
 import SidebarDueDate from '../SidebarDueDate';
 import ProblemSubmissionsList from './ProblemSubmissionsList';
 
@@ -17,7 +15,7 @@ export default function ProblemSidebar({
   post: PostData;
   problem: GroupProblemData;
 }) {
-  const submissions = useUserProblemSubmissions(post.id, problem.id);
+  const submissions = useUserProblemSubmissions(post.id!, problem.id);
 
   if (!submissions) return null;
 

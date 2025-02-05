@@ -1,21 +1,21 @@
 import { Transition } from '@headlessui/react';
 import * as React from 'react';
 import { useContext } from 'react';
-import Select from 'react-select';
 import { SECTION_LABELS } from '../../content/ordering';
-import { useDarkMode } from '../context/DarkModeContext';
 import { EditorContext } from '../context/EditorContext';
 import MarkdownLayoutContext from '../context/MarkdownLayoutContext';
 import useProblemSuggestionAction from '../hooks/useProblemSuggestionAction';
 import { ModuleInfo } from '../models/module';
 import {
+  PROBLEM_DIFFICULTY_OPTIONS,
+  ProblemDifficulty,
+  ProblemMetadata,
   autoGenerateSolutionMetadata,
   generateProblemUniqueId,
-  ProblemMetadata,
-  PROBLEM_DIFFICULTY_OPTIONS,
   probSources,
 } from '../models/problem';
 import ButtonGroup from './ButtonGroup';
+import Select from './Select';
 
 export default function ProblemSuggestionModal({
   isOpen,
@@ -28,22 +28,25 @@ export default function ProblemSuggestionModal({
 }): JSX.Element {
   const [name, setName] = React.useState('');
   const [link, setLink] = React.useState('');
-  const [difficulty, setDifficulty] = React.useState(null);
+  const [difficulty, setDifficulty] = React.useState<ProblemDifficulty | null>(
+    null
+  );
   const [tags, setTags] = React.useState('');
   const [additionalNotes, setAdditionalNotes] = React.useState('');
   const [source, setSource] = React.useState('');
   const [loading, setLoading] = React.useState(false);
-  const [createdIssueLink, setCreatedIssueLink] = React.useState(null);
+  const [createdIssueLink, setCreatedIssueLink] = React.useState<string | null>(
+    null
+  );
 
   const submitSuggestion = useProblemSuggestionAction();
   const editorActions = useContext(EditorContext);
   const inEditor = editorActions.inEditor;
 
   // will be null if in editor
-  const markdownLayoutInfo = useContext(MarkdownLayoutContext)
-    ?.markdownLayoutInfo;
-
-  const darkMode = useDarkMode();
+  const markdownLayoutInfo = useContext(
+    MarkdownLayoutContext
+  )?.markdownLayoutInfo;
 
   React.useEffect(() => {
     if (isOpen) {
@@ -83,7 +86,6 @@ export default function ProblemSuggestionModal({
       try {
         generatedProblemId = generateProblemUniqueId(source, name, link);
       } catch (e) {
-        console.log(e);
         alert(
           'Error generating problem ID from URL. Check console for details.'
         );
@@ -107,6 +109,7 @@ export default function ProblemSuggestionModal({
       onClose();
       return;
     }
+    if (!markdownLayoutInfo) throw new Error('No markdown layout info');
     const moduleName = `${
       SECTION_LABELS[(markdownLayoutInfo as ModuleInfo).section]
     } - ${markdownLayoutInfo.title}`;
@@ -140,7 +143,7 @@ export default function ProblemSuggestionModal({
       Bronze: 'Recent USACO Bronze (Dec 2015 and Later)',
       Silver: 'Recent USACO Silver (Dec 2015 and Later)',
       Gold: 'Recent USACO Gold (Dec 2015 and Later)',
-      Plat: 'USACO Platinum',
+      Platinum: 'USACO Platinum',
     };
     if (map[source]) return map[source];
     return probSources[source][1];
@@ -240,53 +243,6 @@ export default function ProblemSuggestionModal({
             onChange={o => setSource(o.value)}
             className={'mt-1 block w-full text-sm tw-forms-disable'}
             isDisabled={loading}
-            styles={
-              !darkMode
-                ? undefined
-                : {
-                    control: provided => ({
-                      ...provided,
-                      backgroundColor: '#111827',
-                      borderColor: '#374151',
-                    }),
-                    menuList: provided => ({
-                      ...provided,
-                      borderColor: '#374151',
-                      borderWidth: '1px',
-                      borderRadius: '6px',
-                    }),
-                    menu: provided => ({
-                      ...provided,
-                      backgroundColor: '#111827',
-                    }),
-                    indicatorSeparator: provided => ({
-                      ...provided,
-                      backgroundColor: '#374151',
-                    }),
-                    indicatorsContainer: provided => ({
-                      ...provided,
-                      color: '#374151',
-                    }),
-                    singleValue: provided => ({
-                      ...provided,
-                      color: 'rgba(255, 255, 255, 0.87)',
-                    }),
-                    input: provided => ({
-                      ...provided,
-                      color: 'rgba(255, 255, 255, 0.87)',
-                    }),
-                    option: (provided, { isFocused, isSelected }) => ({
-                      ...provided,
-                      ...(isFocused
-                        ? {
-                            backgroundColor: '#4d94ff',
-                          }
-                        : isSelected
-                        ? { backgroundColor: '#0063e6' }
-                        : {}),
-                    }),
-                  }
-            }
           />
         </div>
       </div>
@@ -371,7 +327,7 @@ export default function ProblemSuggestionModal({
               Thanks for helping to improve the USACO Guide. You can track the
               progress of your suggestion here:{' '}
               <a
-                href={createdIssueLink}
+                href={createdIssueLink ?? undefined}
                 target="_blank"
                 rel="noreferrer"
                 className="underline text-black dark:text-white"
@@ -472,7 +428,7 @@ export default function ProblemSuggestionModal({
                   rel="noreferrer"
                   className="text-blue-600 dark:text-blue-300 underline"
                 >
-                  Github pull request
+                  GitHub pull request
                 </a>
                 .
               </p>

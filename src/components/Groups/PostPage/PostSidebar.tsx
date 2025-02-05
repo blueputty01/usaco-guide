@@ -1,6 +1,5 @@
 import { Link } from 'gatsby';
-import React, { useContext } from 'react';
-import UserDataContext from '../../../context/UserDataContext/UserDataContext';
+import React from 'react';
 import { useActiveGroup } from '../../../hooks/groups/useActiveGroup';
 import { useActivePostProblems } from '../../../hooks/groups/useActivePostProblems';
 import { useUserLeaderboardData } from '../../../hooks/groups/useLeaderboardData';
@@ -21,8 +20,8 @@ export default function PostSidebar({
   const { problems } = useActivePostProblems();
   const activeGroup = useActiveGroup();
   const userLeaderboardData = useUserLeaderboardData(
-    activeGroup.activeGroupId,
-    activeGroup.activeUserId
+    activeGroup.activeGroupId!,
+    activeGroup.activeUserId!
   );
 
   return (
@@ -43,7 +42,7 @@ export default function PostSidebar({
             />
           </svg>
           <span className="text-green-700 dark:text-green-400 text-sm font-medium">
-            {userLeaderboardData?.[post.id]?.totalPoints ?? 0} /{' '}
+            {userLeaderboardData?.[post.id!]?.totalPoints ?? 0} /{' '}
             {problems && getTotalPointsFromProblems(problems)} points earned
           </span>
         </div>

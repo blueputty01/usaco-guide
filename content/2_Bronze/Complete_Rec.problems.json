@@ -79,17 +79,30 @@
       "isStarred": false,
       "tags": ["Complete Search", "Recursion"],
       "solutionMetadata": {
-        "kind": "internal"
+        "kind": "internal",
+        "hasHints": true
       }
     },
     {
-      "uniqueId": "ccc-Twenty-four",
+      "uniqueId": "ccc-twenty-four",
       "name": "Twenty-four",
       "url": "https://dmoj.ca/problem/ccc08s4",
       "source": "CCC",
       "difficulty": "Normal",
       "isStarred": false,
       "tags": ["Complete Search", "Permutation"],
+      "solutionMetadata": {
+        "kind": "internal"
+      }
+    },
+    {
+      "uniqueId": "cf-581D",
+      "name": "Three Logos",
+      "url": "https://codeforces.com/problemset/problem/581/D",
+      "source": "CF",
+      "difficulty": "Hard",
+      "isStarred": true,
+      "tags": ["Complete Search", "Permutation", "Subsets"],
       "solutionMetadata": {
         "kind": "internal"
       }

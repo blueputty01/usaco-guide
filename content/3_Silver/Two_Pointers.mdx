@@ -13,8 +13,6 @@ description:
 frequency: 2
 ---
 
-<Problems problems="sample" />
-
 ## Resources
 
 <Resources>
@@ -186,6 +184,11 @@ Now, we can move the right pointer to the end. This makes the sum of values $1+2
 
 Since the right pointer has reached the end of the array, we are done at this point. This leaves us with $\texttt{ans}=3$.
 
+Here's an animation of the above example:
+<video width="960" height="720" controls>
+	<source src="/animations/two_pointers.mp4" type="video/mp4"/>
+</video>
+
 <Info title="Pro Tip">
 
 You can visualize these pointers as maintaining a sliding window of books for this problem.
@@ -194,8 +197,9 @@ You can visualize these pointers as maintaining a sliding window of books for th
 
 ### Implementation
 
-<LanguageSection>
+**Time Complexity:** $\mathcal{O}(N)$
 
+<LanguageSection>
 <CPPSection>
 
 ```cpp
@@ -229,7 +233,6 @@ int main() {
 ```
 
 </CPPSection>
-
 <JavaSection>
 
 ```java
@@ -301,6 +304,7 @@ while left < n and right < n:
 
 print(ans)
 ```
+
 </PySection>
 </LanguageSection>
 
@@ -428,13 +432,13 @@ print(ans)
     <Quiz.Answer>
       The time complexity of a standard two pointers algorithm is $\mathcal{O}(N)$ when not considering any other operations on the array.
       <Quiz.Explanation>
-        Incorrect. Assuming that both pointers move one step at a time and the array isn't sorted, both pointers would take a maximum of $N$ steps.
+        Incorrect. Assuming that both pointers move one step at a time, both pointers would take a maximum of $N$ steps.
       </Quiz.Explanation>
     </Quiz.Answer>
     <Quiz.Answer>
       The space complexity of a standard two pointers algorithm is $\mathcal{O}(1)$ when not considering the space taken up by the array.
       <Quiz.Explanation>
-        Incorrect. Assuming that both pointers move one step at a time and the array isn't sorted, there would be a constant space complexity.
+        Incorrect. Assuming that both pointers move one step at a time, there would be a constant space complexity.
       </Quiz.Explanation>
     </Quiz.Answer>
     <Quiz.Answer correct>

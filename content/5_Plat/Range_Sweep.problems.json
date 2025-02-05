@@ -46,20 +46,19 @@
       "uniqueId": "usaco-816",
       "name": "Slingshot",
       "url": "http://www.usaco.org/index.php?page=viewproblem2&cpid=816",
-      "source": "Plat",
+      "source": "Platinum",
       "difficulty": "Normal",
       "isStarred": false,
       "tags": ["PURQ"],
       "solutionMetadata": {
-        "kind": "USACO",
-        "usacoId": "816"
+        "kind": "internal"
       }
     },
     {
       "uniqueId": "usaco-624",
       "name": "Load Balancing",
       "url": "http://www.usaco.org/index.php?page=viewproblem2&cpid=624",
-      "source": "Plat",
+      "source": "Platinum",
       "difficulty": "Normal",
       "isStarred": false,
       "tags": [],
@@ -86,9 +85,10 @@
       "source": "IZhO",
       "difficulty": "Hard",
       "isStarred": false,
-      "tags": [],
+      "tags": ["Stack", "PURQ", "Lazy SegTree"],
       "solutionMetadata": {
-        "kind": "none"
+        "kind": "internal",
+        "hasHints": true
       }
     }
   ],
@@ -123,7 +123,7 @@
       "uniqueId": "usaco-865",
       "name": "Sort It Out",
       "url": "http://www.usaco.org/index.php?page=viewproblem2&cpid=865",
-      "source": "Plat",
+      "source": "Platinum",
       "difficulty": "Very Hard",
       "isStarred": false,
       "tags": ["DP"],

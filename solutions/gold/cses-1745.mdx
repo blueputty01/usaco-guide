@@ -7,9 +7,7 @@ author: Sofia Yang, Qian Qian
 
 [Official Editorial](https://codeforces.com/blog/entry/70018)
 
-## Solution
-
-**Time Complexity:** $\mathcal{O}(N\cdot X)$
+## Explanation
 
 For this problem, we'll define $\texttt{dp[i][j]}$ as if it is possible to make
 a sum of $j$ with $i$ coins.
@@ -30,8 +28,9 @@ array, then print out the size of that dynamic array and every elements in it.
 
 ## Implementation
 
-<LanguageSection>
+**Time Complexity:** $\mathcal{O}(N\cdot X)$
 
+<LanguageSection>
 <CPPSection>
 
 ```cpp
@@ -57,9 +56,7 @@ int main() {
 		for (int current_sum = 0; current_sum <= MAX_SUM; current_sum++) {
 			dp[i][current_sum] = dp[i - 1][current_sum];
 			int prev_sum = current_sum - coins_values[i - 1];
-			if (prev_sum >= 0 && dp[i - 1][prev_sum]) {
-				dp[i][current_sum] = true;
-			}
+			if (prev_sum >= 0 && dp[i - 1][prev_sum]) { dp[i][current_sum] = true; }
 		}
 	}
 
@@ -76,7 +73,6 @@ int main() {
 ```
 
 </CPPSection>
-
 <JavaSection>
 
 ```java
@@ -84,8 +80,6 @@ import java.io.*;
 import java.util.*;
 
 public class MoneySums {
-	// CodeSnip{Kattio}
-
 	public static int maxSum = (int)1e5;
 
 	public static void main(String[] args) throws IOException {
@@ -104,9 +98,7 @@ public class MoneySums {
 			for (int curSum = 0; curSum <= maxSum; curSum++) {
 				dp[i][curSum] = dp[i - 1][curSum];
 				int prevSum = curSum - value[i];
-				if (prevSum >= 0 && dp[i - 1][prevSum]) {
-					dp[i][curSum] = true;
-				}
+				if (prevSum >= 0 && dp[i - 1][prevSum]) { dp[i][curSum] = true; }
 			}
 		}
 
@@ -118,9 +110,34 @@ public class MoneySums {
 		for (int i : possible) { io.print(i + " "); }
 		io.close();
 	}
+
+	// CodeSnip{Kattio}
 }
 ```
 
 </JavaSection>
+<PySection>
 
+```py
+n = int(input())
+money = list(map(int, input().split()))
+
+max_sum = n * 1000
+dp = [[False] * (max_sum + 1) for _ in range(n + 1)]
+dp[0][0] = True
+
+for i in range(1, n + 1):
+	for j in range(max_sum + 1):
+		dp[i][j] = dp[i - 1][j]
+		left = j - money[i - 1]
+		if left >= 0 and dp[i - 1][left]:
+			dp[i][j] = True
+
+res = [i for i in range(1, max_sum + 1) if dp[n][i]]
+
+print(len(res))
+print(*res)
+```
+
+</PySection>
 </LanguageSection>

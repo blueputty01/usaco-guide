@@ -12,6 +12,7 @@ import black
 CLANG_FORMAT_STYLE = """
 TabWidth: 4
 IndentWidth: 4
+ColumnLimit: 88
 UseTab: ForIndentation
 AllowShortIfStatementsOnASingleLine: AllIfsAndElse
 AllowShortBlocksOnASingleLine: Always
@@ -154,7 +155,9 @@ if __name__ == "__main__":
 	"""
 	Args: paths of files to format
 	"""
-	# raise ValueError(sys.argv[1:])
+	from importlib.metadata import version
+
+	print(f"Clang-Format Version = {version('clang-format')}")
 	paths = sys.argv[1:]
 	print(f"Formatting {len(paths)} paths")
 	for path in paths:

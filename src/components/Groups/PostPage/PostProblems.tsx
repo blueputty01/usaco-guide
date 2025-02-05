@@ -1,8 +1,6 @@
-import { navigate } from 'gatsby';
-import React, { useEffect } from 'react';
 import {
-  DndContext,
   closestCenter,
+  DndContext,
   KeyboardSensor,
   PointerSensor,
   useSensor,
@@ -12,18 +10,20 @@ import {
   arrayMove,
   SortableContext,
   sortableKeyboardCoordinates,
+  useSortable,
   verticalListSortingStrategy,
 } from '@dnd-kit/sortable';
-import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
+import { MenuIcon } from '@heroicons/react/solid';
+import { navigate } from 'gatsby';
+import React, { useEffect } from 'react';
 import { useActiveGroup } from '../../../hooks/groups/useActiveGroup';
 import { useActivePostProblems } from '../../../hooks/groups/useActivePostProblems';
 import { usePostActions } from '../../../hooks/groups/usePostActions';
-import { PostData } from '../../../models/groups/posts';
-import ProblemListItem from '../ProblemListItem';
 import { GroupData } from '../../../models/groups/groups';
+import { PostData } from '../../../models/groups/posts';
 import { ProblemData } from '../../../models/groups/problem';
-import { MenuIcon } from '@heroicons/react/solid';
+import ProblemListItem from '../ProblemListItem';
 
 function SortableItem(props: {
   id: string;
@@ -31,14 +31,14 @@ function SortableItem(props: {
   post: PostData;
   problem: ProblemData;
 }) {
-  if (!props.problem) return null;
-
   const { attributes, listeners, setNodeRef, transform, transition } =
     useSortable({ id: props.id });
 
+  if (!props.problem) return null;
+
   const style = {
     transform: CSS.Transform.toString(transform),
-    transition,
+    transition: transition ?? undefined,
   };
 
   return (
@@ -68,11 +68,11 @@ export default function PostProblems({
 }): JSX.Element {
   const activeGroup = useActiveGroup();
   const { createNewProblem, updateProblemOrdering } = usePostActions(
-    activeGroup.activeGroupId
+    activeGroup.activeGroupId!
   );
   const { problems, isLoading } = useActivePostProblems();
 
-  const [items, setItems] = React.useState([]);
+  const [items, setItems] = React.useState<string[]>([]);
   const sensors = useSensors(
     useSensor(PointerSensor),
     useSensor(KeyboardSensor, {
@@ -106,7 +106,7 @@ export default function PostProblems({
         const newIndex = items.indexOf(over.id);
 
         const newArr = arrayMove<string>(items, oldIndex, newIndex);
-        updateProblemOrdering(post.id, newArr);
+        updateProblemOrdering(post.id!, newArr);
         return newArr;
       });
     }
@@ -161,9 +161,9 @@ export default function PostProblems({
                           <SortableItem
                             key={problemId}
                             id={problemId}
-                            group={activeGroup.groupData}
+                            group={activeGroup.groupData!}
                             post={post}
-                            problem={problems.find(x => x.id === problemId)}
+                            problem={problems.find(x => x.id === problemId)!}
                           />
                         ))}
                       </div>
@@ -174,9 +174,9 @@ export default function PostProblems({
                     {items.map(problemId => (
                       <ProblemListItem
                         key={problemId}
-                        group={activeGroup.groupData}
+                        group={activeGroup.groupData!}
                         post={post}
-                        problem={problems.find(x => x.id === problemId)}
+                        problem={problems.find(x => x.id === problemId)!}
                       />
                     ))}
                   </div>

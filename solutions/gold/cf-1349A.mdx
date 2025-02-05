@@ -58,15 +58,12 @@ import java.util.*;
 
 public class oraclcm {
 	public static void main(String[] args) throws IOException {
-		BufferedReader br =
-		    new BufferedReader(new InputStreamReader(System.in));
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		int N = Integer.parseInt(br.readLine());
 		StringTokenizer st = new StringTokenizer(br.readLine());
 		int[] nums = new int[N];
 
-		for (int i = 0; i < N; i++) {
-			nums[i] = Integer.parseInt(st.nextToken());
-		}
+		for (int i = 0; i < N; i++) { nums[i] = Integer.parseInt(st.nextToken()); }
 
 		long gcd = gcd(nums[0], nums[1]);
 		long ret = nums[0] / gcd * nums[1];
@@ -83,6 +80,38 @@ public class oraclcm {
 ```
 
 </JavaSection>
+
+<PySection>
+
+```py
+import math
+
+"""
+    a stores minimum exponents (gcd of all numbers seen so far)
+    b stores second minimum exponents
+"""
+
+
+def red():  # restore invariant mentioned above
+	global a, b
+	g = math.gcd(a, b)
+	a, b = g, a // g * b  # a / g * b = lcm(a, b)
+
+
+n = int(input())
+arr = list(map(int, input().split()))
+a, b = arr[0], arr[1]
+red()
+
+for i in range(2, n):
+	b = math.gcd(b, arr[i])
+	red()
+
+print(b)
+```
+
+</PySection>
+
 </LanguageSection>
 
 If it's hard to understand what exactly this code is doing at first glance, a

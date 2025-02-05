@@ -1,6 +1,5 @@
 import * as React from 'react';
-import { useContext } from 'react';
-import UserDataContext from '../../context/UserDataContext/UserDataContext';
+import { useUserLangSetting } from '../../context/UserDataContext/properties/simpleProperties';
 import { ResourceInfo } from '../../models/resource';
 import { books } from '../../utils/books';
 import PGS from './PGS';
@@ -95,7 +94,7 @@ export function Resource({
   title?: string;
   children?: React.ReactNode;
 }): JSX.Element {
-  const userSettings = useContext(UserDataContext);
+  const lang = useUserLangSetting();
   source = source ?? '';
   sourceDescription = sourceDescription ?? '';
   if (source in books) {
@@ -115,7 +114,7 @@ export function Resource({
         return url;
       };
       if (source === 'IUSACO') {
-        if (userSettings.lang === 'java') {
+        if (lang === 'java') {
           url = getSec(
             'JAVA',
             'https://darrenyao.com/usacobook/java.pdf',
@@ -129,10 +128,10 @@ export function Resource({
       } else url = books[source][0];
     }
   } else if (source in moduleSources) {
-    if (!url.startsWith('http')) url = moduleSources[source][0] + url;
+    if (!url?.startsWith('http')) url = moduleSources[source][0] + url;
     sourceDescription = moduleSources[source][1];
   } else {
-    if (!url.startsWith('http')) {
+    if (!url?.startsWith('http')) {
       throw `URL ${url} is not valid. Did you make a typo in the source (${source}), or in the URL? Resource name: ${title}`;
     }
   }

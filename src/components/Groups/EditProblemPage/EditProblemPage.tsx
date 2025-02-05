@@ -1,12 +1,12 @@
 import { CheckIcon, XIcon } from '@heroicons/react/solid';
 import { RouteComponentProps } from '@reach/router';
 import {
+  Timestamp,
   collection,
   getDocs,
   getFirestore,
   limit,
   query,
-  Timestamp,
 } from 'firebase/firestore';
 import 'flatpickr/dist/themes/material_blue.css';
 import { Link, navigate } from 'gatsby';
@@ -22,14 +22,14 @@ import { useFirebaseApp } from '../../../hooks/useFirebase';
 import { GroupProblemData } from '../../../models/groups/problem';
 import {
   AlgoliaProblemInfo,
-  getProblemURL,
   ProblemInfo,
+  getProblemURL,
 } from '../../../models/problem';
 import ButtonGroup from '../../ButtonGroup';
-import Layout from '../../layout';
 import ProblemAutocompleteModal from '../../ProblemAutocompleteModal/ProblemAutocompleteModal';
-import SEO from '../../seo';
 import TopNavigationBar from '../../TopNavigationBar/TopNavigationBar';
+import Layout from '../../layout';
+import SEO from '../../seo';
 import Breadcrumbs from '../Breadcrumbs';
 import MarkdownEditor from '../MarkdownEditor';
 import EditProblemHintSection from './EditProblemHintSection';
@@ -48,6 +48,7 @@ export default function EditProblemPage(props: Props) {
   const firebaseApp = useFirebaseApp();
   const activeGroup = useActiveGroup();
   const post = usePost(postId);
+  if (!post) throw new Error('Post not found');
   const originalProblem = useProblem(problemId);
   const [problem, editProblem] = useReducer(
     (oldProblem, updates: Partial<GroupProblemData>): GroupProblemData => ({
@@ -148,7 +149,7 @@ export default function EditProblemPage(props: Props) {
       <nav className="flex mt-6 mb-4" aria-label="Breadcrumb">
         <Breadcrumbs
           className="max-w-4xl w-full mx-auto px-4 sm:px-6 lg:px-8 pt-3 pb-4"
-          group={activeGroup.groupData}
+          group={activeGroup.groupData!}
           post={post}
         />
       </nav>

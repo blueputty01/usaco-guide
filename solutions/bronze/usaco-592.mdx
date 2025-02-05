@@ -7,10 +7,25 @@ author: Qi Wang
 
 [Official Analysis (Java)](http://www.usaco.org/current/data/sol_angry_bronze_jan16.html)
 
+<Warning>
+
+The solution from the official analysis is incorrect on the following input:
+
+```
+3
+3
+5
+6
+```
+
+It outputs 2, but the correct answer is 3.
+
+</Warning>
+
 ## Video Solution
 By Qi Wang
 
-<Youtube id="aFHESO1lhEY" />
+<YouTube id="aFHESO1lhEY" />
 
 ## Implementation
 
@@ -58,8 +73,7 @@ int main() {
 	int max_exploded = 0;
 	for (int i = 0; i < N; i++) {
 		// Get the number of exploded bales for the left & right side
-		max_exploded =
-		    max(max_exploded, exploded_num(i, -1) + exploded_num(i, 1) + 1);
+		max_exploded = max(max_exploded, exploded_num(i, -1) + exploded_num(i, 1) + 1);
 	}
 	cout << max_exploded << endl;
 }
@@ -86,8 +100,8 @@ public class Angry {
 		int maxExploded = 0;
 		for (int i = 0; i < N; i++) {
 			// Get the number of exploded bales for the left & right side
-			maxExploded = Math.max(maxExploded,
-			                       explodedNum(i, -1) + explodedNum(i, 1) + 1);
+			maxExploded =
+			    Math.max(maxExploded, explodedNum(i, -1) + explodedNum(i, 1) + 1);
 		}
 		io.println(maxExploded);
 		io.close();

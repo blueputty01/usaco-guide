@@ -108,8 +108,6 @@ priority queue of objects so that we can extract the minimum. Note that with the
 second approach mentioned in the first section the running time would instead be
 $\mathcal{O}(NMK\alpha(N)\log ans)$, which may be too slow.
 
-<Spoiler title="My Solution">
-
 ```cpp
 #include <bits/stdc++.h>
 using namespace std;
@@ -174,7 +172,7 @@ int main() {
 		if (i == K) {
 			cout << a.wei << "\n";
 			exit(0);
-		}                                // print K-th smallest
+		}  // print K-th smallest
 		while (a.fix < a.span.size()) {  // insert O(N) children
 			B t = a.ban;
 			t[a.span[a.fix]] = 1;
@@ -185,8 +183,6 @@ int main() {
 	}
 }
 ```
-
-</Spoiler>
 
 ## Robotic Cow Herd
 
@@ -236,8 +232,7 @@ void dfs(int pos, ll cur, int id) {
 	if (cur > mx || num == K) return;
 	res += cur;
 	num++;
-	if (id + 1 < v[pos].size())
-		dfs(pos, cur + v[pos][id + 1] - v[pos][id], id + 1);
+	if (id + 1 < v[pos].size()) dfs(pos, cur + v[pos][id + 1] - v[pos][id], id + 1);
 	for (int i = pos + 1; i < v.size(); ++i) {
 		ll CUR = cur + v[i][1];
 		if (num == K || CUR > mx) break;
@@ -298,8 +293,7 @@ void dfs(int pos, ll cur, int id) {
 	if (cur > mx || num == K) return;
 	res += cur;
 	num++;
-	if (id + 1 < v[pos].size())
-		dfs(pos, cur + v[pos][id + 1] - v[pos][id], id + 1);
+	if (id + 1 < v[pos].size()) dfs(pos, cur + v[pos][id + 1] - v[pos][id], id + 1);
 	if (pos + 1 < v.size()) {
 		if (id == 1) dfs(pos + 1, cur - v[pos][1] + v[pos + 1][1], 1);
 		if (id) dfs(pos + 1, cur + v[pos + 1][1], 1);
@@ -307,7 +301,7 @@ void dfs(int pos, ll cur, int id) {
 }
 ```
 
-Now I'll describe what how the priority queue solution works:
+Now I'll describe how the priority queue solution works:
 
 First start with the robot of minimum cost. The robot with second-minimum cost
 can be formed by just choosing the second-minimum controller for the first
@@ -378,8 +372,7 @@ int main() {
 		if (id + 1 < v[pos].size())
 			pq.push({a.f + v[pos][id + 1] - v[pos][id], {pos, id + 1}});
 		if (pos + 1 < v.size()) {
-			if (id == 1)
-				pq.push({a.f - v[pos][1] + v[pos + 1][1], {pos + 1, 1}});
+			if (id == 1) pq.push({a.f - v[pos][1] + v[pos + 1][1], {pos + 1, 1}});
 			if (id) pq.push({a.f + v[pos + 1][1], {pos + 1, 1}});
 		}
 	}

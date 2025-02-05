@@ -115,16 +115,39 @@
       }
     },
     {
+      "uniqueId": "ac-SelectEdges",
+      "name": "Select Edges",
+      "url": "https://atcoder.jp/contests/abc259/tasks/abc259_f",
+      "source": "AC",
+      "difficulty": "Normal",
+      "isStarred": false,
+      "tags": ["Tree", "DP"],
+      "solutionMetadata": {
+        "kind": "internal"
+      }
+    },
+    {
       "uniqueId": "usaco-1019",
       "name": "Delegation",
       "url": "http://www.usaco.org/index.php?page=viewproblem2&cpid=1019",
       "source": "Gold",
-      "difficulty": "Hard",
+      "difficulty": "Normal",
       "isStarred": false,
       "tags": ["Tree", "Greedy"],
       "solutionMetadata": {
-        "kind": "USACO",
-        "usacoId": "1019"
+        "kind": "internal"
+      }
+    },
+    {
+      "uniqueId": "usaco-1020",
+      "name": "Delegation",
+      "url": "http://www.usaco.org/index.php?page=viewproblem2&cpid=1020",
+      "source": "Platinum",
+      "difficulty": "Normal",
+      "isStarred": false,
+      "tags": ["DP", "Tree", "Binary Search"],
+      "solutionMetadata": {
+        "kind": "internal"
       }
     },
     {
@@ -137,6 +160,19 @@
       "tags": ["Functional Graph"],
       "solutionMetadata": {
         "kind": "internal"
+      }
+    },
+    {
+      "uniqueId": "kattis-gcdharmony",
+      "name": "GCD Harmony",
+      "url": "https://open.kattis.com/problems/gcdharmony",
+      "source": "Kattis",
+      "difficulty": "Hard",
+      "isStarred": false,
+      "tags": ["DP", "Tree", "Number Theory"],
+      "solutionMetadata": {
+        "kind": "internal",
+        "hasHints": true
       }
     },
     {
@@ -163,19 +199,6 @@
       "tags": ["DP", "Tree"],
       "solutionMetadata": {
         "kind": "internal"
-      }
-    },
-    {
-      "uniqueId": "usaco-1020",
-      "name": "Delegation",
-      "url": "http://www.usaco.org/index.php?page=viewproblem2&cpid=1020",
-      "source": "Plat",
-      "difficulty": "Very Hard",
-      "isStarred": false,
-      "tags": ["DP", "Tree", "Binary Search"],
-      "solutionMetadata": {
-        "kind": "USACO",
-        "usacoId": "1020"
       }
     },
     {

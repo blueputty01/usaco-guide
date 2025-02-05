@@ -5,6 +5,8 @@ title: Duff in the Army
 author: Chongtian Ma
 ---
 
+[Official Analysis](https://codeforces.com/blog/entry/20971#:~:text=C%20(Author%3A,))
+
 ## Explanation
 
 Note that for each two nodes $u$ and $v$, the path between them is just $u$ to
@@ -138,10 +140,8 @@ int main() {
 		if (least_common_ancestor != v) { combine(min_people, living_at[v]); }
 
 		// gather people living in path from lca to u and lca to v
-		trace_path(u, max(0, depth[u] - depth[least_common_ancestor] - 1),
-		           min_people);
-		trace_path(v, max(0, depth[v] - depth[least_common_ancestor] - 1),
-		           min_people);
+		trace_path(u, max(0, depth[u] - depth[least_common_ancestor] - 1), min_people);
+		trace_path(v, max(0, depth[v] - depth[least_common_ancestor] - 1), min_people);
 
 		combine(min_people, living_at[least_common_ancestor]);
 

@@ -2,9 +2,9 @@ import { RouteComponentProps } from '@reach/router';
 import * as React from 'react';
 import { useActiveGroup } from '../../../hooks/groups/useActiveGroup';
 import { usePost } from '../../../hooks/groups/usePost';
+import TopNavigationBar from '../../TopNavigationBar/TopNavigationBar';
 import Layout from '../../layout';
 import SEO from '../../seo';
-import TopNavigationBar from '../../TopNavigationBar/TopNavigationBar';
 import Breadcrumbs from '../Breadcrumbs';
 import PostBody from './PostBody';
 import PostHeader from './PostHeader';
@@ -47,14 +47,14 @@ export default function PostPage(
 
   return (
     <Layout>
-      <SEO title={`${post.name} · ${activeGroup.groupData.name}`} />
+      <SEO title={`${post.name} · ${activeGroup.groupData?.name}`} />
       <TopNavigationBar />
       <nav className="flex mt-6 mb-4" aria-label="Breadcrumb">
         <Breadcrumbs
           className={`${
             post.type === 'announcement' ? 'max-w-4xl' : 'max-w-7xl'
           } w-full mx-auto px-4 sm:px-6 lg:px-8 pt-3 pb-4`}
-          group={activeGroup.groupData}
+          group={activeGroup.groupData!}
         />
       </nav>
       <main

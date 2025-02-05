@@ -1,8 +1,8 @@
 import { graphql, useStaticQuery } from 'gatsby';
 import { GatsbyImage } from 'gatsby-plugin-image';
 import * as React from 'react';
-import { useContext, useState } from 'react';
-import UserDataContext from '../../context/UserDataContext/UserDataContext';
+import { useState } from 'react';
+import { useLastVisitInfo } from '../../context/UserDataContext/properties/lastVisit';
 
 // note: cows will be unlocked in lexicographical order
 
@@ -42,9 +42,9 @@ const PhotoCard = ({ img, day, tomorrowMilliseconds, hiddenOnDesktop }) => {
         'max-w-[592px] mx-auto mb-8' + (hiddenOnDesktop ? ' lg:hidden' : '')
       }
     >
-      <div className="bg-white dark:bg-gray-900 shadow sm:rounded-lg overflow-hidden flex flex-col">
+      <div className="bg-white dark:bg-gray-800 shadow sm:rounded-lg overflow-hidden flex flex-col">
         <div className="px-4 pt-5 sm:px-6 sm:pt-6 pb-4">
-          <h3 className="text-lg leading-6 font-medium text-gray-900 dark:text-dark-high-emphasis">
+          <h3 className="text-lg leading-6 font-medium text-gray-800 dark:text-dark-high-emphasis">
             Day {day} Photo
           </h3>
         </div>
@@ -59,7 +59,9 @@ const PhotoCard = ({ img, day, tomorrowMilliseconds, hiddenOnDesktop }) => {
             image={img}
             className="w-full object-cover"
             alt="Cow"
-            style={tomorrowMilliseconds >= 0 ? { filter: 'blur(60px)' } : null}
+            style={
+              tomorrowMilliseconds >= 0 ? { filter: 'blur(60px)' } : undefined
+            }
           />
         </div>
       </div>
@@ -68,30 +70,28 @@ const PhotoCard = ({ img, day, tomorrowMilliseconds, hiddenOnDesktop }) => {
 };
 
 export default function DailyStreak({ streak }) {
-  const data = useStaticQuery(graphql`
-    {
+  const data: Queries.DailyStreakQuery = useStaticQuery(graphql`
+    query DailyStreak {
       allFile(
         filter: { relativePath: { regex: "/^cows/.*/" } }
         sort: { fields: name }
       ) {
-        edges {
-          node {
-            childImageSharp {
-              gatsbyImageData(quality: 100, layout: CONSTRAINED, width: 592)
-            }
-            name
+        nodes {
+          childImageSharp {
+            gatsbyImageData(quality: 100, layout: CONSTRAINED, width: 592)
           }
+          name
         }
       }
     }
   `);
   // https://www.digitalocean.com/community/tutorials/react-usememo
   const cows = React.useMemo(() => {
-    return data.allFile.edges.map(
-      ({ node }) => node.childImageSharp.gatsbyImageData
+    return data.allFile.nodes.map(
+      node => node.childImageSharp!.gatsbyImageData
     );
   }, []);
-  const { lastVisitDate } = useContext(UserDataContext);
+  const { lastVisitDate } = useLastVisitInfo();
 
   // we don't want to render streaks during Server-Side Generation
   const [firstRender, setFirstRender] = useState(true);
@@ -128,7 +128,7 @@ export default function DailyStreak({ streak }) {
     if (i == times.length) {
       return (
         <div className="mb-8" key={times.length}>
-          <div className="bg-white dark:bg-gray-900 shadow sm:rounded-lg overflow-hidden flex flex-col">
+          <div className="bg-white dark:bg-gray-800 shadow sm:rounded-lg overflow-hidden flex flex-col">
             <div className="px-4 py-5 sm:p-6">
               <div className="text-center">
                 <h3 className="text-lg leading-6 font-medium text-gray-900 dark:text-dark-high-emphasis">
@@ -168,7 +168,7 @@ export default function DailyStreak({ streak }) {
   };
   const leftCows = () => {
     // 2-column format for desktop, so hide every other cow
-    const items = [];
+    const items: React.ReactElement[] = [];
     for (let i = maxInd; i >= 0; --i) {
       items.push(getComponent(i, (maxInd - i) % 2 == 1));
     }
@@ -176,7 +176,7 @@ export default function DailyStreak({ streak }) {
   };
   const rightCows = () => {
     // desktop-only
-    const items = [];
+    const items: React.ReactElement[] = [];
     for (let i = maxInd - 1; i >= 0; i -= 2) {
       items.push(getComponent(i, false));
     }
@@ -184,7 +184,7 @@ export default function DailyStreak({ streak }) {
   };
   return (
     <>
-      <div className="bg-white dark:bg-gray-900 shadow sm:rounded-lg overflow-hidden lg:col-span-2">
+      <div className="bg-white dark:bg-gray-800 shadow sm:rounded-lg overflow-hidden lg:col-span-2">
         <div className="px-4 py-5 sm:p-6">
           <div className="text-center">
             <h3 className="text-lg leading-6 font-medium text-gray-900 dark:text-dark-high-emphasis">

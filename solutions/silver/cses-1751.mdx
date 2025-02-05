@@ -5,6 +5,8 @@ title: Planets Cycles
 author: Maggie Liu (C++), Qi Wang (Java), George Pong
 ---
 
+## Explanation
+
 Define the number of teleportations starting from a planet as the
 $\texttt{pathlength}$ of that planet. For each planet that hasn't been visited,
 we want to find its $\texttt{pathlength}$. Call the planet we are performing
@@ -42,11 +44,13 @@ $\texttt{steps}$. Once we get to the $\textit{cycle}$, the $\texttt{pathlength}$
 of the planets will all be equal to the $\texttt{pathlength}$ of the
 $\textit{repeat}$, which is the length of the $\textit{cycle}$.
 
-<LanguageSection>
-
-<CPPSection>
 
 ## Implementation
+
+**Time Complexity**: $\mathcal{O}(N)$
+
+<LanguageSection>
+<CPPSection>
 
 ```cpp
 #include <iostream>
@@ -102,48 +106,13 @@ void dfs(int planet) {
 ```
 
 </CPPSection>
-
 <JavaSection>
 
-## Implementation
-
 ```java
-
 import java.io.*;
 import java.util.*;
 
-class Kattio extends PrintWriter {
-	private BufferedReader r;
-	private StringTokenizer st;
-
-	// standard input
-	public Kattio() { this(System.in, System.out); }
-	public Kattio(InputStream i, OutputStream o) {
-		super(o);
-		r = new BufferedReader(new InputStreamReader(i));
-	}
-	// USACO-style file input
-	public Kattio(String problemName) throws IOException {
-		super(new FileWriter(problemName + ".out"));
-		r = new BufferedReader(new FileReader(problemName + ".in"));
-	}
-
-	// returns null if no more input
-	public String next() {
-		try {
-			while (st == null || !st.hasMoreTokens())
-				st = new StringTokenizer(r.readLine());
-			return st.nextToken();
-		} catch (Exception e) {}
-		return null;
-	}
-
-	public int nextInt() { return Integer.parseInt(next()); }
-	public double nextDouble() { return Double.parseDouble(next()); }
-	public long nextLong() { return Long.parseLong(next()); }
-}
-
-public class planetCycles {
+public class PlanetCycles {
 	static int N, steps;
 	static int[] destinations, pathlength;
 	static boolean[] visited;
@@ -184,11 +153,12 @@ public class planetCycles {
 			steps += pathlength[destinations[n]];
 		}
 	}
+
+	// CodeSnip{Kattio}
 }
 ```
 
 </JavaSection>
-
 <PySection>
 
 ```py
@@ -245,5 +215,4 @@ print(*path_length)
 ```
 
 </PySection>
-
 </LanguageSection>

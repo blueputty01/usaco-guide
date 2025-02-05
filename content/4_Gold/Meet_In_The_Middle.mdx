@@ -50,8 +50,7 @@ recombine them to search for our answer. For every $\texttt{sum}$ in the $\textt
 we can simply check how many elements of $x - \texttt{sum}$ there are in
 $\texttt{right}$. This can be done using simple binary search.
 
-<Spoiler title = "Implementation">
-Overall Time Complexity: $O(N\cdot 2^{N/2})$
+Time Complexity: $O(N\cdot 2^{N/2})$
 
 <LanguageSection>
 
@@ -94,9 +93,7 @@ int main() {
 	for (ll i : left) {
 		auto low_iterator = lower_bound(right.begin(), right.end(), x - i);
 		auto high_iterator = upper_bound(right.begin(), right.end(), x - i);
-		int start_index = low_iterator - right.begin();
-		int end_index = high_iterator - right.begin();
-		ans += end_index - start_index;
+		ans += high_iterator - low_iterator;
 	}
 
 	cout << ans << endl;
@@ -116,7 +113,6 @@ import java.io.*;
 import java.util.*;
 
 public class Main {
-
 	public static void main(String[] args) {
 		Kattio io = new Kattio();
 
@@ -169,43 +165,14 @@ public class Main {
 		}
 		return r;
 	}
-}
 
-// BeginCodeSnip{IO}
-class Kattio extends PrintWriter {
-	private BufferedReader r;
-	private StringTokenizer st;
-	// standard input
-	public Kattio() { this(System.in, System.out); }
-	public Kattio(InputStream i, OutputStream o) {
-		super(o);
-		r = new BufferedReader(new InputStreamReader(i));
-	}
-	// USACO-style file input
-	public Kattio(String problemName) throws IOException {
-		super(problemName + ".out");
-		r = new BufferedReader(new FileReader(problemName + ".in"));
-	}
-	// returns null if no more input
-	public String next() {
-		try {
-			while (st == null || !st.hasMoreTokens())
-				st = new StringTokenizer(r.readLine());
-			return st.nextToken();
-		} catch (Exception e) {}
-		return null;
-	}
-	public int nextInt() { return Integer.parseInt(next()); }
-	public double nextDouble() { return Double.parseDouble(next()); }
-	public long nextLong() { return Long.parseLong(next()); }
+	// CodeSnip{Kattio}
 }
-// EndCodeSnip
 ```
 
 </JavaSection>
 
 </LanguageSection>
-</Spoiler>
 
 ### Problems
 

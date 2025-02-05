@@ -2,12 +2,12 @@
 id: cses-2081
 source: CSES
 title: Fixed-Length Paths II
-author: Andi Qu, Benjamin Qi
+author: Andi Qu, Benjamin Qi, Michael Chen
 ---
 
 ## With Centroid Decomposition
 
-**Time Complexity:** $\mathcal O(N \log^2 N)$
+**Time Complexity:** $\mathcal O(N \log N)$
 
 This solution is a simple extension of
 [CSES Fixed-Length Paths I's solution](/solutions/cses-2080).
@@ -17,9 +17,15 @@ of a fixed length $k$, a node with depth $d$ in $u$'s $i$-th child's subtree
 will contribute $\sum_{x = a - d}^{b - d}\texttt{cnt}_{i - 1}[x]$ paths instead
 of $\texttt{cnt}_{i - 1}[k - d]$ paths to the answer.
 
-This is a range sum, so we can use any range-sum data-structure (e.g. a BIT) to
-query and update $\texttt{cnt}$ efficiently. This adds an additional $\log N$
-factor to the complexity.
+We could calculate this is using a range-sum data-structure (e.g. a BIT).
+However this would add an additional $\log N$ factor to the complexity which might be too slow.
+
+Another way is to calculate and maintain the partial sums of $\texttt{cnt}$.
+We can calculate the partial sum in time proportional to the size of the subtree, and
+each time $d$ is incremented we can update the partial sum in $\mathcal O(1)$ time.
+
+This allows us to keep the total work done at each level of the centroid decomposition
+at $\mathcal O(N)$ and keep the overall time complexity at $\mathcal O(N \log N)$.
 
 <LanguageSection>
 
@@ -35,14 +41,14 @@ vector<int> graph[200001];
 int subtree[200001];
 
 ll ans = 0, bit[200001];
-int mx_depth;
+int total_cnt[200001]{1}, mx_depth;
+int cnt[200001], subtree_depth;
 bool processed[200001];
 
 int get_subtree_sizes(int node, int parent = 0) {
 	subtree[node] = 1;
 	for (int i : graph[node])
-		if (!processed[i] && i != parent)
-			subtree[node] += get_subtree_sizes(i, node);
+		if (!processed[i] && i != parent) subtree[node] += get_subtree_sizes(i, node);
 	return subtree[node];
 }
 
@@ -53,36 +59,44 @@ int get_centroid(int desired, int node, int parent = 0) {
 	return node;
 }
 
-void update(int pos, ll val) {
-	for (pos++; pos <= n; pos += pos & -pos) bit[pos] += val;
-}
-
-ll query(int l, int r) {
-	ll ans = 0;
-	for (r++; r; r -= r & -r) ans += bit[r];
-	for (; l; l -= l & -l) ans -= bit[l];
-	return ans;
-}
-
-void get_cnt(int node, int parent, bool filling, int depth = 1) {
+void get_cnt(int node, int parent, int depth = 1) {
 	if (depth > b) return;
-	mx_depth = max(mx_depth, depth);
-	if (filling) update(depth, 1);
-	else ans += query(max(0, a - depth), b - depth);
+	subtree_depth = max(subtree_depth, depth);
+	cnt[depth]++;
 	for (int i : graph[node])
-		if (!processed[i] && i != parent) get_cnt(i, node, filling, depth + 1);
+		if (!processed[i] && i != parent) get_cnt(i, node, depth + 1);
 }
 
 void centroid_decomp(int node = 1) {
 	int centroid = get_centroid(get_subtree_sizes(node) >> 1, node);
 	processed[centroid] = true;
 	mx_depth = 0;
+	long long partial_sum_init = (a == 1 ? 1ll : 0ll);
 	for (int i : graph[centroid])
 		if (!processed[i]) {
-			get_cnt(i, centroid, false);
-			get_cnt(i, centroid, true);
+			subtree_depth = 0;
+			get_cnt(i, centroid);
+
+			long long partial_sum = partial_sum_init;
+			for (int depth = 1; depth <= subtree_depth; depth++) {
+				ans += partial_sum * cnt[depth];
+
+				int dremove = b - depth;
+				if (dremove >= 0) partial_sum -= total_cnt[dremove];
+				int dadd = a - (depth + 1);
+				if (dadd >= 0) partial_sum += total_cnt[dadd];
+			}
+
+			for (int depth = a - 1; depth <= b - 1 && depth <= subtree_depth; depth++)
+				partial_sum_init += cnt[depth];
+
+			for (int depth = 1; depth <= subtree_depth; depth++)
+				total_cnt[depth] += cnt[depth];
+			mx_depth = max(mx_depth, subtree_depth);
+
+			fill(cnt, cnt + subtree_depth + 1, 0);
 		}
-	for (int i = 1; i <= mx_depth; i++) update(i, -query(i, i));
+	fill(total_cnt + 1, total_cnt + mx_depth + 1, 0);
 	for (int i : graph[centroid])
 		if (!processed[i]) centroid_decomp(i);
 }
@@ -96,7 +110,6 @@ int main() {
 		graph[u].push_back(v);
 		graph[v].push_back(u);
 	}
-	update(0, 1);
 	centroid_decomp();
 	cout << ans;
 	return 0;
@@ -206,7 +219,7 @@ tcT > int lwb(V<T> &a, const T &b) { return int(lb(all(a), b) - bg(a)); }
 // loops
 #define FOR(i, a, b) for (int i = (a); i < (b); ++i)
 #define F0R(i, a) FOR(i, 0, a)
-#define ROF(i, a, b) for (int i = (b)-1; i >= (a); --i)
+#define ROF(i, a, b) for (int i = (b) - 1; i >= (a); --i)
 #define R0F(i, a) ROF(i, 0, a)
 #define EACH(a, x) for (auto &a : x)
 
@@ -214,8 +227,7 @@ const int MOD = 1e9 + 7;  // 998244353;
 const int MX = 2e5 + 5;
 const ll INF = 1e18;  // not too close to LLONG_MAX
 const db PI = acos((db)-1);
-const int dx[4] = {1, 0, -1, 0},
-          dy[4] = {0, 1, 0, -1};  // for every grid problem!!
+const int dx[4] = {1, 0, -1, 0}, dy[4] = {0, 1, 0, -1};  // for every grid problem!!
 mt19937 rng((uint32_t)chrono::steady_clock::now().time_since_epoch().count());
 template <class T> using pqg = priority_queue<T, vector<T>, greater<T>>;
 
@@ -236,9 +248,7 @@ ll fdiv(ll a, ll b) {
 	return a / b - ((a ^ b) < 0 && a % b);
 }  // divide a by b rounded down
 
-tcT > bool ckmin(T &a, const T &b) {
-	return b < a ? a = b, 1 : 0;
-}  // set a = min(a,b)
+tcT > bool ckmin(T &a, const T &b) { return b < a ? a = b, 1 : 0; }  // set a = min(a,b)
 tcT > bool ckmax(T &a, const T &b) { return a < b ? a = b, 1 : 0; }
 
 tcTU > T fstTrue(T lo, T hi, U f) {
@@ -386,14 +396,12 @@ tcTUU > void DBG(const T &t, const U &...u) {
 	DBG(u...);
 }
 #ifdef LOCAL  // compile with -DLOCAL, chk -> fake assert
-#define dbg(...)                                                               \
-	cerr << "Line(" << __LINE__ << ") -> [" << #__VA_ARGS__ << "]: [",         \
-	    DBG(__VA_ARGS__)
-#define chk(...)                                                               \
-	if (!(__VA_ARGS__))                                                        \
-		cerr << "Line(" << __LINE__ << ") -> function(" << __FUNCTION__        \
-		     << ") -> CHK FAILED: (" << #__VA_ARGS__ << ")"                    \
-		     << "\n",                                                          \
+#define dbg(...)                                                                       \
+	cerr << "Line(" << __LINE__ << ") -> [" << #__VA_ARGS__ << "]: [", DBG(__VA_ARGS__)
+#define chk(...)                                                                       \
+	if (!(__VA_ARGS__))                                                                \
+		cerr << "Line(" << __LINE__ << ") -> function(" << __FUNCTION__                \
+		     << ") -> CHK FAILED: (" << #__VA_ARGS__ << ")" << "\n",                   \
 		    exit(0);
 #else
 #define dbg(...) 0

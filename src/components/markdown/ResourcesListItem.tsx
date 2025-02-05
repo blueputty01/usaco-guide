@@ -1,11 +1,11 @@
 import Tippy from '@tippyjs/react';
 import * as React from 'react';
-import { useContext, useRef } from 'react';
+import { useRef } from 'react';
 import styled, { css } from 'styled-components';
 import { Instance } from 'tippy.js';
 import tw from 'twin.macro';
 import { useDarkMode } from '../../context/DarkModeContext';
-import UserDataContext from '../../context/UserDataContext/UserDataContext';
+import { useUserLangSetting } from '../../context/UserDataContext/properties/simpleProperties';
 import { ResourceInfo } from '../../models/resource';
 import TextTooltip from '../Tooltip/TextTooltip';
 import Tooltip from '../Tooltip/Tooltip';
@@ -20,7 +20,7 @@ export const Anchor = styled.a`
 `;
 
 // https://stackoverflow.com/questions/45871439/before-and-after-pseudo-classes-used-with-styled-components
-const StyledResourceRow = styled.tr`
+const StyledResourceRow = styled.tr<{ isActive: boolean }>`
   ${({ isActive }) =>
     isActive
       ? css`
@@ -37,10 +37,10 @@ export default function ResourcesListItem({
 }: {
   resource: ResourceInfo;
 }): JSX.Element {
-  const { lang: userLang } = useContext(UserDataContext);
+  const userLang = useUserLangSetting();
   const darkMode = useDarkMode();
   const [isActive, setIsActive] = React.useState(false);
-  const id = `resource-${encodeURIComponent(resource.url)}`;
+  const id = `resource-${encodeURIComponent(resource.url!)}`;
 
   React.useEffect(() => {
     const hashHandler = (): void => {

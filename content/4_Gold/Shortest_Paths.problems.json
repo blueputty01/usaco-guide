@@ -126,6 +126,18 @@
       }
     },
     {
+      "uniqueId": "ac-remaindergame",
+      "name": "Remainder Game",
+      "url": "https://atcoder.jp/contests/agc022/tasks/agc022_c",
+      "source": "AC",
+      "difficulty": "Hard",
+      "isStarred": false,
+      "tags": ["SP", "Greedy"],
+      "solutionMetadata": {
+        "kind": "none"
+      }
+    },
+    {
       "uniqueId": "ioi-11-crocodile",
       "name": "2011 - Crocodile",
       "url": "https://oj.uz/problem/view/IOI11_crocodile",
@@ -134,8 +146,8 @@
       "isStarred": false,
       "tags": ["SP"],
       "solutionMetadata": {
-        "kind": "IOI",
-        "year": 2011
+        "kind": "internal",
+        "hasHints": true
       }
     },
     {
@@ -164,7 +176,7 @@
     },
     {
       "uniqueId": "apio-11-FindThePath",
-      "name": "2011 - Find the Path",
+      "name": "Find the Path",
       "url": "https://dmoj.ca/problem/apio11p2",
       "source": "APIO",
       "difficulty": "Hard",

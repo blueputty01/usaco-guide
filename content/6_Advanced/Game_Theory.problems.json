@@ -1,6 +1,84 @@
 {
   "MODULE_ID": "game-theory",
+  "chessboard-games": [
+    {
+      "uniqueId": "chessboard-games-againe",
+      "name": "Chessboard Game, Again!",
+      "url": "https://www.hackerrank.com/contests/5-days-of-game-theory/challenges/a-chessboard-game/problem",
+      "source": "Hackerrank",
+      "difficulty": "Normal",
+      "isStarred": false,
+      "tags": ["Game Theory", "NIM"],
+      "solutionMetadata": {
+        "kind": "none"
+      }
+    }
+  ],
+  "nim": [
+    {
+      "uniqueId": "cses-1730",
+      "name": "NIM Game I",
+      "url": "https://cses.fi/problemset/task/1730",
+      "source": "CSES",
+      "difficulty": "Easy",
+      "isStarred": false,
+      "tags": ["Game Theory", "NIM"],
+      "solutionMetadata": {
+        "kind": "none"
+      }
+    }
+  ],
+  "snim": [
+    {
+      "uniqueId": "snim-kattis",
+      "name": "S-NIM",
+      "url": "https://open.kattis.com/problems/snim",
+      "source": "Kattis",
+      "difficulty": "Easy",
+      "isStarred": false,
+      "tags": ["Game Theory", "NIM"],
+      "solutionMetadata": {
+        "kind": "none"
+      }
+    }
+  ],
   "general": [
+    {
+      "uniqueId": "apple-tree-cf-gt",
+      "name": "Apple Tree",
+      "url": "https://codeforces.com/contest/812/problem/E",
+      "source": "CF",
+      "difficulty": "Easy",
+      "isStarred": true,
+      "tags": ["Game Theory", "Nimbers"],
+      "solutionMetadata": {
+        "kind": "none"
+      }
+    },
+    {
+      "uniqueId": "game-of-stones-gt",
+      "name": "Game Of Stones",
+      "url": "https://codeforces.com/problemset/problem/768/E",
+      "source": "CF",
+      "difficulty": "Easy",
+      "isStarred": true,
+      "tags": ["Game Theory", "DP", "Bitmasks", "Nimbers"],
+      "solutionMetadata": {
+        "kind": "none"
+      }
+    },
+    {
+      "uniqueId": "arpa-and-game-gt",
+      "name": "Arpa & Game",
+      "url": "https://codeforces.com/contest/850/problem/C",
+      "source": "CF",
+      "difficulty": "Easy",
+      "isStarred": true,
+      "tags": ["Game Theory", "DP", "Bitmasks", "Nimbers"],
+      "solutionMetadata": {
+        "kind": "none"
+      }
+    },
     {
       "uniqueId": "ioi-05-RectangleGame",
       "name": "2005 - Rectangle Game",
@@ -8,7 +86,7 @@
       "source": "IOI",
       "difficulty": "Easy",
       "isStarred": false,
-      "tags": [],
+      "tags": ["Game Theory"],
       "solutionMetadata": {
         "kind": "IOI",
         "year": 2005
@@ -21,7 +99,7 @@
       "source": "IOI",
       "difficulty": "Normal",
       "isStarred": false,
-      "tags": [],
+      "tags": ["Game Theory"],
       "solutionMetadata": {
         "kind": "IOI",
         "year": 2001
@@ -34,7 +112,7 @@
       "source": "Baltic OI",
       "difficulty": "Normal",
       "isStarred": false,
-      "tags": [],
+      "tags": ["Game Theory"],
       "solutionMetadata": {
         "kind": "link",
         "url": "https://github.com/boi-2014/tasks/blob/master/solutions/analysis/coprobber.pdf"
@@ -47,10 +125,9 @@
       "source": "AC",
       "difficulty": "Normal",
       "isStarred": false,
-      "tags": ["Nimbers", "Game Theory"],
+      "tags": ["Nimbers", "Game Theory", "Tree"],
       "solutionMetadata": {
-        "kind": "autogen-label-from-site",
-        "site": "AC"
+        "kind": "internal"
       }
     },
     {
@@ -60,7 +137,7 @@
       "source": "AC",
       "difficulty": "Normal",
       "isStarred": false,
-      "tags": [],
+      "tags": ["Game Theory", "Nimbers"],
       "solutionMetadata": {
         "kind": "autogen-label-from-site",
         "site": "AC"
@@ -69,7 +146,7 @@
     {
       "uniqueId": "GCJ-BacterialTactics",
       "name": "Bacterial Tactics",
-      "url": "https://codingcompetitions.withgoogle.com/codejam/round/00000000000516b9/0000000000134cdf",
+      "url": "https://zibada.guru/gcj/2019r1c/problems/#C",
       "source": "GCJ",
       "difficulty": "Hard",
       "isStarred": false,
@@ -79,16 +156,15 @@
       }
     },
     {
-      "uniqueId": "ac-StrangeNim",
+      "uniqueId": "strange-nim-atcoder",
       "name": "Strange Nim",
       "url": "https://atcoder.jp/contests/arc091/tasks/arc091_d",
       "source": "AC",
       "difficulty": "Hard",
       "isStarred": false,
-      "tags": ["Nimbers", "Game Theory"],
+      "tags": ["Game Theory", "NIM"],
       "solutionMetadata": {
-        "kind": "autogen-label-from-site",
-        "site": "AC"
+        "kind": "none"
       }
     },
     {

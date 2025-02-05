@@ -1,32 +1,5 @@
 {
   "MODULE_ID": "two-pointers",
-  "sample": [
-    {
-      "uniqueId": "cses-1640",
-      "name": "Sum of Two Values",
-      "url": "https://cses.fi/problemset/task/1640",
-      "source": "CSES",
-      "difficulty": "Easy",
-      "isStarred": true,
-      "tags": [],
-      "solutionMetadata": {
-        "kind": "internal"
-      }
-    },
-    {
-      "uniqueId": "cses-1660",
-      "name": "Subarray Sums I",
-      "url": "https://cses.fi/problemset/task/1660",
-      "source": "CSES",
-      "difficulty": "Easy",
-      "isStarred": false,
-      "tags": [],
-      "solutionMetadata": {
-        "kind": "CPH",
-        "section": "8.1"
-      }
-    }
-  ],
   "book": [
     {
       "uniqueId": "cf-279B",
@@ -42,6 +15,30 @@
     }
   ],
   "ad": [
+    {
+      "uniqueId": "cses-1640",
+      "name": "Sum of Two Values",
+      "url": "https://cses.fi/problemset/task/1640",
+      "source": "CSES",
+      "difficulty": "Easy",
+      "isStarred": true,
+      "tags": ["2P", "Sorting"],
+      "solutionMetadata": {
+        "kind": "internal"
+      }
+    },
+    {
+      "uniqueId": "cses-1660",
+      "name": "Subarray Sums I",
+      "url": "https://cses.fi/problemset/task/1660",
+      "source": "CSES",
+      "difficulty": "Easy",
+      "isStarred": false,
+      "tags": ["Sliding Window"],
+      "solutionMetadata": {
+        "kind": "internal"
+      }
+    },
     {
       "uniqueId": "cses-1641",
       "name": "Sum of Three Values",
@@ -86,6 +83,18 @@
       "difficulty": "Easy",
       "isStarred": false,
       "tags": ["2P"],
+      "solutionMetadata": {
+        "kind": "internal"
+      }
+    },
+    {
+      "uniqueId": "cf-1777C",
+      "name": "Quiz Master",
+      "url": "https://codeforces.com/contest/1777/problem/C",
+      "source": "CF",
+      "difficulty": "Normal",
+      "isStarred": false,
+      "tags": ["2P", "Sorting", "Sliding Window"],
       "solutionMetadata": {
         "kind": "internal"
       }

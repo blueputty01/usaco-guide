@@ -1,8 +1,8 @@
-import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import React, { Component } from 'react';
 
-import { random, sample, range, getDiameter } from './Confetti.helpers';
 import { createCircle, createTriangle, createZigZag } from './confetti-shapes';
+import { getDiameter, random, range, sample } from './Confetti.helpers';
 
 import Canvas from './Canvas';
 

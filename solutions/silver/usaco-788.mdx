@@ -5,6 +5,22 @@ title: Mootube
 author: Óscar Garries, Qi Wang
 ---
 
+<Spoiler title="Hint 1">
+
+Think about the $N$ videos and the $N - 1$ relationships between them.
+What data structure you think can best store and process those information?
+
+</Spoiler>
+
+<Spoiler title="Hint 2">
+
+Let's imagine manually searching through a tree of videos for a singular query.
+What observations can we make about how the relevance value influences our decision-making process in selecting the relevant videos?
+
+</Spoiler>
+
+<Spoiler title="Solution">
+
 [Official Analysis (Java)](http://www.usaco.org/current/data/sol_mootube_silver_jan18.html)
 
 ## Implementation
@@ -145,4 +161,56 @@ public class MooTube {
 ```
 
 </JavaSection>
+<PySection>
+
+<Warning>
+Due to the strict time limits, this Python code recieves a TLE verdict on a test case.
+</Warning>
+
+```py
+import sys
+
+sys.setrecursionlimit(int(1e9))
+
+
+def search_videos(v: int, threshold: int) -> None:
+	"""Searches all vertices that can be reached through the current vertex v"""
+	global num_reachable
+	visited[v] = True
+	for n in neighbors[v]:
+		# Only visit non-visited vertices whose relevance is greater than the current threshold
+		if not visited[n[0]] and n[1] >= threshold:
+			num_reachable += 1
+			search_videos(n[0], threshold)
+
+
+with open("mootube.in", "r") as read:
+	with open("mootube.out", "w") as write:
+		neighbors = []
+		visited = []
+		num_reachable = 0
+		video_num, query_num = map(int, read.readline().split())
+		neighbors = [[] for _ in range(video_num + 1)]
+		for _ in range(video_num - 1):
+			a, b, relevance = map(int, read.readline().split())
+			a -= 1
+			b -= 1
+			neighbors[a].append((b, relevance))
+			neighbors[b].append((a, relevance))
+
+		for _ in range(query_num):
+			threshold, start = map(int, read.readline().split())
+			start -= 1
+
+			# Reset global variables for the current query
+			num_reachable = 0
+			visited = [False] * video_num
+			search_videos(start, threshold)
+
+			write.write(f"{num_reachable}\n")
+```
+
+</PySection>
 </LanguageSection>
+
+</Spoiler>

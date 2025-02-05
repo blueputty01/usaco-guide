@@ -14,12 +14,6 @@ of putting cows in their even/odd positions?
 
 <Spoiler title="Hint 2">
 
-If we reverse an odd number of cows, does anything effectively change?
-
-</Spoiler>
-
-<Spoiler title="Hint 3">
-
 How can we process the cows such that we don't have to look back to already
 processed cows? Keep in mind that we can only reverse *prefixes*.
 
@@ -27,7 +21,7 @@ processed cows? Keep in mind that we can only reverse *prefixes*.
 
 <Spoiler title="Solution">
 
-[Official Analysis (C++, Java, Python)](http://usaco.org/current/data/sol_prob1_bronze_open22.html)
+[Official Analysis (C++, Java, and Python)](http://usaco.org/current/data/sol_prob1_bronze_open22.html)
 
 ## Implementation
 
@@ -55,8 +49,7 @@ int main() {
 	for (int c = cow_num - 2; c >= 0; c -= 2) {
 		string sub = cows.substr(c, 2);
 		if (sub[0] == sub[1]) { continue; }
-		if ((sub == "GH" && flips % 2 == 0) ||
-		    (sub == "HG" && flips % 2 == 1)) {
+		if ((sub == "GH" && flips % 2 == 0) || (sub == "HG" && flips % 2 == 1)) {
 			flips++;
 		}
 	}
@@ -73,8 +66,7 @@ import java.io.*;
 
 public class Photoshoot {
 	public static void main(String[] args) throws IOException {
-		BufferedReader read =
-		    new BufferedReader(new InputStreamReader(System.in));
+		BufferedReader read = new BufferedReader(new InputStreamReader(System.in));
 		int cowNum = Integer.parseInt(read.readLine());
 		String cows = read.readLine();
 		assert cows.length() == cowNum && cowNum % 2 == 0;

@@ -2,6 +2,19 @@
   "MODULE_ID": "gold-conclusion",
   "problems": [
     {
+      "uniqueId": "cf-1842C",
+      "name": "Tenzing and Balls",
+      "url": "https://codeforces.com/problemset/problem/1842/C",
+      "source": "CF",
+      "difficulty": "Easy",
+      "isStarred": false,
+      "tags": ["DP"],
+      "solutionMetadata": {
+        "kind": "autogen-label-from-site",
+        "site": "CF"
+      }
+    },
+    {
       "uniqueId": "usaco-230",
       "name": "Island Travels",
       "url": "http://www.usaco.org/index.php?page=viewproblem2&cpid=230",
@@ -10,8 +23,7 @@
       "isStarred": false,
       "tags": ["Bitmasks", "DP", "BFS"],
       "solutionMetadata": {
-        "kind": "USACO",
-        "usacoId": "230"
+        "kind": "internal"
       }
     },
     {
@@ -40,6 +52,19 @@
       }
     },
     {
+      "uniqueId": "cf-1509C",
+      "name": "The Sports Festival",
+      "url": "https://codeforces.com/contest/1509/problem/C",
+      "source": "CF",
+      "difficulty": "Easy",
+      "isStarred": false,
+      "tags": ["Range DP"],
+      "solutionMetadata": {
+        "kind": "autogen-label-from-site",
+        "site": "CF"
+      }
+    },
+    {
       "uniqueId": "cfgym-103886E",
       "name": "Jeopardized Projects",
       "url": "https://codeforces.com/gym/103886/problem/E",
@@ -48,8 +73,7 @@
       "isStarred": false,
       "tags": ["Combinatorics", "Prefix Sums"],
       "solutionMetadata": {
-        "kind": "autogen-label-from-site",
-        "site": "CF"
+        "kind": "internal"
       }
     },
     {
@@ -91,6 +115,144 @@
       }
     },
     {
+      "uniqueId": "usaco-282",
+      "name": "What's Up With Gravity?",
+      "url": "http://www.usaco.org/index.php?page=viewproblem2&cpid=282",
+      "source": "Old Silver",
+      "difficulty": "Normal",
+      "isStarred": false,
+      "tags": ["BFS"],
+      "solutionMetadata": {
+        "kind": "internal"
+      }
+    },
+    {
+      "uniqueId": "usaco-1090",
+      "name": "Telephone",
+      "url": "http://www.usaco.org/index.php?page=viewproblem2&cpid=1090",
+      "source": "Gold",
+      "difficulty": "Normal",
+      "isStarred": false,
+      "tags": ["BFS"],
+      "solutionMetadata": {
+        "kind": "internal"
+      }
+    },
+    {
+      "uniqueId": "cf-835D",
+      "name": "Palindromic Characteristics",
+      "url": "https://codeforces.com/contest/835/problem/D",
+      "source": "CF",
+      "difficulty": "Normal",
+      "isStarred": false,
+      "tags": ["DP", "Hashing"],
+      "solutionMetadata": {
+        "kind": "autogen-label-from-site",
+        "site": "CF"
+      }
+    },
+    {
+      "uniqueId": "usaco-695",
+      "name": "Cow Navigation",
+      "url": "http://www.usaco.org/index.php?page=viewproblem2&cpid=695",
+      "source": "Gold",
+      "difficulty": "Normal",
+      "isStarred": false,
+      "tags": ["BFS"],
+      "solutionMetadata": {
+        "kind": "internal"
+      }
+    },
+    {
+      "uniqueId": "usaco-575",
+      "name": "Bessie's Dream",
+      "url": "http://www.usaco.org/index.php?page=viewproblem2&cpid=575",
+      "source": "Gold",
+      "difficulty": "Normal",
+      "isStarred": false,
+      "tags": ["BFS"],
+      "solutionMetadata": {
+        "kind": "USACO",
+        "usacoId": "575"
+      }
+    },
+    {
+      "uniqueId": "cf-1114D",
+      "name": "Flood Fill",
+      "url": "https://codeforces.com/contest/1114/problem/D",
+      "source": "CF",
+      "difficulty": "Normal",
+      "isStarred": false,
+      "tags": ["DP"],
+      "solutionMetadata": {
+        "kind": "internal"
+      }
+    },
+    {
+      "uniqueId": "cf-1108F",
+      "name": "MST Unification",
+      "url": "https://codeforces.com/contest/1108/problem/F",
+      "source": "CF",
+      "difficulty": "Normal",
+      "isStarred": false,
+      "tags": ["DSU", "MST"],
+      "solutionMetadata": {
+        "kind": "autogen-label-from-site",
+        "site": "CF"
+      }
+    },
+    {
+      "uniqueId": "kattis-studentsko",
+      "name": "Studentsko",
+      "url": "https://open.kattis.com/problems/studentsko?tab=submissions",
+      "source": "Kattis",
+      "difficulty": "Normal",
+      "isStarred": false,
+      "tags": ["LIS", "DP"],
+      "solutionMetadata": {
+        "kind": "internal",
+        "hasHints": true
+      }
+    },
+    {
+      "uniqueId": "cf-1810E",
+      "name": "Monsters",
+      "url": "https://codeforces.com/contest/1810/problem/E",
+      "source": "CF",
+      "difficulty": "Normal",
+      "isStarred": false,
+      "tags": ["DSU", "Set", "Greedy"],
+      "solutionMetadata": {
+        "kind": "autogen-label-from-site",
+        "site": "CF"
+      }
+    },
+    {
+      "uniqueId": "other-flowers",
+      "name": "Flowers",
+      "url": "https://kilonova.ro/problems/2890",
+      "source": "IIOT",
+      "difficulty": "Normal",
+      "isStarred": false,
+      "tags": ["DP", "Tree"],
+      "solutionMetadata": {
+        "kind": "none"
+      }
+    },
+    {
+      "uniqueId": "cf-2027D2",
+      "name": "The Endspeaker (Hard Version)",
+      "url": "https://codeforces.com/contest/2027/problem/D2",
+      "source": "CF",
+      "difficulty": "Normal",
+      "isStarred": false,
+      "tags": ["DP", "Binary Search", "Two Pointers", "PURS"],
+      "solutionMetadata": {
+        "kind": "autogen-label-from-site",
+        "site": "CF"
+      }
+    },
+    {
       "uniqueId": "cf-1713E",
       "name": "Cross Swapping",
       "url": "https://codeforces.com/problemset/problem/1713/E",
@@ -115,6 +277,32 @@
       }
     },
     {
+      "uniqueId": "ac-cubic",
+      "name": "Cubic?",
+      "url": "https://atcoder.jp/contests/abc238/tasks/abc238_g",
+      "source": "AC",
+      "difficulty": "Hard",
+      "isStarred": false,
+      "tags": ["Hashing", "Prime Factorization"],
+      "solutionMetadata": {
+        "kind": "autogen-label-from-site",
+        "site": "AC"
+      }
+    },
+    {
+      "uniqueId": "cf-906D",
+      "name": "Power Tower",
+      "url": "https://codeforces.com/problemset/problem/906/D",
+      "source": "CF",
+      "difficulty": "Very Hard",
+      "isStarred": false,
+      "tags": ["Divisibility", "Math", "Number Theory"],
+      "solutionMetadata": {
+        "kind": "autogen-label-from-site",
+        "site": "CF"
+      }
+    },
+    {
       "uniqueId": "poi-sums",
       "name": "Sums",
       "url": "https://szkopul.edu.pl/problemset/problem/ROXsaseQWYR11jbNvCgM19Er/site/?key=statement",
@@ -123,7 +311,7 @@
       "isStarred": false,
       "tags": ["SP"],
       "solutionMetadata": {
-        "kind": "none"
+        "kind": "internal"
       }
     }
   ]

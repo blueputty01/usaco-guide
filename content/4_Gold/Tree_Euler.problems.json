@@ -110,12 +110,38 @@
       "uniqueId": "usaco-696",
       "name": "Promotion Counting",
       "url": "http://www.usaco.org/index.php?page=viewproblem2&cpid=696",
-      "source": "Plat",
+      "source": "Platinum",
       "difficulty": "Normal",
       "isStarred": false,
       "tags": ["Euler Tour", "PURS"],
       "solutionMetadata": {
         "kind": "internal"
+      }
+    },
+    {
+      "uniqueId": "ac-exactlyKSteps",
+      "name": "Exactly K Steps",
+      "url": "https://atcoder.jp/contests/abc267/tasks/abc267_f",
+      "source": "AC",
+      "difficulty": "Normal",
+      "isStarred": false,
+      "tags": ["Euler Tour"],
+      "solutionMetadata": {
+        "kind": "autogen-label-from-site",
+        "site": "AC"
+      }
+    },
+    {
+      "uniqueId": "cf-1051F",
+      "name": "The Shortest Statement",
+      "url": "https://codeforces.com/contest/1051/problem/F",
+      "source": "CF",
+      "difficulty": "Normal",
+      "isStarred": false,
+      "tags": ["Euler Tour"],
+      "solutionMetadata": {
+        "kind": "autogen-label-from-site",
+        "site": "CF"
       }
     },
     {
@@ -132,6 +158,19 @@
       }
     },
     {
+      "uniqueId": "ac-distancequeries",
+      "name": "Distance Queries on a Tree",
+      "url": "https://atcoder.jp/contests/abc294/tasks/abc294_g",
+      "source": "AC",
+      "difficulty": "Hard",
+      "isStarred": true,
+      "tags": ["LCA", "PURS"],
+      "solutionMetadata": {
+        "kind": "internal",
+        "hasHints": true
+      }
+    },
+    {
       "uniqueId": "ioi-09-regions",
       "name": "2009 - Regions",
       "url": "https://oj.uz/problem/view/IOI09_regions",
@@ -140,15 +179,15 @@
       "isStarred": false,
       "tags": ["Euler Tour", "Binary Search"],
       "solutionMetadata": {
-        "kind": "link",
-        "url": "http://www.ioi2009.org/GetResource?id=1969"
+        "kind": "internal",
+        "hasHints": true
       }
     },
     {
       "uniqueId": "usaco-973",
       "name": "Bessie's Snow Cow",
       "url": "http://www.usaco.org/index.php?page=viewproblem2&cpid=973",
-      "source": "Plat",
+      "source": "Platinum",
       "difficulty": "Hard",
       "isStarred": false,
       "tags": ["Euler Tour", "PURS", "Lazy SegTree"],
@@ -157,23 +196,10 @@
       }
     },
     {
-      "uniqueId": "cf-838B",
-      "name": "Diverging Directions",
-      "url": "https://codeforces.com/contest/838/problem/B",
-      "source": "CF",
-      "difficulty": "Hard",
-      "isStarred": false,
-      "tags": ["Euler Tour", "RURQ"],
-      "solutionMetadata": {
-        "kind": "autogen-label-from-site",
-        "site": "CF"
-      }
-    },
-    {
-      "uniqueId": "dmoj-VictorTakesOverCanada",
+      "uniqueId": "dmopc-victortakesovercanada",
       "name": "Victor Takes Over Canada",
       "url": "https://dmoj.ca/problem/dmopc20c1p5",
-      "source": "DMOJ",
+      "source": "DMOPC",
       "difficulty": "Very Hard",
       "isStarred": false,
       "tags": ["Euler Tour", "PURS"],

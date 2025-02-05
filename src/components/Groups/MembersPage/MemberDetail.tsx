@@ -1,8 +1,7 @@
 import { navigate } from 'gatsby-link';
 import * as React from 'react';
-import { useContext } from 'react';
 import toast from 'react-hot-toast';
-import UserDataContext from '../../../context/UserDataContext/UserDataContext';
+import { useFirebaseUser } from '../../../context/UserDataContext/UserDataContext';
 import getPermissionLevel from '../../../functions/src/groups/utils/getPermissionLevel';
 import { useActiveGroup } from '../../../hooks/groups/useActiveGroup';
 import { useGroupActions } from '../../../hooks/groups/useGroupActions';
@@ -11,11 +10,9 @@ import { MemberInfo } from '../../../hooks/groups/useMemberInfoForGroup';
 export default function MemberDetail({ member }: { member: MemberInfo }) {
   const activeGroup = useActiveGroup();
   const { removeMemberFromGroup, updateMemberPermissions } = useGroupActions();
-  const {
-    firebaseUser: { uid: userId },
-  } = useContext(UserDataContext);
+  const { uid: userId } = useFirebaseUser()!;
   const userLeaderboardData = useUserLeaderboardData(
-    activeGroup.activeGroupId,
+    activeGroup.activeGroupId!,
     member.uid
   );
 
@@ -26,7 +23,10 @@ export default function MemberDetail({ member }: { member: MemberInfo }) {
       </p>
     );
   }
-  const permissionLevel = getPermissionLevel(member.uid, activeGroup.groupData);
+  const permissionLevel = getPermissionLevel(
+    member.uid,
+    activeGroup.groupData!
+  );
 
   return (
     <article>
@@ -93,7 +93,7 @@ export default function MemberDetail({ member }: { member: MemberInfo }) {
                     'Are you sure you want to remove this member from the group?'
                   )
                 ) {
-                  removeMemberFromGroup(activeGroup.activeGroupId, member.uid)
+                  removeMemberFromGroup(activeGroup.activeGroupId!, member.uid)
                     .then(() =>
                       toast.success(
                         'This member has been successfully removed from the group.'
@@ -126,7 +126,7 @@ export default function MemberDetail({ member }: { member: MemberInfo }) {
                       )
                     ) {
                       updateMemberPermissions(
-                        activeGroup.activeGroupId,
+                        activeGroup.activeGroupId!,
                         member.uid,
                         newPermission
                       )
@@ -155,7 +155,7 @@ export default function MemberDetail({ member }: { member: MemberInfo }) {
                   'Viewing group as member. Do not submit any problems. Reload the page to undo.'
                 );
                 activeGroup.setActiveUserId(member.uid);
-                navigate(`/groups/${activeGroup.activeGroupId}`);
+                navigate(`/groups/${activeGroup.activeGroupId!}`);
               }}
             >
               View Group as Member

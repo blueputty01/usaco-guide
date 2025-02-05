@@ -1,25 +1,29 @@
 import { InformationCircleIcon } from '@heroicons/react/outline';
 import classNames from 'classnames';
-import { useAtomValue, useUpdateAtom } from 'jotai/utils';
-import React, { useContext } from 'react';
+import { useAtomValue, useSetAtom } from 'jotai';
+import React from 'react';
 import { activeFileAtom, saveFileAtom } from '../../atoms/editor';
 import { useDarkMode } from '../../context/DarkModeContext';
 import {
-  Language,
   LANGUAGE_LABELS,
-} from '../../context/UserDataContext/properties/userLang';
-import UserDataContext from '../../context/UserDataContext/UserDataContext';
+  useSetThemeSetting,
+  useSetUserLangSetting,
+  useUserLangSetting,
+} from '../../context/UserDataContext/properties/simpleProperties';
 import LogoSquare from '../LogoSquare';
 import { fetchFileContent } from './editorUtils';
 
 export const EditorTopNav = (): JSX.Element => {
   const activeFile = useAtomValue(activeFileAtom);
-  const saveFile = useUpdateAtom(saveFileAtom);
-  const userSettings = useContext(UserDataContext);
+  const saveFile = useSetAtom(saveFileAtom);
   const isDarkMode = useDarkMode();
+  const userLang = useUserLangSetting();
+  const setUserLang = useSetUserLangSetting();
+  const setTheme = useSetThemeSetting();
 
   const handleReloadContent = async () => {
-    if (confirm('Reload file from Github? Your local changes will be lost.')) {
+    if (!activeFile) return;
+    if (confirm('Reload file from GitHub? Your local changes will be lost.')) {
       const data = await fetchFileContent(activeFile.path);
       // note: we can't use setMarkdown / setProblems in sequence because setProblems would override setMarkdown
       saveFile({
@@ -80,10 +84,10 @@ export const EditorTopNav = (): JSX.Element => {
 
         {activeFile?.path && (
           <button
-            className="inline-flex items-center space-x-2 text-gray-600 text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 px-3 py-2 font-medium text-sm rounded-md focus:outline-none transition"
+            className="inline-flex items-center space-x-2 text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 px-3 py-2 font-medium text-sm rounded-md focus:outline-none transition"
             onClick={handleReloadContent}
           >
-            Reload Content from Github
+            Reload Content from GitHub
           </button>
         )}
         {activeFile?.path && (
@@ -92,25 +96,25 @@ export const EditorTopNav = (): JSX.Element => {
               activeFile?.path
             )}`}
             target="_blank"
-            className="inline-flex items-center space-x-2 text-gray-600 text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 px-3 py-2 font-medium text-sm rounded-md focus:outline-none transition"
+            className="inline-flex items-center space-x-2 text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 px-3 py-2 font-medium text-sm rounded-md focus:outline-none transition"
             rel="noreferrer"
           >
-            View File on Github &rarr;
+            View File on GitHub &rarr;
           </a>
         )}
       </div>
       <div className="flex items-center">
         <nav className="flex space-x-1" aria-label="Tabs">
-          {['cpp', 'java', 'py'].map((tab: Language) => (
+          {(['cpp', 'java', 'py'] as const).map(tab => (
             <button
               key={tab}
               className={classNames(
-                tab === userSettings.lang
+                tab === userLang
                   ? 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300'
                   : 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300',
                 'px-3 py-2 font-medium text-sm rounded-md focus:outline-none transition'
               )}
-              onClick={() => userSettings.setLang(tab)}
+              onClick={() => setUserLang(tab)}
             >
               {LANGUAGE_LABELS[tab]}
             </button>
@@ -132,7 +136,7 @@ export const EditorTopNav = (): JSX.Element => {
         <div className="mx-4 block border-l border-gray-200 dark:border-gray-700 h-6 self-center" />
 
         <button
-          onClick={() => userSettings.setTheme(isDarkMode ? 'light' : 'dark')}
+          onClick={() => setTheme(isDarkMode ? 'light' : 'dark')}
           className="-mx-1 p-1 border-2 border-transparent text-gray-400 dark:text-gray-400 rounded-full hover:text-gray-300 dark:hover:text-dark-high-emphasis focus:outline-none focus:text-gray-500 focus:bg-gray-100 dark:focus:bg-gray-700 transition"
         >
           {isDarkMode ? (

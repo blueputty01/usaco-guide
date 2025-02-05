@@ -57,13 +57,14 @@ const inlineCode = (props): JSX.Element => (
 );
 const a = ({ children, ...props }) => (
   <a
-    target={!props.href || props.href.startsWith('#') ? null : '_blank'}
+    target={!props.href || props.href.startsWith('#') ? undefined : '_blank'}
     {...props}
   >
     {children}
   </a>
 );
 const pre = ({ children, copyButton = true, ...props }) => {
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   const isDarkMode = useDarkMode();
 
   return (

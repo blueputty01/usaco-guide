@@ -53,7 +53,7 @@ $\mathcal{O}(N^2)$ time:
 #include <vector>
 using namespace std;
 
-int find_lis(vector<int> a) {
+int find_lis(const vector<int> &a) {
 	int lis = 0;
 	vector<int> dp(a.size(), 1);
 	for (int i = 0; i < a.size(); i++) {
@@ -134,8 +134,8 @@ wanted.
 index $j$ (with 0-indexing) such that $L_i[j] \geq A[i + 1]$.
 
 **Proof:** Let $j$ be defined as it is in the statement. First of all, since
-$A[i + 1] > L_i[j - 1]$, there is an increasing sequence of length $j$ ending on
-$A[i + 1]$, as we can append $A[i + 1]$ to the end of the sequence of length
+$A[i + 1] > L_i[j - 1]$, there is an increasing sequence of length $j+1$ ending
+at $A[i + 1]$, as we can append $A[i + 1]$ to the end of the sequence of length
 $j$. By Lemma 1, $L_i$ is strictly increasing, so $L_i[k] \geq A[i + 1]$ for all
 $k \geq j$. This means that there cannot be a LIS ending at $A[i + 1]$ longer
 than $j + 1$.
@@ -160,7 +160,7 @@ solution for PCB).
 #include <vector>
 using namespace std;
 
-int find_lis(vector<int> a) {
+int find_lis(const vector<int> &a) {
 	vector<int> dp;
 	for (int i : a) {
 		int pos = lower_bound(dp.begin(), dp.end(), i) - dp.begin();
@@ -387,6 +387,7 @@ class MaxSegTree {
 from typing import List
 
 
+# BeginCodeSnip{Range Maximum Segment Tree}
 class MaxSegTree:
 	def __init__(self, len_: int):
 		self.len = len_
@@ -415,6 +416,9 @@ class MaxSegTree:
 			start >>= 1
 			end >>= 1
 		return max_
+
+
+# EndCodeSnip
 
 
 def find_lis(a: List[int]) -> int:
@@ -563,15 +567,13 @@ import java.util.*;
 
 class PCB {
 	public static void main(String[] args) throws IOException {
-		BufferedReader br =
-		    new BufferedReader(new InputStreamReader(System.in));
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		int n = Integer.parseInt(br.readLine());
 		TreeMap<Integer, Integer> a =
 		    new TreeMap<Integer, Integer>(Collections.reverseOrder());
 		for (int i = 0; i < n; i++) {
 			StringTokenizer st = new StringTokenizer(br.readLine());
-			a.put(Integer.parseInt(st.nextToken()),
-			      Integer.parseInt(st.nextToken()));
+			a.put(Integer.parseInt(st.nextToken()), Integer.parseInt(st.nextToken()));
 		}
 		// finding the LIS of a reversed array = finding the LDS
 		int lis = 0;
@@ -594,8 +596,10 @@ class PCB {
 <Problems problems="lis" />
 
 <Info>
+
 The original problem statement for "Matryoshka" is in Japanese. You can find a user-translated
 version of the problem [here](https://gist.github.com/SansPapyrus683/ffa4906fc1351e48d453aa838cd255a2).
+
 </Info>
 
 <!-- <Resource source="CF" title="DP List" url="325">

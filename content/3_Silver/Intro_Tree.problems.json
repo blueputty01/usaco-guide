@@ -38,7 +38,8 @@
       "isStarred": true,
       "tags": ["Tree", "Connected Components"],
       "solutionMetadata": {
-        "kind": "internal"
+        "kind": "internal",
+        "hasHints": true
       }
     },
     {
@@ -100,6 +101,18 @@
       "solutionMetadata": {
         "kind": "CPH",
         "section": "14.2"
+      }
+    },
+    {
+      "uniqueId": "cf-104536F",
+      "name": "Minimize the Diameter",
+      "url": "https://codeforces.com/gym/104536/problem/F",
+      "source": "CF",
+      "difficulty": "Normal",
+      "isStarred": false,
+      "tags": ["Tree"],
+      "solutionMetadata": {
+        "kind": "internal"
       }
     },
     {

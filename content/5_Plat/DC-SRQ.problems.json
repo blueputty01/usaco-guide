@@ -53,10 +53,10 @@
       }
     },
     {
-      "uniqueId": "dmoj-ContinuedFractions",
+      "uniqueId": "dmopc-ContinuedFractions",
       "name": "Continued Fractions",
       "url": "https://dmoj.ca/problem/dmopc19c7p4",
-      "source": "DMOJ",
+      "source": "DMOPC",
       "difficulty": "Normal",
       "isStarred": false,
       "tags": [],
@@ -66,8 +66,8 @@
       }
     },
     {
-      "uniqueId": "noi-supperbox",
-      "name": "Supperbox",
+      "uniqueId": "noi-18-supperbox",
+      "name": "Estelle's Supper Box",
       "url": "https://codebreaker.xyz/problem/supperbox",
       "source": "NOI",
       "difficulty": "Normal",
@@ -81,7 +81,7 @@
       "uniqueId": "usaco-997",
       "name": "Non-Decreasing Subsequences",
       "url": "http://www.usaco.org/index.php?page=viewproblem2&cpid=997",
-      "source": "Plat",
+      "source": "Platinum",
       "difficulty": "Hard",
       "isStarred": false,
       "tags": ["Matrix", "D&C"],

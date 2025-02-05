@@ -5,12 +5,14 @@ title: Diamond Collector
 author: Nathan Wang, Albert Ye
 ---
 
-[Official Analysis](http://www.usaco.org/current/data/sol_diamond_silver_open16.html)
+[Official Analysis (Java)](http://www.usaco.org/current/data/sol_diamond_silver_open16.html)
+
+## Implementation
+
+**Time Complexity:** $\mathcal{O} (N \log{N})$
 
 <LanguageSection>
 <CPPSection>
-
-## Implementation
 
 ```cpp
 #include <bits/stdc++.h>
@@ -49,15 +51,11 @@ int main() {
 		ans = max(ans, canTakeLeft[l] + maxValAfterI[l + canTakeLeft[l]]);
 	}
 	cout << ans << endl;
-
-	return 0;
 }
 ```
 
 </CPPSection>
 <JavaSection>
-
-## Implementation
 
 Source: Nick Wu, from the official USACO editorial
 
@@ -73,9 +71,7 @@ public class diamondS {
 		int n = Integer.parseInt(st.nextToken());
 		int k = Integer.parseInt(st.nextToken());
 		int[] list = new int[n];
-		for (int i = 0; i < n; i++) {
-			list[i] = Integer.parseInt(br.readLine());
-		}
+		for (int i = 0; i < n; i++) { list[i] = Integer.parseInt(br.readLine()); }
 		Arrays.sort(list);
 		// leftmostIndex[i] stores the index of the smallest diamond that can be
 		// included given that the largest diamond in the case has size list[i].
@@ -96,9 +92,7 @@ public class diamondS {
 		int[] rightSize = new int[n];
 		for (int i = n - 1; i >= 0; i--) {
 			rightSize[i] = rightmostIndex[i] - i + 1;
-			if (i < n - 1) {
-				rightSize[i] = Math.max(rightSize[i], rightSize[i + 1]);
-			}
+			if (i < n - 1) { rightSize[i] = Math.max(rightSize[i], rightSize[i + 1]); }
 		}
 		int ret = 0;
 		for (int i = 0; i < n - 1; i++) {
@@ -132,8 +126,6 @@ public class diamondS {
 
 </JavaSection>
 <PySection>
-
-## Implementation
 
 ```py
 import sys

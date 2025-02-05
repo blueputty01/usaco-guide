@@ -1,21 +1,6 @@
 {
   "MODULE_ID": "PURS",
-  "sample": [
-    {
-      "uniqueId": "cses-1648",
-      "name": "Dynamic Range Sum Queries",
-      "url": "https://cses.fi/problemset/task/1648",
-      "source": "CSES",
-      "difficulty": "Easy",
-      "isStarred": false,
-      "tags": ["PURS"],
-      "solutionMetadata": {
-        "kind": "sketch",
-        "sketch": "Can also do range XOR queries w/ update."
-      }
-    }
-  ],
-  "segSam": [
+  "rangeMin": [
     {
       "uniqueId": "cses-1649",
       "name": "Dynamic Range Minimum Queries",
@@ -24,6 +9,20 @@
       "difficulty": "Easy",
       "isStarred": false,
       "tags": ["PURQ"],
+      "solutionMetadata": {
+        "kind": "none"
+      }
+    }
+  ],
+  "rangeSum": [
+    {
+      "uniqueId": "cses-1648",
+      "name": "Dynamic Range Sum Queries",
+      "url": "https://cses.fi/problemset/task/1648",
+      "source": "CSES",
+      "difficulty": "Easy",
+      "isStarred": false,
+      "tags": ["PURS"],
       "solutionMetadata": {
         "kind": "none"
       }
@@ -88,6 +87,18 @@
       "difficulty": "Easy",
       "isStarred": false,
       "tags": ["PURS", "Coordinate Compress"],
+      "solutionMetadata": {
+        "kind": "internal"
+      }
+    },
+    {
+      "uniqueId": "cf-1181D",
+      "name": "Irrigation",
+      "url": "https://codeforces.com/contest/1181/problem/D",
+      "source": "CF",
+      "difficulty": "Easy",
+      "isStarred": false,
+      "tags": ["PURS", "Binary Search", "Offline"],
       "solutionMetadata": {
         "kind": "internal"
       }
@@ -171,7 +182,7 @@
       "uniqueId": "usaco-720",
       "name": "Mincross",
       "url": "http://www.usaco.org/index.php?page=viewproblem2&cpid=720",
-      "source": "Plat",
+      "source": "Platinum",
       "difficulty": "Easy",
       "isStarred": false,
       "tags": ["PURS", "Inversions"],

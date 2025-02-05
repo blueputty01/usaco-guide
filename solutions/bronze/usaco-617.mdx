@@ -2,13 +2,20 @@
 id: usaco-617
 source: USACO Bronze 2016 February
 title: Load Balancing
-author: Maggie Liu, Kevin Sheng
+author: Maggie Liu, Kevin Sheng, David Guo
 ---
 
 [Official Analysis (Java)](http://www.usaco.org/current/data/sol_balancing_bronze_feb16.html)
 
 <LanguageSection>
 <CPPSection>
+
+## Explanation
+
+We solve this problem by brute forcing over all possible placements of the two fences.
+Note that we only need to consider fence positions at $x + 1$ and $y + 1$ for each cow's at $(x, y)$
+because these are the only positions that affect the regions without passing through a cow.
+For each pair of fences, we count the number of cows in each of the four regions and update our maximum accordingly.
 
 ## Implementation
 
@@ -61,9 +68,8 @@ int main() {
 				}
 			}
 
-			min_imbalance =
-			    min(min_imbalance,
-			        max({top_left, top_right, bottom_left, bottom_right}));
+			min_imbalance = min(min_imbalance,
+			                    max({top_left, top_right, bottom_left, bottom_right}));
 		}
 	}
 
@@ -80,8 +86,7 @@ import java.util.*;
 
 public class Balancing {
 	public static void main(String[] args) throws IOException {
-		BufferedReader read =
-		    new BufferedReader(new FileReader("balancing.in"));
+		BufferedReader read = new BufferedReader(new FileReader("balancing.in"));
 		StringTokenizer initial = new StringTokenizer(read.readLine());
 		int cowNum = Integer.parseInt(initial.nextToken());
 		// We won't use this variable
@@ -96,11 +101,11 @@ public class Balancing {
 			xvals[c] = Integer.parseInt(cow.nextToken());
 			yvals[c] = Integer.parseInt(cow.nextToken());
 			vfences.add(xvals[c] + 1);  // x-coords of relevant vertical fences
-			hfences.add(yvals[c] +
-			            1);  // y-coords of relevant horizontal fences
+			hfences.add(yvals[c] + 1);  // y-coords of relevant horizontal fences
 		}
 
 		int minImbalance = cowNum;
+		// Loop through each pair of fences
 		for (int v : vfences) {
 			for (int h : hfences) {
 				int topLeft = 0;
@@ -108,6 +113,7 @@ public class Balancing {
 				int bottomLeft = 0;
 				int bottomRight = 0;
 
+				// Count the number of cows in each region
 				for (int c = 0; c < cowNum; c++) {
 					if (xvals[c] < v && yvals[c] > h) {
 						topLeft++;

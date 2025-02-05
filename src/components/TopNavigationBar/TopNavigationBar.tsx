@@ -19,17 +19,20 @@ import {
 import classNames from 'classnames';
 import { Link } from 'gatsby';
 import * as React from 'react';
-import { Fragment, useContext, useState } from 'react';
-import MODULE_ORDERING from '../../../content/ordering';
-import { SignInContext } from '../../context/SignInContext';
-import UserDataContext from '../../context/UserDataContext/UserDataContext';
-import { useUserGroups } from '../../hooks/groups/useUserGroups';
+import { Fragment, useState } from 'react';
+import { useSignIn } from '../../context/SignInContext';
+import {
+  useFirebaseUser,
+  useIsUserDataLoaded,
+  useSignOutAction,
+} from '../../context/UserDataContext/UserDataContext';
 import ContactUsSlideover from '../ContactUsSlideover/ContactUsSlideover';
-import { LoadingSpinner } from '../elements/LoadingSpinner';
 import Logo from '../Logo';
 import LogoSquare from '../LogoSquare';
 import MobileMenuButtonContainer from '../MobileMenuButtonContainer';
 import SectionsDropdown from '../SectionsDropdown';
+import { LoadingSpinner } from '../elements/LoadingSpinner';
+import Banner from './Banner';
 import { SearchModal } from './SearchModal';
 import { UserAvatarMenu } from './UserAvatarMenu';
 
@@ -37,33 +40,16 @@ export default function TopNavigationBar({
   transparent = false,
   linkLogoToIndex = false,
   currentSection = null,
-  hideClassesPromoBar = false,
+  hidePromoBar = false,
+  redirectToDashboard = false,
 }) {
-  const { firebaseUser, signOut, isLoaded, userProgressOnModules } =
-    useContext(UserDataContext);
-  const { signIn } = React.useContext(SignInContext);
+  const firebaseUser = useFirebaseUser();
+  const signOut = useSignOutAction();
+  const isLoaded = useIsUserDataLoaded();
+  const { signIn } = useSignIn();
   const [isMobileNavOpen, setIsMobileNavOpen] = useState(false);
   const [isContactUsActive, setIsContactUsActive] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
-  const userGroups = useUserGroups();
-
-  const sections = {};
-  for (const section of Object.keys(MODULE_ORDERING)) {
-    let total = 0;
-    let completed = 0;
-    MODULE_ORDERING[section].forEach(chapter => {
-      chapter.items.forEach(module => {
-        total++;
-        if (Object.keys(userProgressOnModules).includes(module)) {
-          completed++;
-        }
-      });
-    });
-    sections[section] = {
-      total,
-      completed,
-    };
-  }
 
   const resources = [
     {
@@ -147,31 +133,16 @@ export default function TopNavigationBar({
       key: 'adv',
     },
   ];
-
   return (
     <>
-      {!hideClassesPromoBar && (
-        <div className="relative bg-blue-600">
-          <div className="max-w-screen-xl mx-auto py-3 px-3 sm:px-6 lg:px-8">
-            <div className="pr-16 sm:text-center sm:px-16">
-              <p className="font-medium text-white">
-                <span className="md:inline">
-                  We're looking for Content Authors!
-                </span>
-                <span className="block sm:ml-2 sm:inline-block">
-                  <a
-                    href="https://forms.gle/YbPR1J3caZW3pV5r6"
-                    target="_blank"
-                    rel="noreferrer"
-                    className="text-white font-bold underline"
-                  >
-                    Apply here&rarr;
-                  </a>
-                </span>
-              </p>
-            </div>
-          </div>
-        </div>
+      {!hidePromoBar && (
+        <>
+          <Banner
+            text="Registration for Spring Live Classes Open"
+            action="Register"
+            link="https://joincpi.org/classes"
+          />
+        </>
       )}
 
       <nav
@@ -185,6 +156,7 @@ export default function TopNavigationBar({
             <div className="flex px-2 lg:px-0">
               <Link
                 to={linkLogoToIndex ? '/' : '/dashboard'}
+                state={{ redirect: redirectToDashboard }}
                 className="flex-shrink-0 flex items-center"
               >
                 <div className="block sm:hidden">

@@ -346,13 +346,13 @@ of classes and structs, integral to generic code.
 <Resources>
 	<Resource
 		source="LCPP"
-		title="13.1 - Function Templates"
-		url="https://www.learncpp.com/cpp-tutorial/131-function-templates/"
+		title="8.14 - Function Templates"
+		url="https://www.learncpp.com/cpp-tutorial/function-templates/"
 	/>
 	<Resource
 		source="LCPP"
-		title="13.3 - Template Classes"
-		url="https://www.learncpp.com/cpp-tutorial/133-template-classes/"
+		title="19.1 - Template Classes"
+		url="https://www.learncpp.com/cpp-tutorial/template-classes/"
 	/>
 </Resources>
 
@@ -404,8 +404,7 @@ template <class T> struct Point3D {
 Point3D<int> p1{1, 2, 3};
 Point3D<int> p2{3, 4, 5};
 Point3D<double> p3{1.1, 2.2, 3.3};
-Point3D<long long> p4{9223372036854775807, 9223372036854775807,
-                      9223372036854775807};
+Point3D<long long> p4{9223372036854775807, 9223372036854775807, 9223372036854775807};
 ```
 
 It would be narrow-minded to think that templates are in any way limited to
@@ -432,7 +431,7 @@ but we can easily write a templated function to fix this, handling all types
 of containers at once:
 
 ```cpp
-template <class T> int sz(T &container) { return (int)container.size(); }
+template <class T> int sz(const T &container) { return (int)container.size(); }
 ```
 
 You can call this through typing `sz<vector<int>>(v)` where `v` is a
@@ -476,7 +475,7 @@ templates under the hood.
 <Resources>
 	<Resource
 		source="LCPP"
-		title="6.13 - Typedefs and type aliases"
+		title="8.7 - Typedefs and type aliases"
 		url="https://www.learncpp.com/cpp-tutorial/typedefs-and-type-aliases/"
 		starred
 	/>
@@ -763,8 +762,7 @@ if we want code to run differently for different versions of C++, we can write:
  * "Clamps" v between the values of lo and hi if it's
  * out of the bounds defined by those two values.
  */
-template <class T>
-constexpr const T &clamp(const T &v, const T &lo, const T &hi) {
+template <class T> constexpr const T &clamp(const T &v, const T &lo, const T &hi) {
 	assert(lo <= hi);
 	if (v < lo) {
 		return lo;

@@ -6,12 +6,18 @@ import 'tippy.js/themes/light.css';
 import ConfettiContext from '../../../context/ConfettiContext';
 import { useDarkMode } from '../../../context/DarkModeContext';
 import MarkdownLayoutContext from '../../../context/MarkdownLayoutContext';
-import UserDataContext from '../../../context/UserDataContext/UserDataContext';
 import {
+  useSetProgressOnModule,
+  useSetProgressOnProblem,
+  useUserProgressOnModules,
+  useUserProgressOnProblems,
+} from '../../../context/UserDataContext/properties/userProgress';
+import {
+  PROBLEM_PROGRESS_OPTIONS,
   ProblemInfo,
   ProblemProgress,
-  PROBLEM_PROGRESS_OPTIONS,
 } from '../../../models/problem';
+import { DivisionProblemInfo } from './DivisionList/DivisionProblemInfo';
 
 const StyledTippy = styled(Tippy)`
   .tippy-content {
@@ -135,15 +141,15 @@ export default function ProblemStatusCheckbox({
   problem,
   size = 'small',
 }: {
-  problem: ProblemInfo;
+  problem: ProblemInfo | DivisionProblemInfo;
   size?: 'small' | 'large';
 }): JSX.Element {
   const darkMode = useDarkMode();
   const markdownLayoutContext = useContext(MarkdownLayoutContext);
-  const { userProgressOnModules, setModuleProgress } =
-    useContext(UserDataContext);
-  const { userProgressOnProblems, setUserProgressOnProblems } =
-    useContext(UserDataContext);
+  const userProgressOnModules = useUserProgressOnModules();
+  const setModuleProgress = useSetProgressOnModule();
+  const userProgressOnProblems = useUserProgressOnProblems();
+  const setUserProgressOnProblems = useSetProgressOnProblem();
   const updateModuleProgressToPracticing = () => {
     if (
       markdownLayoutContext === null ||
@@ -184,7 +190,7 @@ export default function ProblemStatusCheckbox({
                 updateModuleProgressToPracticing();
               }
               if (!solved(status) && solved(progress)) {
-                showConfetti();
+                showConfetti!();
               }
             }}
             currentProgress={status}

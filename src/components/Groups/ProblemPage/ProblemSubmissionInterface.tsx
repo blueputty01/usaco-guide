@@ -1,8 +1,11 @@
 import * as React from 'react';
 import { useReducer } from 'react';
 import { useDropzone } from 'react-dropzone';
-import { LANGUAGE_LABELS } from '../../../context/UserDataContext/properties/userLang';
-import UserDataContext from '../../../context/UserDataContext/UserDataContext';
+import { useFirebaseUser } from '../../../context/UserDataContext/UserDataContext';
+import {
+  LANGUAGE_LABELS,
+  useUserLangSetting,
+} from '../../../context/UserDataContext/properties/simpleProperties';
 import { useActiveGroup } from '../../../hooks/groups/useActiveGroup';
 import {
   ProblemSubmissionRequestData,
@@ -32,17 +35,19 @@ export default function ProblemSubmissionInterface({
 }: {
   problem: GroupProblemData;
 }) {
-  const { lang, firebaseUser } = React.useContext(UserDataContext);
-  const emptySubmission: Partial<ProblemSubmissionRequestData> = {
+  const firebaseUser = useFirebaseUser();
+  const lang = useUserLangSetting();
+  const emptySubmission: ProblemSubmissionRequestData = {
+    filename: '',
     problemID: problem.id,
     sourceCode: '',
     language: lang === 'showAll' ? 'cpp' : lang,
   };
   const [submission, editSubmission] = useReducer(
     (
-      oldSubmission,
+      oldSubmission: ProblemSubmissionRequestData,
       updates: Partial<ProblemSubmissionRequestData>
-    ): Partial<ProblemSubmissionRequestData> => ({
+    ): ProblemSubmissionRequestData => ({
       ...oldSubmission,
       ...updates,
     }),
@@ -51,7 +56,7 @@ export default function ProblemSubmissionInterface({
   const [submissionLink, setSubmissionLink] = React.useState('');
   const activeGroup = useActiveGroup();
   const { submitSolution, submitSubmissionLink } = usePostActions(
-    activeGroup.activeGroupId
+    activeGroup.activeGroupId!
   );
 
   const { getRootProps, getInputProps, open, isDragActive } = useDropzone({
@@ -63,9 +68,10 @@ export default function ProblemSubmissionInterface({
       const fileReader = new FileReader();
       fileReader.readAsText(file, 'UTF-8');
       fileReader.onload = e => {
-        editSubmission({
-          sourceCode: e.target.result.toString(),
-        });
+        e.target?.result &&
+          editSubmission({
+            sourceCode: e.target.result.toString(),
+          });
       };
     },
   });
@@ -131,14 +137,14 @@ export default function ProblemSubmissionInterface({
     try {
       const submissionID = await submitSolution(
         {
-          problemID: problem.usacoGuideId,
-          language: submission.language,
+          problemID: problem.usacoGuideId!,
+          language: submission.language!,
           filename: {
             cpp: 'main.cpp',
             java: 'Main.java',
             py: 'main.py',
-          }[submission.language],
-          sourceCode: submission.sourceCode,
+          }[submission.language!],
+          sourceCode: submission.sourceCode!,
         },
         problem.postId,
         problem.id

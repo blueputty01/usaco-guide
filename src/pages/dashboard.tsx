@@ -1,4 +1,4 @@
-import { graphql, PageProps } from 'gatsby';
+import { graphql, Link, PageProps } from 'gatsby';
 import * as React from 'react';
 import {
   moduleIDToSectionMap,
@@ -7,7 +7,6 @@ import {
 } from '../../content/ordering';
 import ActiveItems, { ActiveItem } from '../components/Dashboard/ActiveItems';
 import Activity from '../components/Dashboard/Activity';
-import AnnouncementBanner from '../components/Dashboard/AnnouncementBanner';
 import Announcements from '../components/Dashboard/Announcements';
 import DailyStreak from '../components/Dashboard/DailyStreak';
 import Card from '../components/Dashboard/DashboardCard';
@@ -17,20 +16,30 @@ import Layout from '../components/layout';
 import divToProbs from '../components/markdown/ProblemsList/DivisionList/div_to_probs.json';
 import SEO from '../components/seo';
 import TopNavigationBar from '../components/TopNavigationBar/TopNavigationBar';
-import { SignInContext } from '../context/SignInContext';
-import UserDataContext from '../context/UserDataContext/UserDataContext';
+import { useSignIn } from '../context/SignInContext';
+import { useLastVisitInfo } from '../context/UserDataContext/properties/lastVisit';
+import {
+  useLastReadAnnouncement,
+  useLastViewedModule,
+  useSetLastReadAnnouncement,
+  useShowIgnoredSetting,
+} from '../context/UserDataContext/properties/simpleProperties';
+import {
+  useUserProgressOnModules,
+  useUserProgressOnProblems,
+} from '../context/UserDataContext/properties/userProgress';
+import { useFirebaseUser } from '../context/UserDataContext/UserDataContext';
 import {
   AnnouncementInfo,
   graphqlToAnnouncementInfo,
 } from '../models/announcement';
 import {
-  getModulesProgressInfo,
-  getProblemsProgressInfo,
+  useModulesProgressInfo,
+  useProblemsProgressInfo,
 } from '../utils/getProgressInfo';
 
 export default function DashboardPage(props: PageProps) {
-  const { modules, announcements, problems } = props.data as any;
-  const userSettings = React.useContext(UserDataContext);
+  const { navigate, modules, announcements, problems } = props.data as any;
   const moduleIDToName = modules.edges.reduce((acc, cur) => {
     acc[cur.node.frontmatter.id] = cur.node.frontmatter.title;
     return acc;
@@ -76,18 +85,15 @@ export default function DashboardPage(props: PageProps) {
     }
     return res;
   }, [problems]);
-  const {
-    lastViewedModule: lastViewedModuleID,
-    userProgressOnModules,
-    userProgressOnProblems,
-    lastReadAnnouncement,
-    setLastReadAnnouncement,
-    firebaseUser,
-    consecutiveVisits,
-  } = React.useContext(UserDataContext);
-  const { signIn } = React.useContext(SignInContext);
-
-  const showIgnored = userSettings.showIgnored;
+  const lastViewedModuleID = useLastViewedModule();
+  const userProgressOnModules = useUserProgressOnModules();
+  const userProgressOnProblems = useUserProgressOnProblems();
+  const lastReadAnnouncement = useLastReadAnnouncement();
+  const setLastReadAnnouncement = useSetLastReadAnnouncement();
+  const firebaseUser = useFirebaseUser();
+  const { consecutiveVisits, numPageviews } = useLastVisitInfo();
+  const showIgnored = useShowIgnoredSetting();
+  const { signIn } = useSignIn();
 
   const lastViewedModuleURL = moduleIDToURLMap[lastViewedModuleID];
   const activeModules: ActiveItem[] = React.useMemo(() => {
@@ -138,7 +144,7 @@ export default function DashboardPage(props: PageProps) {
   const moduleProgressIDs = Object.keys(moduleIDToName).filter(
     x => moduleIDToSectionMap[x] === lastViewedSection
   );
-  const allModulesProgressInfo = getModulesProgressInfo(moduleProgressIDs);
+  const allModulesProgressInfo = useModulesProgressInfo(moduleProgressIDs);
 
   const problemStatisticsIDs = React.useMemo(() => {
     return Object.keys(problemIDMap).filter(problemID =>
@@ -148,7 +154,7 @@ export default function DashboardPage(props: PageProps) {
       )
     );
   }, [problemIDMap, lastViewedSection]);
-  const allProblemsProgressInfo = getProblemsProgressInfo(problemStatisticsIDs);
+  const allProblemsProgressInfo = useProblemsProgressInfo(problemStatisticsIDs);
 
   const parsedAnnouncements: AnnouncementInfo[] = React.useMemo(() => {
     return announcements.edges.map(node =>
@@ -161,7 +167,7 @@ export default function DashboardPage(props: PageProps) {
       <SEO title="Dashboard" />
 
       <div className="min-h-screen bg-gray-100 dark:bg-dark-surface">
-        <TopNavigationBar linkLogoToIndex={true} />
+        <TopNavigationBar linkLogoToIndex={true} redirectToDashboard={false} />
 
         <main className="pb-12">
           <div className="max-w-7xl mx-auto mb-4">
@@ -189,13 +195,34 @@ export default function DashboardPage(props: PageProps) {
                   )}
                 </div>
               </div>
-              <div className="flex overflow-x-auto">
-                <WelcomeBackBanner
-                  lastViewedModuleURL={lastViewedModuleURL}
-                  lastViewedModuleLabel={moduleIDToName[lastViewedModuleID]}
-                />
-              </div>
+              <WelcomeBackBanner
+                lastViewedModuleURL={lastViewedModuleURL}
+                lastViewedModuleLabel={moduleIDToName[lastViewedModuleID]}
+              />
             </div>
+          </div>
+          <header id="announcements">
+            <div className="max-w-7xl mx-auto px-4 sm:px-8 lg:px-10">
+              <h1 className="text-3xl font-bold leading-tight text-gray-900 dark:text-dark-high-emphasis">
+                Announcements
+              </h1>
+              <Link
+                to="/announcements"
+                className="hover:underline transition-all duration-300"
+              >
+                View all &rarr;
+              </Link>
+            </div>
+          </header>
+          <div className="max-w-7xl mx-auto mb-8">
+            {/* Only show announcements in the current year by passing in a filter function */}
+            <Announcements
+              filterFn={announcement =>
+                parseInt(announcement.date.split(', ')[1]) ===
+                new Date().getFullYear()
+              }
+              announcements={parsedAnnouncements}
+            />
           </div>
           <div className="max-w-7xl mx-auto sm:px-6 lg:px-8 lg:grid lg:grid-cols-2 lg:gap-8">
             {activeProblems.length > 0 && (
@@ -208,16 +235,6 @@ export default function DashboardPage(props: PageProps) {
                 <ActiveItems type="modules" items={activeModules} />
               </div>
             )}
-          </div>
-          <header id="announcements">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-              <h1 className="text-3xl font-bold leading-tight text-gray-900 dark:text-dark-high-emphasis">
-                Announcements
-              </h1>
-            </div>
-          </header>
-          <div className="max-w-7xl mx-auto mb-8">
-            <Announcements announcements={parsedAnnouncements} />
           </div>
           <header>
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -280,7 +297,7 @@ export default function DashboardPage(props: PageProps) {
                 {/*      <SectionProgressBar title="Bronze" />*/}
                 {/*      <SectionProgressBar title="Silver" />*/}
                 {/*      <SectionProgressBar title="Gold" />*/}
-                {/*      <SectionProgressBar title="Plat" />*/}
+                {/*      <SectionProgressBar title="Platinum" />*/}
                 {/*      <SectionProgressBar title="Advanced" />*/}
                 {/*    </div>*/}
                 {/*  </div>*/}
@@ -292,8 +309,8 @@ export default function DashboardPage(props: PageProps) {
         </main>
       </div>
 
-      {parsedAnnouncements[0].id !== lastReadAnnouncement &&
-        userSettings.numPageviews > 12 && (
+      {/* {parsedAnnouncements[0].id !== lastReadAnnouncement &&
+        numPageviews > 12 && (
           <div className="h-12">
             <AnnouncementBanner
               announcement={parsedAnnouncements[0]}
@@ -302,7 +319,7 @@ export default function DashboardPage(props: PageProps) {
               }
             />
           </div>
-        )}
+        )} */}
     </Layout>
   );
 }

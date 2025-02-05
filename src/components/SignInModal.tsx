@@ -2,15 +2,15 @@ import { Dialog, Transition } from '@headlessui/react';
 import { XIcon } from '@heroicons/react/solid';
 import {
   AuthCredential,
-  getAuth,
   GithubAuthProvider,
   GoogleAuthProvider,
+  getAuth,
   linkWithCredential,
   signInWithCredential,
   signInWithPopup,
 } from 'firebase/auth';
-import React, { Fragment, useContext } from 'react';
-import UserDataContext from '../context/UserDataContext/UserDataContext';
+import React, { Fragment } from 'react';
+import { useForceFirebaseUserRerender } from '../context/UserDataContext/UserDataContext';
 import { useFirebaseApp } from '../hooks/useFirebase';
 import { LoadingSpinner } from './elements/LoadingSpinner';
 
@@ -24,12 +24,15 @@ export const SignInModal: React.FC<SignInModalProps> = ({
   onClose,
 }) => {
   const firebaseApp = useFirebaseApp();
-  const { triggerUserDataContextRerender } = useContext(UserDataContext);
+  // TODO: test to see whether this actually works
+  const forceFirebaseUserRerender = useForceFirebaseUserRerender();
   const [isSigningIn, setIsSigningIn] = React.useState(false);
   const [isLinking, setIsLinking] = React.useState(false);
-  const [error, setError] = React.useState(null);
+  const [error, setError] = React.useState<any>(null);
   const [email, setEmail] = React.useState('');
-  const [credential, setCredential] = React.useState<AuthCredential>(null);
+  const [credential, setCredential] = React.useState<AuthCredential | null>(
+    null
+  );
 
   const diffCredentialMessage = 'auth/account-exists-with-different-credential';
   const handleSignInWithGoogle = () => {
@@ -78,6 +81,7 @@ export const SignInModal: React.FC<SignInModalProps> = ({
 
   // links account from credential with the account from other provider (either Google or Github)
   const handleLinkAccounts = async () => {
+    if (!credential) return;
     try {
       let otherProvider: GoogleAuthProvider | GithubAuthProvider;
       if (credential.signInMethod === 'github.com') {
@@ -89,7 +93,7 @@ export const SignInModal: React.FC<SignInModalProps> = ({
       }
       otherProvider.setCustomParameters({ login_hint: email });
       await signInWithPopup(getAuth(firebaseApp), otherProvider);
-      await linkWithCredential(getAuth(firebaseApp).currentUser, credential);
+      await linkWithCredential(getAuth(firebaseApp).currentUser!, credential);
       await signInWithCredential(getAuth(firebaseApp), credential);
 
       // At this point, getAuth(firebaseApp).currentUser is updated with the latest credentials
@@ -97,7 +101,7 @@ export const SignInModal: React.FC<SignInModalProps> = ({
       // that firebaseUser has changed and we should rerender things that depend on it.
       // In particular, without this, the "Linked Providers" section under "Sign In Methods"
       // in Settings will not update until the page is reloaded.
-      triggerUserDataContextRerender();
+      forceFirebaseUserRerender();
 
       onClose();
     } catch (e) {
@@ -235,7 +239,7 @@ export const SignInModal: React.FC<SignInModalProps> = ({
                         </g>
                       </g>
                     </svg>
-                    <span className="ml-3">Sign In With Github</span>
+                    <span className="ml-3">Sign In With GitHub</span>
                   </button>
                   {isSigningIn && <LoadingSpinner />}
                 </div>

@@ -49,8 +49,8 @@
       "isStarred": true,
       "tags": ["1DRQ", "Binary Search"],
       "solutionMetadata": {
-        "kind": "IOI",
-        "year": 2007
+        "kind": "internal",
+        "hasHints": true
       }
     }
   ],
@@ -85,13 +85,12 @@
       "uniqueId": "usaco-578",
       "name": "Counting Haybales",
       "url": "http://www.usaco.org/index.php?page=viewproblem2&cpid=578",
-      "source": "Plat",
+      "source": "Platinum",
       "difficulty": "Easy",
       "isStarred": false,
       "tags": ["Lazy SegTree"],
       "solutionMetadata": {
-        "kind": "USACO",
-        "usacoId": "578"
+        "kind": "internal"
       }
     },
     {
@@ -126,33 +125,44 @@
       "source": "IOI",
       "difficulty": "Normal",
       "isStarred": false,
-      "tags": [],
+      "tags": ["Lazy SegTree"],
       "solutionMetadata": {
-        "kind": "IOI",
-        "year": 2014
+        "kind": "internal",
+        "hasHints": true
       }
     },
     {
       "uniqueId": "ioi-05-mountain",
       "name": "2005 - Mountain",
-      "url": "https://dmoj.ca/problem/ioi05p3",
+      "url": "https://dmoj.ca/problem/ioi05p2",
       "source": "IOI",
       "difficulty": "Normal",
       "isStarred": false,
-      "tags": [],
+      "tags": ["Lazy SegTree", "Coordinate Compression"],
       "solutionMetadata": {
-        "kind": "link",
-        "url": "https://ioinformatics.org/files/ioi2005solutions.pdf"
+        "kind": "internal"
       }
     },
     {
       "uniqueId": "usaco-973",
       "name": "Bessie's Snow Cow",
       "url": "http://www.usaco.org/index.php?page=viewproblem2&cpid=973",
-      "source": "Plat",
+      "source": "Platinum",
       "difficulty": "Normal",
       "isStarred": false,
       "tags": ["Euler Tour", "PURS", "Lazy SegTree"],
+      "solutionMetadata": {
+        "kind": "internal"
+      }
+    },
+    {
+      "uniqueId": "cf-838B",
+      "name": "Diverging Directions",
+      "url": "https://codeforces.com/contest/838/problem/B",
+      "source": "CF",
+      "difficulty": "Normal",
+      "isStarred": false,
+      "tags": ["Euler Tour", "RURQ"],
       "solutionMetadata": {
         "kind": "internal"
       }
@@ -171,10 +181,10 @@
       }
     },
     {
-      "uniqueId": "dmoj-VictorIdentifiesSoftware",
+      "uniqueId": "dmopc-VictorIdentifiesSoftware",
       "name": "Victor Identifies Software",
       "url": "https://dmoj.ca/problem/dmopc20c1p6",
-      "source": "DMOJ",
+      "source": "DMOPC",
       "difficulty": "Very Hard",
       "isStarred": false,
       "tags": ["Lazy SegTree"],

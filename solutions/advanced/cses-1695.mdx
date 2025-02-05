@@ -5,7 +5,7 @@ title: Police Chase
 author: Dong Liu
 ---
 
-**Time Complexity**: $\mathcal O(N^2 \cdot M)$
+**Time Complexity**: $\mathcal O(N^3)$
 
 First, we run a max flow algorithm on the graph. Then, we run another BFS from
 node $1$. If node $a$ is reachable but node $b$ is not and there was an edge
@@ -28,7 +28,7 @@ using vi = vector<int>;
 
 #define F0R(i, a) for (int i = 0; i < (a); i++)
 #define FOR(i, a, b) for (int i = (a); i <= (b); i++)
-#define R0F(i, a) for (int i = (a)-1; i >= 0; i--)
+#define R0F(i, a) for (int i = (a) - 1; i >= 0; i--)
 #define ROF(i, a, b) for (int i = (b); i >= a; i--)
 #define trav(a, x) for (auto &a : x)
 

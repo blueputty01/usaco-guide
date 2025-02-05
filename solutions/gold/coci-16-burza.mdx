@@ -29,7 +29,7 @@ From the first observation, we can see that an optimal strategy would be to mark
 at most one node at each depth (excluding the root).
 
 Since marking a node of depth $d$ makes at least $k - d + 1$ nodes off-limit and
-we can mark nodes from depth $1$ to $k$, if $\frac{k \cdot (k - 1)}{2} \geq n$,
+we can mark nodes from depth $1$ to $k$, if $\frac{k \cdot (k + 1)}{2} \geq n$,
 the game can always end in $k$ moves.
 
 That reduces the maximum value of $k$ we have to consider down to around 30, which
@@ -38,8 +38,8 @@ unfortunately is still too large for an exponential time solution. But it is
 
 ### Further Analysis
 
-To limit the maximum number of nodes to 20, we have to prove that a game can *always*
-end in $k$ moves if $k^2 \geq n$.
+To limit the maximum number of steps to a point where bitwise DP is feasible,
+we have to prove that a game can *always* end in $k$ moves if $k^2 \geq n$.
 
 Since each move results in breaking a tree down into a bunch of smaller trees,
 we can do a [proof by induction](https://en.wikipedia.org/wiki/Mathematical_induction).
@@ -94,11 +94,11 @@ $$
 Since we know that $n_r \leq (k-r)^2$ and by extension $\sqrt{n_r} \leq k-r$, we can substitute
 those terms to prove our desired expression:
 $$
-n_{r+1} \leq (k-r)^2-2(k-r)=(k-r-1)^2
+n_{r+1} \leq (k-r)^2-2(k-r) + 1=(k-r-1)^2
 $$
 
 And we're done! Since we've shown that any case where $k^2 \geq n$ will result in a win, we just
-have to handle the case where $N \leq 20$, for which
+have to handle the case where $k \lt 20$, for which
 [bitmask DP](/gold/dp-bitmasks) will suffice.
 
 ### Bitmask DP
@@ -125,7 +125,7 @@ yields a configuration that can cover up to the fifth leaf.
 
 ## Implementation
 
-**Time Complexity:** $\mathcal{O}(2^{\sqrt{N}} \cdot N)$
+**Time Complexity:** $\mathcal{O}(2^{\sqrt{n}} \cdot n)$
 
 <LanguageSection>
 <CPPSection>
@@ -172,8 +172,7 @@ int main() {
 		for (int n : neighbors[at]) {
 			if (n != prev) {
 				process_nodes(n, at, depth + 1);
-				cutoff_cover[at].insert(cutoff_cover[at].end(),
-				                        cutoff_cover[n].begin(),
+				cutoff_cover[at].insert(cutoff_cover[at].end(), cutoff_cover[n].begin(),
 				                        cutoff_cover[n].end());
 			}
 		}

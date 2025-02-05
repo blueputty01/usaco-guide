@@ -196,8 +196,7 @@ the variable (`#v`) in addition to the value of the variable (`v`).
 #include <iostream>
 using namespace std;
 
-#define dbg(v)                                                                 \
-	cout << "Line(" << __LINE__ << ") -> " << #v << " = " << (v) << endl;
+#define dbg(v) cout << "Line(" << __LINE__ << ") -> " << #v << " = " << (v) << endl;
 
 int x = 10;  // pretend this variable is important
 
@@ -300,7 +299,8 @@ int main() {
 
 If your code is getting WA, one option is to run your buggy solution against
 another solution that you're relatively confident is correct on randomly
-generated data until you find a difference. See the video for details.
+generated test cases until you find a difference. Usually, small test cases
+will suffice. See the video for details.
 
 <Resources>
 	<Resource

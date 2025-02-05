@@ -66,6 +66,32 @@
       "solutionMetadata": {
         "kind": "internal"
       }
+    },
+    {
+      "uniqueId": "usaco-284",
+      "name": "Luxury River Cruise",
+      "url": "http://usaco.org/index.php?page=viewproblem2&cpid=284",
+      "source": "Old Silver",
+      "difficulty": "Normal",
+      "isStarred": false,
+      "tags": ["Functional Graph"],
+      "solutionMetadata": {
+        "kind": "USACO",
+        "usacoId": "284"
+      }
+    },
+    {
+      "uniqueId": "IOI11_garden",
+      "name": "Tropical Garden",
+      "url": "https://oj.uz/problem/view/IOI11_garden",
+      "source": "IOI",
+      "difficulty": "Very Hard",
+      "isStarred": false,
+      "tags": ["Functional Graph"],
+      "solutionMetadata": {
+        "kind": "IOI",
+        "year": 2011
+      }
     }
   ]
 }

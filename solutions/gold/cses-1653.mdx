@@ -2,18 +2,26 @@
 id: cses-1653
 source: CSES
 title: Elevator Rides
-author: Sofia Yang
+author: Sofia Yang, David Guo
 ---
 
-[CPH Solution (10.5)](/CPH.pdf#page=112)
+[CPH Solution (10.5)](/CPH.pdf#page=113)
 
+## Explanation
+
+We solve the problem using dynamic programming with bitmasking to determine the minimum number of elevator rides required to transport all the people within the given weight limit.
+
+We use a DP array where each element corresponds to a bitmask representing which people have already been transported. Each entry in the DP array stores a pair that represents the state of the rides, including the number of rides taken and the weight of the current ride. The bitmask allows us to efficiently represent subsets of people, with each bit indicating whether a specific person has already been transported.
+
+For each subset of people, we iterate over all individuals to determine who could be the last person added to the group. By removing that person from the current subset, we calculate the state of the group without them. If adding this person’s weight to the current ride does not exceed the elevator’s weight limit, we update the total weight for that ride. Otherwise, we start a new ride, incrementing the number of rides, and set the total weight to this person’s weight. After every iteration, we update the state only if the new configuration results in fewer rides or a lighter current total weight.
+
+Finally, when we have transported everyone, the result for the full group is stored in the DP array. This value represents the minimum number of elevator rides needed to transport all the people within the weight limit.
 
 ## Implementation
 
 **Time Complexity:** $\mathcal{O}(N\cdot 2^N)$
 
 <LanguageSection>
-
 <JavaSection>
 
 ```java
@@ -90,19 +98,18 @@ public class ElevatorRides {
 ```
 
 </JavaSection>
-
 <CPPSection>
 
 ```cpp
 // CodeSnip{CPP Short Template}
 
 int main() {
-	int people, maxWeight;
-	cin >> people >> maxWeight;
+	int people, max_weight;
+	cin >> people >> max_weight;
 	vector<int> weight(people);
 	for (int &i : weight) cin >> i;
 
-	vector<pair<int, int>> dp(1 << people, {people + 1, maxWeight + 1});
+	vector<pair<int, int>> dp(1 << people, {people + 1, max_weight + 1});
 	dp[0] = make_pair(1, 0);
 	/*
 	 * Loop through all bitmasks.
@@ -114,23 +121,63 @@ int main() {
 			// The ith person has used the elevator.
 			if (mask & (1 << i)) {
 				auto prev = dp[mask ^ (1 << i)];
-				int numRides = prev.first;
-				int totalWeight = prev.second;
+				int num_rides = prev.first;
+				int total_weight = prev.second;
 				// We need to use a new ride.
-				if (totalWeight + weight[i] <= maxWeight)
-					totalWeight += weight[i];
+				if (total_weight + weight[i] <= max_weight) total_weight += weight[i];
 				else {
 					// Add the weight of the ith person to the current ride.
-					numRides++;
-					totalWeight = weight[i];
+					num_rides++;
+					total_weight = weight[i];
 				}
 				// Update if it is better than the original.
-				dp[mask] = min(dp[mask], make_pair(numRides, totalWeight));
+				dp[mask] = min(dp[mask], make_pair(num_rides, total_weight));
 			}
 	}
 	// Result when all people have used the elevator.
 	cout << dp[(1 << people) - 1].first;
 }
 ```
+
 </CPPSection>
+<PySection>
+
+```py
+people, max_weight = map(int, input().split())
+weight = list(map(int, input().split()))
+
+dp = [(people + 1, max_weight + 1)] * (1 << people)
+dp[0] = (1, 0)
+
+"""
+Loop through all bitmasks.
+The bitmasks represent whether each person has used the elevator or not.
+If the ith bit is set, this means the ith person has used the elevator.
+"""
+
+for mask in range(1, 1 << people):
+	for i in range(people):
+		# The ith person has used the elevator
+		if mask & (1 << i):
+			prev = dp[mask ^ (1 << i)]
+			num_rides = prev[0]
+			total_weight = prev[1]
+
+			# We need to use a new ride
+			if total_weight + weight[i] <= max_weight:
+				total_weight += weight[i]
+
+			else:
+				# Add the weight of the ith person to the current ride
+				num_rides += 1
+				total_weight = weight[i]
+
+			# Update if it is better than the original
+			dp[mask] = min(dp[mask], (num_rides, total_weight))
+
+# Result when all people have used the elevator
+print(dp[(1 << people) - 1][0])
+```
+
+</PySection>
 </LanguageSection>

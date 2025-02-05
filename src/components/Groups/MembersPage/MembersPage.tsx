@@ -2,20 +2,22 @@ import { Link } from 'gatsby';
 import * as React from 'react';
 import { useActiveGroup } from '../../../hooks/groups/useActiveGroup';
 import useLeaderboardData from '../../../hooks/groups/useLeaderboardData';
-import getMemberInfoForGroup from '../../../hooks/groups/useMemberInfoForGroup';
+import useMemberInfoForGroup from '../../../hooks/groups/useMemberInfoForGroup';
+import TopNavigationBar from '../../TopNavigationBar/TopNavigationBar';
 import Layout from '../../layout';
 import SEO from '../../seo';
-import TopNavigationBar from '../../TopNavigationBar/TopNavigationBar';
 import MemberDetail from './MemberDetail';
 
 export default function MembersPage(): JSX.Element {
   const activeGroup = useActiveGroup();
-  const memberInfo = getMemberInfoForGroup(activeGroup.groupData);
+  const memberInfo = useMemberInfoForGroup(activeGroup.groupData!);
   const leaderboard = useLeaderboardData({
-    groupId: activeGroup.activeGroupId,
+    groupId: activeGroup.activeGroupId!,
     maxResults: 200,
   });
-  const [activeMemberId, setActiveMemberId] = React.useState<string>(null);
+  const [activeMemberId, setActiveMemberId] = React.useState<string | null>(
+    null
+  );
 
   React.useEffect(() => {
     const handler = () => {
@@ -46,7 +48,7 @@ export default function MembersPage(): JSX.Element {
 
   return (
     <Layout>
-      <SEO title={`Members · ${activeGroup.groupData.name}`} />
+      <SEO title={`Members · ${activeGroup.groupData!.name}`} />
       <div className="xl:h-screen xl:overflow-hidden flex flex-col">
         <TopNavigationBar />
 
@@ -58,7 +60,7 @@ export default function MembersPage(): JSX.Element {
             {activeMemberId ? (
               memberInfo ? (
                 <MemberDetail
-                  member={memberInfo.find(x => x?.uid === activeMemberId)}
+                  member={memberInfo.find(x => x?.uid === activeMemberId)!}
                 />
               ) : (
                 <div>
@@ -76,7 +78,7 @@ export default function MembersPage(): JSX.Element {
           <aside className="order-first lg:flex lg:flex-col flex-shrink-0 lg:w-96 lg:border-r lg:border-gray-200 dark:lg:border-gray-700 shadow-md lg:shadow-none">
             <div className="px-6 pt-6 pb-4">
               <Link
-                to={`/groups/${activeGroup.groupData.id}`}
+                to={`/groups/${activeGroup.groupData!.id}`}
                 className="text-gray-600 dark:text-gray-300 underline text-sm"
               >
                 &larr; Back to group page

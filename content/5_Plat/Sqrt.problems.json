@@ -1,5 +1,19 @@
 {
   "MODULE_ID": "sqrt",
+  "ndcp": [
+    {
+      "uniqueId": "ndcp",
+      "name": "Hop Sugoroku",
+      "url": "https://atcoder.jp/contests/abc335/tasks/abc335_f",
+      "source": "Atcoder",
+      "difficulty": "Medium",
+      "isStarred": false,
+      "tags": ["Sqrt"],
+      "solutionMetadata": {
+        "kind": "none"
+      }
+    }
+  ],
   "sam": [
     {
       "uniqueId": "cses-1648",
@@ -9,6 +23,20 @@
       "difficulty": "Very Easy",
       "isStarred": false,
       "tags": ["Sqrt"],
+      "solutionMetadata": {
+        "kind": "none"
+      }
+    }
+  ],
+  "dquery": [
+    {
+      "uniqueId": "spoj-DQUERY",
+      "name": "D-query",
+      "url": "https://www.spoj.com/problems/DQUERY/",
+      "source": "SPOJ",
+      "difficulty": "Hard",
+      "isStarred": false,
+      "tags": ["Sqrt", "Mo's Algorithm"],
       "solutionMetadata": {
         "kind": "none"
       }
@@ -26,18 +54,6 @@
       "solutionMetadata": {
         "kind": "link",
         "url": "https://codeforces.com/blog/entry/20226"
-      }
-    },
-    {
-      "uniqueId": "joi-18-BitarosBirthday",
-      "name": "2018 - Bitaro's Birthday",
-      "url": "https://oj.uz/problem/view/JOI18_bitaro",
-      "source": "JOI",
-      "difficulty": "Easy",
-      "isStarred": false,
-      "tags": ["Sqrt"],
-      "solutionMetadata": {
-        "kind": "none"
       }
     },
     {
@@ -76,6 +92,18 @@
       "solutionMetadata": {
         "kind": "autogen-label-from-site",
         "site": "CF"
+      }
+    },
+    {
+      "uniqueId": "joi-18-BitarosBirthday",
+      "name": "2018 - Bitaro's Birthday",
+      "url": "https://oj.uz/problem/view/JOI18_bitaro",
+      "source": "JOI",
+      "difficulty": "Normal",
+      "isStarred": true,
+      "tags": ["Sqrt", "DP"],
+      "solutionMetadata": {
+        "kind": "internal"
       }
     },
     {
@@ -131,7 +159,7 @@
       "uniqueId": "usaco-841",
       "name": "Train Tracking",
       "url": "http://www.usaco.org/index.php?page=viewproblem2&cpid=841",
-      "source": "Plat",
+      "source": "Platinum",
       "difficulty": "Very Hard",
       "isStarred": false,
       "tags": ["Sqrt"],
@@ -141,10 +169,10 @@
       }
     },
     {
-      "uniqueId": "dmoj-FluidDynamics",
+      "uniqueId": "dmopc-FluidDynamics",
       "name": "Fluid Dynamics",
       "url": "https://dmoj.ca/problem/dmopc19c7p7",
-      "source": "DMOJ",
+      "source": "DMOPC",
       "difficulty": "Very Hard",
       "isStarred": false,
       "tags": ["Sqrt"],
@@ -153,10 +181,10 @@
       }
     },
     {
-      "uniqueId": "dmoj-ArithmeticSubtrees",
+      "uniqueId": "wac-ArithmeticSubtrees",
       "name": "Arithmetic Subtrees",
       "url": "https://dmoj.ca/problem/wac1p7",
-      "source": "DMOJ",
+      "source": "Wesley's Anger Contest",
       "difficulty": "Very Hard",
       "isStarred": false,
       "tags": ["Sqrt"],
@@ -188,15 +216,15 @@
       "isStarred": false,
       "tags": ["Sqrt"],
       "solutionMetadata": {
-        "kind": "IOI",
-        "year": 2009
+        "kind": "internal",
+        "hasHints": true
       }
     },
     {
       "uniqueId": "usaco-1188",
       "name": "Minimizing Haybales",
       "url": "http://www.usaco.org/index.php?page=viewproblem2&cpid=1188",
-      "source": "Plat",
+      "source": "Platinum",
       "difficulty": "Normal",
       "isStarred": false,
       "tags": ["Sqrt"],
@@ -208,13 +236,13 @@
       "uniqueId": "usaco-817",
       "name": "New Barns",
       "url": "http://www.usaco.org/index.php?page=viewproblem2&cpid=817",
-      "source": "Plat",
+      "source": "Platinum",
       "difficulty": "Hard",
       "isStarred": false,
       "tags": ["Sqrt"],
       "solutionMetadata": {
-        "kind": "USACO",
-        "usacoId": "817"
+        "kind": "internal",
+        "hasHints": true
       }
     },
     {
@@ -311,7 +339,7 @@
       "uniqueId": "usaco-793",
       "name": "Cow At Large",
       "url": "http://www.usaco.org/index.php?page=viewproblem2&cpid=793",
-      "source": "Plat",
+      "source": "Platinum",
       "difficulty": "Very Hard",
       "isStarred": false,
       "tags": ["Sqrt"],

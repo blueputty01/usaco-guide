@@ -48,7 +48,7 @@
       "source": "CSES",
       "difficulty": "Easy",
       "isStarred": false,
-      "tags": ["Sorting"],
+      "tags": ["Greedy", "Sorting"],
       "solutionMetadata": {
         "kind": "internal"
       }
@@ -74,8 +74,7 @@
       "isStarred": true,
       "tags": ["Greedy", "Sorting"],
       "solutionMetadata": {
-        "kind": "CPH",
-        "section": "6.3"
+        "kind": "internal"
       }
     },
     {
@@ -177,6 +176,18 @@
       }
     },
     {
+      "uniqueId": "usaco-810",
+      "name": "Rest Stops",
+      "url": "http://www.usaco.org/index.php?page=viewproblem2&cpid=810",
+      "source": "Silver",
+      "difficulty": "Easy",
+      "isStarred": false,
+      "tags": ["Greedy"],
+      "solutionMetadata": {
+        "kind": "internal"
+      }
+    },
+    {
       "uniqueId": "usaco-714",
       "name": "Why Did the Cow Cross the Road",
       "url": "http://www.usaco.org/index.php?page=viewproblem2&cpid=714",
@@ -184,6 +195,18 @@
       "difficulty": "Normal",
       "isStarred": false,
       "tags": ["Greedy", "Sorted Set"],
+      "solutionMetadata": {
+        "kind": "internal"
+      }
+    },
+    {
+      "uniqueId": "leetcode-502",
+      "name": "IPO",
+      "url": "https://leetcode.com/problems/ipo",
+      "source": "LC",
+      "difficulty": "Normal",
+      "isStarred": false,
+      "tags": ["Greedy", "Sorting", "Priority Queue"],
       "solutionMetadata": {
         "kind": "internal"
       }
@@ -213,6 +236,19 @@
       }
     },
     {
+      "uniqueId": "cf-1783C",
+      "name": "Yet Another Tournament",
+      "url": "https://codeforces.com/contest/1783/problem/C",
+      "source": "CF",
+      "difficulty": "Normal",
+      "isStarred": false,
+      "tags": ["Greedy", "Sorting"],
+      "solutionMetadata": {
+        "kind": "autogen-label-from-site",
+        "site": "CF"
+      }
+    },
+    {
       "uniqueId": "usaco-1158",
       "name": "Closest Cow Wins",
       "url": "http://www.usaco.org/index.php?page=viewproblem2&cpid=1158",
@@ -223,6 +259,19 @@
       "solutionMetadata": {
         "kind": "USACO",
         "usacoId": "1158"
+      }
+    },
+    {
+      "uniqueId": "cf-1802D",
+      "name": "Buying Gifts",
+      "url": "https://codeforces.com/contest/1802/problem/D",
+      "source": "CF",
+      "difficulty": "Hard",
+      "isStarred": false,
+      "tags": ["Greedy", "Sorting", "Sorted Set"],
+      "solutionMetadata": {
+        "kind": "autogen-label-from-site",
+        "site": "CF"
       }
     },
     {
